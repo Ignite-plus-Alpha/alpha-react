@@ -1,68 +1,102 @@
-import React, { Component } from 'react'
-import { Button, Header, Image, Modal } from 'semantic-ui-react'
+import React, { Component } from "react";
+import { Button, Header, Image, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
+import Switch from "@material-ui/core/Switch";
 
 class AddCardModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            open: false,
-            cardHolderName: "",
-            cardNumber: "",
-            expirydate:"",
-            upiid:"",                                    
-        }        
-    }
-    
-
-
-
-show = (dimmer) => () => this.setState({ dimmer, open: true })
-close = () => this.setState({ open: false })
-
-    //handle field change
-    handleChange = event  => {
-      const {value,name } = event.target;
-      this.setState({[name]:value})
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      cardHolderName: "",
+      cardNumber: "",
+      expirydate: "",
+      upiid: "",
+      checkedA: "false",
+      cardId: "",
     };
-    //handleFormSubmit
-  handleSubmit= event => {
-      event.preventDefault();
-      const data={        
-        cardholder_name:this.state.cardHolderName,
-        card_number:this.state.cardNumber,
-        expiry_date:this.state.expirydate,
-        userid:this.props.UserId,
-        upi_id:this.state.upiid,
-      }
-      profileService.createWallet(data)
-      .then(response=>console.log(response))
-      .then(this.props.loadWallets)
-      .catch(e=>console.log(e))
-
-      this.setState({ cardHolderName:'',cardNumber:'',upiid:'',expirydate:'',open:false})
-      
-
-
   }
 
+  show = (dimmer) => () => this.setState({ dimmer, open: true });
+  close = () => this.setState({ open: false });
+  handleToggleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
+  };
 
-render() {
-  const { open, dimmer,cardHolderName,cardNumber,upiid,expirydate } = this.state;
+  //handle field change
+  handleChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({ [name]: value });
+  };
+  //handleFormSubmit
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      cardholder_name: this.state.cardHolderName,
+      card_number: this.state.cardNumber,
+      expiry_date: this.state.expirydate,
+      userid: this.props.UserId,
+      upi_id: this.state.upiid,
+    };
 
-  
+    // profileService.createWallet(data)
+    // .then(response=>console.log(response.data))
+    // .then(this.props.loadWallets)
+    // .catch(e=>console.log(e))
 
-  return (
-    <div>
+    profileService
+      .createWallet(data)
+      .then((response) => this.setState({ cardId: response.data.wallet_id }))
+      .then(() => {
+        console.log(this.props.email, this.state.cardId);
+        if (this.state.checkedA === true) {
+          profileService
+            .setDefaultWalletByEmailId(this.props.email, this.state.cardId)
+            .then((response) => console.log(response))
+            .then(this.props.loadWallets)
+            .catch((e) => console.log(e));
+        }
+      })
+      .catch((e) => console.log(e));
+    this.setState({
+      cardHolderName: "",
+      cardNumber: "",
+      upiid: "",
+      expirydate: "",
+      open: false,
+    });
+  };
 
-<button  onClick={this.show('blurring')} class="ui teal button"style={{position:"right" ,minWidth:"205px"}}>
-    <i className="fa  fa-credit-card"></i>
-    &nbsp;&nbsp;&nbsp;
-    <b>ADD NEW CARD</b>
-    </button>
+  render() {
+    const {
+      open,
+      dimmer,
+      cardHolderName,
+      cardNumber,
+      checkedB,
+      upiid,
+      expirydate,
+    } = this.state;
 
-      <Modal dimmer={dimmer} open={open} onClose={this.close} style={{padding:"3%", width:"40%"}}>      
-      <form class="ui form" onSubmit={this.handleSubmit}>
+    return (
+      <div>
+        <button
+          onClick={this.show("blurring")}
+          class="ui teal button"
+          style={{ position: "right", minWidth: "205px" }}
+        >
+          <i className="fa  fa-credit-card"></i>
+          &nbsp;&nbsp;&nbsp;
+          <b>ADD NEW CARD</b>
+        </button>
+
+        <Modal
+          dimmer={dimmer}
+          open={open}
+          onClose={this.close}
+          style={{ padding: "3%", width: "40%" }}
+        >
+          <form class="ui form" onSubmit={this.handleSubmit}>
             <h4>Card details</h4>
             <div class="field">
               <label>Card Holder Name</label>
@@ -95,32 +129,37 @@ render() {
               </div>
             </div>
             <div class="two fields">
-            <div class=" six wide field">
+              <div class=" six wide field">
                 <label>upi id</label>
                 <input
-                type="text"
-                    name="upiid"
-                    placeholder="Upi Id"
-                    onChange={this.handleChange}
-                    value={upiid}
-                    required
-                    >
-                </input>
+                  type="text"
+                  name="upiid"
+                  placeholder="Upi Id"
+                  onChange={this.handleChange}
+                  value={upiid}
+                  required
+                ></input>
               </div>
               <div class=" six wide field">
                 <label>expiry date</label>
                 <input
-                type="month"
-                    name="expirydate"
-                    placeholder="Expiry Date"
-                    onChange={this.handleChange}
-                    value={expirydate}
-                    required
-                    >
-                </input>
+                  type="month"
+                  name="expirydate"
+                  placeholder="Expiry Date"
+                  onChange={this.handleChange}
+                  value={expirydate}
+                  required
+                ></input>
               </div>
-  
             </div>
+            <div>Make default Wallet</div>
+            <Switch
+              checked={checkedB}
+              onChange={this.handleToggleChange}
+              color="primary"
+              name="checkedA"
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
             <div
               className="action-buttons"
               style={{
@@ -131,8 +170,7 @@ render() {
               }}
             >
               <span style={{ minWidth: "150px" }}>
-                <Button positive type='submit' value='Submit Form'>
-                  <i class="add  icon"></i>
+                <Button positive type="submit" value="Submit Form">
                   Add
                 </Button>
               </span>
@@ -143,16 +181,15 @@ render() {
                   style={{ minWidth: "120px" }}
                   onClick={this.close}
                 >
-                  <i class="delete  icon"></i>
                   Cancel
                 </button>
               </span>
             </div>
           </form>
-      </Modal>
-    </div>
-  )
-}
+        </Modal>
+      </div>
+    );
+  }
 }
 
-export default AddCardModal
+export default AddCardModal;

@@ -14,6 +14,10 @@ const styles = (theme) => ({
 });
 
 export default class Login extends Component {
+  responseGoogle = (response) => {
+    console.log(response);
+  };
+
   render() {
     return (
       <form align="center">
