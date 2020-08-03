@@ -18,7 +18,7 @@ export default class Subheader extends Component {
 
   apicall = () => {
     axios
-      .get("http://localhost:8080/groups")
+      .get("http://localhost:8082/groups")
       .then((response) => {
         this.setState({
           groups: response.data,
@@ -33,7 +33,7 @@ export default class Subheader extends Component {
     return (
       <div className="subheader">
         {this.state.groups.map((item) => (
-          <SubheaderList groupId={item.groupId} />
+          <SubheaderList key={item.groupId} groupId={item.groupId} />
         ))}
       </div>
     );

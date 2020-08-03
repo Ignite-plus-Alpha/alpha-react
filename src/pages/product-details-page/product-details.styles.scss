@@ -1,31 +1,26 @@
-.product-preview{
-  .flexbox-container-column{
+.product-preview {
+  text-transform: capitalize;
+  .flexbox-container-column {
     margin-left: 10%;
     display: flex;
     flex-direction: row;
-  
-    .specification-table{
+
+    .specification-table {
       width: 400px;
     }
-    .flexbox-container-row{
-    
-    
+    .flexbox-container-row {
       display: flex;
-      
+
       flex-direction: column;
-      .item-header{
+      .item-header {
         margin-left: 10px;
-        .size{
+        .size {
           margin-right: 10%;
-         
         }
-  
       }
-  
     }
-    .specification-table{
-      width:80%
+    .specification-table {
+      width: 80%;
     }
   }
-
 }

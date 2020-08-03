@@ -1,9 +1,54 @@
-import React from 'react'
-import './cart.styles.scss'
+import React from "react";
+import Cart from "./cart";
+import { Redirect, withRouter } from "react-router-dom";
+import Axios from "axios";
 
-const CartPage = () => (
-    <div className='cartPage'>
-        CART PAGE   
-    </div>
-)
-export default CartPage
+class CartDirectory extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cartId: "",
+      isLoaded: false,
+    };
+  }
+
+  componentDidMount = () => {
+    if (localStorage.getItem("userId")) {
+      this.getUserCartId();
+    }
+  };
+
+  getUserCartId = () => {
+    Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
+      .then((response) => {
+        // localStorage.setItem("cartId", response.data.cartId);
+        console.log(response.data.cartId);
+        this.setState({ cartId: response.data.cartId, isLoaded: true });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  render() {
+    if (!localStorage.getItem("userId")) return <Redirect to="/signup" />;
+    if (this.state.isLoaded)
+      return (
+        <div>
+          <Cart
+            key={localStorage.getItem("userId")}
+            userId={localStorage.getItem("userId")}
+            cartId={this.state.cartId}
+          />
+        </div>
+      );
+    return (
+      <div className="Item">
+        <center>
+          <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" />
+        </center>
+      </div>
+    );
+  }
+}
+export default withRouter(CartDirectory);
