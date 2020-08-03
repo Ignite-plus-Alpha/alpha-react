@@ -21,20 +21,7 @@ class ItemPage extends React.Component {
         categoryId: this.props.match.params.categoryId,
         groupId: this.props.match.params.groupId,
       },
-      () =>
-        productService
-          .getItemsByGroupIdCategoryId(
-            this.state.groupId,
-            this.state.categoryId
-          )
-          .then((response) => {
-            this.setState({
-              items: response.data,
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-          })
+      () => this.getItemData()
     );
   }
 
@@ -43,25 +30,27 @@ class ItemPage extends React.Component {
       prevState.groupId !== this.state.groupId ||
       prevState.categoryId !== this.state.categoryId
     ) {
-      this.setState(
-        { groupId: this.state.groupId, categoryId: this.state.categoryId },
-        () =>
-          productService
-            .getItemsByGroupIdCategoryId(
-              this.state.groupId,
-              this.state.categoryId
-            )
-            .then((response) => {
-              this.setState({
-                items: response.data,
-              });
-            })
-            .catch((e) => {
-              console.log(e);
-            })
-      );
+      this.setState({
+        groupId: this.state.groupId,
+        categoryId: this.state.categoryId,
+      });
+
+      this.getItemData();
     }
   }
+
+  getItemData = () => {
+    productService
+      .getItemsByGroupIdCategoryId(this.state.groupId, this.state.categoryId)
+      .then((response) => {
+        this.setState({
+          items: response.data,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (

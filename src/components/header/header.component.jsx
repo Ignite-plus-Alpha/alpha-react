@@ -24,9 +24,6 @@ export const Header = () => (
       <Link to="/wishlist" className="option">
         <i className="fa fa-heart"></i>
       </Link>
-      <Link to="/signup" className="option">
-        <b>SIGNUP/LOGIN</b>
-      </Link>
     </div>
   </div>
 );

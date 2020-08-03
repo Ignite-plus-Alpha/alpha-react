@@ -1,0 +1,8 @@
+ 
+Button{
+    align-content: center;
+    display: flex;
+    width:100px;
+    margin-left:50% ;
+    padding-left: 50px;
+}

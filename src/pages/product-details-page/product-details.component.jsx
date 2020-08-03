@@ -20,6 +20,7 @@ class ProductDetailsPage extends React.Component {
       size: [],
       chosenSize: "na",
       addToCart: false,
+      cartId: "",
     };
   }
 
@@ -30,26 +31,30 @@ class ProductDetailsPage extends React.Component {
         groupId: this.props.match.params.groupId,
         itemId: this.props.match.params.itemId,
       },
-      () =>
-        productService
-          .getItemsByGroupIdCategoryIdItemId(
-            this.state.groupId,
-            this.state.categoryId,
-            this.state.itemId
-          )
-          .then((response) => {
-            console.log(response);
-            this.setState({
-              item: response.data,
-              description: response.data.description,
-              size: response.data.size,
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-          })
+      () => this.getItem()
     );
+    if (localStorage.getItem("userId")) this.getUserCartId();
   }
+
+  getItem = () => {
+    productService
+      .getItemsByGroupIdCategoryIdItemId(
+        this.state.groupId,
+        this.state.categoryId,
+        this.state.itemId
+      )
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          item: response.data,
+          description: response.data.description,
+          size: response.data.size,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   handleClick = (event) => {
     console.log("add to Bag");
@@ -72,11 +77,21 @@ class ProductDetailsPage extends React.Component {
     }
   };
 
+  getUserCartId = () => {
+    Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
+      .then((response) => {
+        // localStorage.setItem("cartId", response.data.cartId);
+        console.log(response.data.cartId);
+        this.setState({ cartId: response.data.cartId });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   checkInBag = () => {
     Axios.get(
-      `http://localhost:8081/cartItem/${localStorage.getItem("cartId")}/${
-        this.state.itemId
-      }/${this.state.chosenSize}`
+      `http://localhost:8081/cartItem/${this.state.cartId}/${this.state.itemId}/${this.state.chosenSize}`
     )
       .then((response) => {
         console.log(response.data);
@@ -102,9 +117,9 @@ class ProductDetailsPage extends React.Component {
 
   updateCart = (itemId, itemSize, itemQuantity) => {
     Axios.put(
-      `http://localhost:8081/cartItem/${localStorage.getItem(
-        "cartId"
-      )}/${itemId}/${itemSize}/${itemQuantity + 1}`
+      `http://localhost:8081/cartItem/${
+        this.state.cartId
+      }/${itemId}/${itemSize}/${itemQuantity + 1}`
     )
       .then((response) => {
         console.log(response.data);
@@ -118,7 +133,7 @@ class ProductDetailsPage extends React.Component {
 
   addToCart = () => {
     const data = {
-      cartId: localStorage.getItem("cartId"),
+      cartId: this.state.cartId,
       itemId: this.state.itemId,
       itemSize: this.state.chosenSize,
       itemTitle: this.state.item.title,

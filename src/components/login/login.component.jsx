@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import HomePage from "../../pages/homepage/homepage.component";
+import GoogleLogin from "react-google-login";
 const styles = (theme) => ({
   button: {
     display: "flex",
@@ -53,6 +54,24 @@ export default class Login extends Component {
         >
           Submit
         </Button>
+        <br />
+        <div
+          className="sign-in-options"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: "3%",
+          }}
+        >
+          <GoogleLogin
+            clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
+            buttonText="Google Login"
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+            cookiePolicy={"single_host_origin"}
+          />
+        </div>
       </form>
     );
   }

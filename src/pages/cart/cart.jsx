@@ -9,8 +9,8 @@ export default class CartPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: localStorage.getItem("userId"),
-      cartId: localStorage.getItem("cartId"),
+      userId: this.props.userId,
+      cartId: this.props.cartId,
       cartItems: [],
       total_price: 0,
       total_quantity: 0,
@@ -23,9 +23,7 @@ export default class CartPage extends Component {
   componentDidMount = () => {
     console.log("User Found");
     console.log(this.props.cartId);
-    {
-      this.getCartItems();
-    }
+    this.getCartItems();
   };
 
   getCartItems = () => {
@@ -83,7 +81,12 @@ export default class CartPage extends Component {
           <br />
           <br />
           {this.state.cartItems.map((item, index) => (
-            <Card key={index} item={item} getCartItems={this.getCartItems} />
+            <Card
+              key={index}
+              item={item}
+              cartId={this.state.cartId}
+              getCartItems={this.getCartItems}
+            />
           ))}
           <h1>Total Price:₹{this.state.total_price}</h1>
           <br />

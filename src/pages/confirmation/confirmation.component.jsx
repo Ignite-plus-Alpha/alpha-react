@@ -5,13 +5,12 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import "./confirmation.styles.scss";
-import PaymentIcon from "@material-ui/icons/Payment";
-import Button from "@material-ui/core/Button";
+import PayPalBtn from "./PayPal.jsx";
 
 const styles = {
   card: {
-    maxWidth: 450,
-    marginLeft: 50,
+    maxWidth: 500,
+    alignItems:"center"
   },
   title: {
     fontSize: 16,
@@ -30,6 +29,12 @@ class Confirmation extends Component {
     };
   }
 
+  paymentHandler = (details, data) => {
+    /** Here you can call your backend API
+      endpoint and update the database */
+    console.log(details, data);
+  }
+
   componentDidMount = () => {
     this.setState({
       total_price: this.props.location.state.total_price,
@@ -39,17 +44,19 @@ class Confirmation extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="confirmation">
+      <div className="confirmation" style={{alignItems:"center"}}>
+        <div >
+          <center>
         CONFIRMATION
         <br />
         <br />
-        <center>
-          <Card className={classes.card}>
+          <Card className={classes.card}  >
             <CardContent>
               <Typography
                 className={classes.title}
                 variant="h5"
                 component="h2"
+                width="auto"
                 gutterBottom
               >
                 <LocationOnIcon fontSize="inherit" />
@@ -63,7 +70,7 @@ class Confirmation extends Component {
             </CardContent>
           </Card>
           <br />
-          <Card className={classes.card}>
+          {/* <Card className={classes.card}>
             <CardContent>
               <Typography
                 className={classes.title}
@@ -76,22 +83,20 @@ class Confirmation extends Component {
               </Typography>
               <Typography></Typography>
               <Typography>1111 2222 3333 4444</Typography>
-              <Typography>CVV:***</Typography>
+              <Typography>CVV:*</Typography>
             </CardContent>
-          </Card>
+          </Card> */}
           <h3>
             Total Price:{this.state.total_price}
             <br />
             Total Items:{this.state.total_quantity}
           </h3>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.checkoutClicked}
-          >
-            CONFIRM
-          </Button>
+          <PayPalBtn
+                    amount = {this.state.total_price}
+                    currency = {'INR'}
+                    onSuccess={this.paymentHandler}/>
         </center>
+        </div>
       </div>
     );
   }

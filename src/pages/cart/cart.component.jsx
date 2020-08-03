@@ -4,6 +4,14 @@ import { Redirect, withRouter } from "react-router-dom";
 import Axios from "axios";
 
 class CartDirectory extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cartId: "",
+      isLoaded: false,
+    };
+  }
+
   componentDidMount = () => {
     if (localStorage.getItem("userId")) {
       this.getUserCartId();
@@ -13,7 +21,9 @@ class CartDirectory extends React.Component {
   getUserCartId = () => {
     Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
       .then((response) => {
-        localStorage.setItem("cartId", response.data.cartId);
+        // localStorage.setItem("cartId", response.data.cartId);
+        console.log(response.data.cartId);
+        this.setState({ cartId: response.data.cartId, isLoaded: true });
       })
       .catch((e) => {
         console.log(e);
@@ -22,12 +32,23 @@ class CartDirectory extends React.Component {
 
   render() {
     if (!localStorage.getItem("userId")) return <Redirect to="/signup" />;
-    else
+    if (this.state.isLoaded)
       return (
         <div>
-          <Cart key={localStorage.getItem("userId")} />
+          <Cart
+            key={localStorage.getItem("userId")}
+            userId={localStorage.getItem("userId")}
+            cartId={this.state.cartId}
+          />
         </div>
       );
+    return (
+      <div className="Item">
+        <center>
+          <img src="https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif" />
+        </center>
+      </div>
+    );
   }
 }
 export default withRouter(CartDirectory);

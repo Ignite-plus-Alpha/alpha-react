@@ -14,33 +14,13 @@ class CategoryPage extends React.Component {
 
   componentDidMount() {
     this.setState({ groupId: this.props.match.params.groupId }, () =>
-      productService
-        .getCategoriesByGroupId(this.state.groupId)
-        .then((response) => {
-          this.setState({
-            categories: response.data,
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        })
+      this.getData()
     );
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.groupId !== this.state.groupId) {
-      this.setState({ groupId: this.state.groupId }, () =>
-        productService
-          .getCategoriesByGroupId(this.state.groupId)
-          .then((response) => {
-            this.setState({
-              categories: response.data,
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-          })
-      );
+      this.setState({ groupId: this.state.groupId }, () => this.getData());
     }
   }
 
@@ -49,6 +29,19 @@ class CategoryPage extends React.Component {
       return { groupId: nextProps.match.params.groupId };
     } else return null;
   }
+
+  getData = () => {
+    productService
+      .getCategoriesByGroupId(this.state.groupId)
+      .then((response) => {
+        this.setState({
+          categories: response.data,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   render() {
     return (

@@ -3,7 +3,7 @@ import "./profile.styles.scss";
 import ProfileDataService from "../../services/profile-service";
 
 import SignInForm from "./signIn.component";
-import SignUp from "../signup/signup";
+import SignUp from "../../components/signUp/SignUp.component";
 import ProfileDetailCard from "../../components/card/ProfileDetailCard.component";
 import UpdateProfile from "../../components/Modal/update-profile-form.component";
 
@@ -11,17 +11,27 @@ class ProfileDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: "chinmay@gmail.com",
+      //userEmail:"chinmay@gmail.com",
+      userEmail: null,
       user: null,
       firstName: "",
       lastName: "",
       mobile: "",
+      showSignIn: true,
+      showSignUp: false,
+      show: false,
     };
   }
 
   componentDidMount() {
     this.loadData();
   }
+
+  hideComponent = () => {
+    this.state.show
+      ? this.setState({ show: false })
+      : this.setState({ show: true });
+  };
 
   loadData = () => {
     ProfileDataService.getProfileByEmailId(this.state.userEmail)
@@ -38,11 +48,16 @@ class ProfileDetailPage extends React.Component {
       });
   };
 
-  //    handleSignIn=()=>{
-
-  //     }
   render() {
-    const { userEmail, firstName, lastName, mobile } = this.state;
+    const {
+      userEmail,
+      firstName,
+      lastName,
+      mobile,
+      showSignIn,
+      showSignUp,
+      show,
+    } = this.state;
     // console.log(this.state.user)
 
     if (userEmail !== null) {
@@ -59,42 +74,52 @@ class ProfileDetailPage extends React.Component {
       );
     } else
       return (
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div style={{ padding: "2%", width: "40%" }}>
-            <a>
-              <h3>I do not have an account</h3>
-            </a>
-            <p>Sign in with email and password</p>
-            <SignInForm />
-          </div>
-          <div style={{ padding: "2%", width: "50%" }}>
-            <a>
-              <h3>I already have an account</h3>
-            </a>
-            <p>Sign Up with email and password</p>
-            <SignUp />
-          </div>
+        <div>
+          {!show && (
+            <div>
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "inherit",
+                  marginBottom: "10%",
+                  minWidth: "340px",
+                  fontSize: "25px",
+                  cursor: "pointer",
+                  display: "inline-block",
+                }}
+                onClick={this.hideComponent}
+                class="default-button"
+              >
+                {" "}
+                I do not have an account
+              </button>
+              <h3>Sign in with email and password</h3>
+              {showSignIn && <SignInForm />}
+            </div>
+          )}
+          {show && (
+            <div style={{ padding: "2%", width: "50%" }}>
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "inherit",
+                  marginBottom: "10%",
+                  minWidth: "400px",
+                  fontSize: "25px",
+                  cursor: "pointer",
+                  display: "inline-block",
+                }}
+                onClick={this.hideComponent}
+                class="default-button"
+              >
+                I already have an account
+              </button>
+              <h3>Sign Up with email and password</h3>
+              <SignUp />
+            </div>
+          )}
         </div>
       );
   }
 }
 export default ProfileDetailPage;
-
-// else if(existingUser)
-// return(
-
-//         <div style={{padding:"2%" ,width:"40%"}}>
-//         <button  onClick={(e)=>this.handleFormDispaly}><h3>I do not have an account</h3></button>
-//             <p>Sign in with email and password</p>
-//         <SignInForm/>
-//         </div>)
-
-// else return(
-
-//         <div style={{padding:"2%",width:"50%"}}>
-//         <a  onClick={(e)=>this.handleFormDispaly}><h3>I already have an account</h3></a>
-//             <p>Sign Up with email and password</p>
-//         <SignUp/>
-//         </div>
-
-// )

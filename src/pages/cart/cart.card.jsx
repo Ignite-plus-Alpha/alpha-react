@@ -35,9 +35,9 @@ const styles = (theme) => ({
 class Card extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   item: props.item,
-    // };
+    this.state = {
+      cartId: props.cartId,
+    };
     this.deleteItem = this.deleteItem.bind(this);
   }
 
@@ -46,9 +46,7 @@ class Card extends Component {
     else itemQuantity = itemQuantity - 1;
     console.log(localStorage.getItem("cartId"), itemId, itemSize, itemQuantity);
     Axios.put(
-      `http://localhost:8081/cartItem/${localStorage.getItem(
-        "cartId"
-      )}/${itemId}/${itemSize}/${itemQuantity}`
+      `http://localhost:8081/cartItem/${this.state.cartId}/${itemId}/${itemSize}/${itemQuantity}`
     )
       .then((response) => {
         console.log(response.data);
@@ -62,9 +60,7 @@ class Card extends Component {
 
   deleteItem(itemId, itemSize) {
     Axios.delete(
-      `http://localhost:8081/cartItem/${localStorage.getItem(
-        "cartId"
-      )}/${itemId}/${itemSize}`
+      `http://localhost:8081/cartItem/${this.state.cartId}/${itemId}/${itemSize}`
     )
       .then((response) => {
         console.log(response.data);
