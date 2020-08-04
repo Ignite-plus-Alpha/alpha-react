@@ -74,7 +74,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
       </Button>
       </span>
       <span>  
-        <UpdateCardExpiry loadWallets={loadWallets} userId={currentUserUserId} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
+        <UpdateCardExpiry loadWallets={loadWallets} emailId={emailId} userId={currentUserUserId} expiryDate={expiryDate} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
         </span>
       </div>    
       </CardActions>

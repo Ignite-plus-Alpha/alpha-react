@@ -41,7 +41,7 @@ export default function ProfileDetailCard({email,firstName,lastName,mobile,loadD
         </Typography>
       </CardContent>
       <CardActions>
-      <UpdateProfileForm email={email} loadData={loadData} firstName={firstName}/>
+      <UpdateProfileForm email={email} loadData={loadData} firstName={firstName} lastName={lastName} mobile={mobile}/>
       </CardActions>
     </Card>
   );

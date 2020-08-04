@@ -3,6 +3,7 @@ import {  Modal } from "semantic-ui-react";
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 
+import Switch from '@material-ui/core/Switch';
 import profileService from "../../services/profile-service";
 
 
@@ -11,13 +12,21 @@ class UpdateCardExpiry extends Component {
     super(props);
     this.state={
       open: false,
-      expirydate:''
+      expirydate:this.props.expiryDate,
+      checkedA: false,
+      
    
       }
   }
 
 show = (dimmer) => () => this.setState({ dimmer, open: true })
 close = () => this.setState({ open: false })
+
+handleToggleChange = (event) => {
+  this.setState({ [event.target.name]: event.target.checked });
+  console.log( event.target.checked)
+
+};
 
     //handle field change
     handleChange = event  => {
@@ -36,6 +45,16 @@ close = () => this.setState({ open: false })
       console.log(this.props.userId,"******",this.props.addressId,"************",data )
       profileService.updateWalletExpiry(this.props.userId,this.props.walletId,data)
       .then(response=>console.log(response.data))
+      .then(() => {
+        console.log(this.props.emailId, this.state.walletId);
+        if (this.state.checkedA === true) {
+          profileService
+            .setDefaultWalletByEmailId(this.props.emailId, this.props.walletId)
+            .then((response) => console.log(response))
+            .then(this.props.loadWallets)
+            .catch((e) => console.log(e));
+        }
+      })
       .then(this.props.loadWallets)
       .catch(e=>console.log(e))
       this.setState({ open:false})    
@@ -45,7 +64,7 @@ close = () => this.setState({ open: false })
 
 
 render() {
-  const { open, dimmer,expirydate } = this.state;
+  const { checkedA,open, dimmer,expirydate } = this.state;
   return (
     <div>
       <Button variant="outlined" sie="small" color="primary"
@@ -69,7 +88,17 @@ render() {
                     required
                     >
                 </input>
-              </div>               
+              </div>
+              <label>set card as default</label> 
+              <div className="set-default">
+              <Switch
+            checked={checkedA}
+            onChange={this.handleToggleChange}
+            color="primary"
+            name="checkedA"
+            inputProps={{ 'aria-label': 'primary checkbox' }}
+        /> </div>
+
             <div
               className="action-buttons"
               style={{

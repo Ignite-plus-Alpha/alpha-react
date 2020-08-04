@@ -11,7 +11,7 @@ class Wallets extends React.Component {
     super(props);
     this.state = {
       email: "chinmay@gmail.com",
-      currentUserUserId: "a46edc1a-db4a-40c4-8daf-fbbfed21d9d0",
+      currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
       wallets: [],
       cardHolderName: "",
       cardNumber: "",

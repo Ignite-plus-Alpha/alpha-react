@@ -11,15 +11,13 @@ class ProfileDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: "chinmay@gmail.com",
-      // userEmail: null,
+       userEmail: "chinmay@gmail.com",
+      //userEmail: null,
       user: null,
       firstName: "",
       lastName: "",
       mobile: "",
-      showSignIn: true,
-      showSignUp: false,
-      show: false,
+      show: true,
     };
   }
 
@@ -94,7 +92,7 @@ class ProfileDetailPage extends React.Component {
                 I do not have an account
               </button>
               <h3>Sign in with email and password</h3>
-              {showSignIn && <SignInForm />}
+               <SignInForm />
             </div>
           )}
           {show && (

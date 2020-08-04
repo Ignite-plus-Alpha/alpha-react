@@ -11,12 +11,13 @@ class UpdateAddressForm extends Component {
     super(props);
     this.state={
       open: false,
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      state: "",
-      country: "",
-      zipcode:"",
+      addressLine1: this.props.addressLine1,
+      addressLine2: this.props.addressLine2,
+      city: this.props.city,
+      state: this.props.state,
+      country: this.props.country,
+      zipcode:this.props.zipcode,
+      checkedB: "false",
    
       }
   }
@@ -47,12 +48,28 @@ close = () => this.setState({ open: false })
       console.log(this.props.userId,"******",this.props.addressId,"************",data )
       profileService.updateAddress(this.props.userId,this.props.addressId,data)
       .then(response=>console.log(response.data))
+      .then(() => {
+        console.log(this.props.emailId, this.state.AddressId);
+        if (this.state.checkedB === true) {
+          profileService
+            .setDefaultAddressByEmailId(this.props.emailId, this.props.addressId)
+            .then((response) => console.log(response))
+            .then(this.props.loadAddresses)
+            .catch((e) => console.log(e));
+        }
+      })
       .then(this.props.loadAddresses)
       .catch(e=>console.log(e))
       this.setState({ open:false})    
    
 
   }
+  handleToggleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
+    console.log( event.target.checked)
+
+  
+  };
 
 
 render() {

@@ -78,7 +78,7 @@ const handleEdit=(currentUserUserId,addressId,defaultAddress)=>{
         Delete
       </Button>
     
-      <UpdateAddressForm loadAddresses={loadAddresses} userId={currentUserUserId} addressId={addressId} />
+      <UpdateAddressForm loadAddresses={loadAddresses} userId={currentUserUserId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />
        
   
       </div>

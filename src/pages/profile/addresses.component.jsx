@@ -9,7 +9,7 @@ class Addresses extends React.Component {
     super(props);
     this.state = {
       userEmail: "chinmay@gmail.com",
-      currentUserUserId: "a46edc1a-db4a-40c4-8daf-fbbfed21d9d0",
+      currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
       addresses: [],
       defaultAddress: "",
       default: "",

@@ -16,7 +16,8 @@ class AddAddressModal extends Component {
             state: "",
             country: "",
             zipcode:"",
-            checkedB:"false"
+            checkedB:"false",
+            AddressId:""
           };        
     }
      handleToggleChange = (event) => {
@@ -54,7 +55,17 @@ class AddAddressModal extends Component {
         // profileService.setDefaultAddressByEmailId()
 
         profileService.createAddress(data)
-        .then(response=>console.log(response))
+        .then(response=>this.setState({ AddressId: response.data.address_id }))
+        .then(() => {
+          console.log(this.props.email, this.state.AddressId);
+          if (this.state.checkedB === true) {
+            profileService
+              .setDefaultAddressByEmailId(this.props.email, this.state.AddressId)
+              .then((response) => console.log(response))
+              .then(this.props.loadAddresses)
+              .catch((e) => console.log(e));
+          }
+        })
         .then(this.props.loadAddresses)
         .catch(e=>console.log(e))
 

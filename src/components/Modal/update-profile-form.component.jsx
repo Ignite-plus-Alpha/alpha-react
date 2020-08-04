@@ -9,13 +9,15 @@ import profileService from "../../services/profile-service";
 class UpdateProfileForm extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      open: false,
-      firstName:this.props.firstName,
-      lastName:'',
-      mobile:'',
     
-      }
+
+      this.state={
+        firstName:this.props.firstName,
+        lastName:this.props.lastName,
+        mobile:this.props.mobile,   
+        open: false
+           
+        }
   }
 
 show = (dimmer) => () => this.setState({ dimmer, open: true })
@@ -49,10 +51,13 @@ close = () => this.setState({ open: false })
 
 
 render() {
-  const { open, dimmer,firstName,lastName,mobile,password } = this.state;
+  const { open, dimmer,lastName,mobile,firstName} = this.state;
+
+ 
   return (
     <div>
- 
+ {
+  console.log(this.props)}
 
       <Button variant="outlined" sie="small" color="primary"
       startIcon={<EditIcon />} onClick={this.show('default')}  style={{margin:"10%" }}>
@@ -61,17 +66,16 @@ render() {
 
 
       <Modal dimmer={dimmer} open={open} onClose={this.close} style={{padding:"3%", width:"35%"}}>      
-      <form class="ui form" onSubmit={this.handleSubmit}>
-            <h4>Edit Personal details</h4>
-            <div class="two fields">
-            <div class="field">
+      <form className="ui form" onSubmit={this.handleSubmit}>
+            <h4>Edit Profil</h4>
+            <div className="field">
               <label>First Name</label>
-              <div class="fields">
-                <div class="sixteen wide field">
+              <div className="fields">
+                <div className="sixteen wide field">
                   <input
                     type="text"
                     name="firstName"
-                    placeholder="First Name"
+                    placeholder=" First Name"
                     onChange={this.handleChange}
                     value={firstName}
                     required
@@ -79,14 +83,15 @@ render() {
                 </div>
               </div>
             </div>
-            <div class="field">
+            
+            <div className="field">
               <label>Last Name</label>
-              <div class="fields">
-                <div class="sixteen wide field">
+              <div className="fields">
+                <div className="sixteen wide field">
                   <input
                     type="text"
                     name="lastName"
-                    placeholder="Last Name"
+                    placeholder=" Last Name"
                     onChange={this.handleChange}
                     value={lastName}
                     required
@@ -94,15 +99,14 @@ render() {
                 </div>
               </div>
             </div>
-            </div>
-            <div class="field">
-              <label> Mobile Number</label>
-              <div class="fields">
-                <div class="sixteen wide field">
+            <div className="field">
+              <label> Mobile number</label>
+              <div className="fields">
+                <div className="sixteen wide field">
                   <input
                     type="text"
                     name="mobile"
-                    placeholder="Mobile Number"
+                    placeholder="Mobile"
                     onChange={this.handleChange}
                     value={mobile}
                     required
@@ -110,7 +114,6 @@ render() {
                 </div>
               </div>
             </div>
-         
             <div
               className="action-buttons"
               style={{
