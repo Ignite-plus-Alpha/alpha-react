@@ -6,15 +6,17 @@ import SignInForm from "./signIn.component";
 import SignUp from "../../components/signUp/SignUp.component";
 import ProfileDetailCard from "../../components/card/ProfileDetailCard.component";
 import UpdateProfile from "../../components/Modal/update-profile-form.component";
+import Login from "../../components/login/login.component";
 
 class ProfileDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       userEmail: "chinmay@gmail.com",
-      //userEmail: null,
+       //userEmail: "chinmay@gmail.com",
+      // userEmail: null,
       user: null,
       firstName: "",
+
       lastName: "",
       mobile: "",
       show: true,
@@ -32,7 +34,7 @@ class ProfileDetailPage extends React.Component {
   };
 
   loadData = () => {
-    ProfileDataService.getProfileByEmailId(this.state.userEmail)
+    ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
         this.setState({
           user: response.data,
@@ -48,7 +50,7 @@ class ProfileDetailPage extends React.Component {
 
   render() {
     const {
-      userEmail,
+      
       firstName,
       lastName,
       mobile,
@@ -56,9 +58,10 @@ class ProfileDetailPage extends React.Component {
       showSignUp,
       show,
     } = this.state;
+    const {userEmail}=this.props
     // console.log(this.state.user)
 
-    if (userEmail !== null) {
+    
       return (
         <div className="profilePage">
           <ProfileDetailCard
@@ -70,54 +73,55 @@ class ProfileDetailPage extends React.Component {
           />
         </div>
       );
-    } else
-      return (
-        <div>
-          {!show && (
-            <div>
-              <button
-                style={{
-                  border: "none",
-                  backgroundColor: "inherit",
-                  marginBottom: "10%",
-                  minWidth: "340px",
-                  fontSize: "25px",
-                  cursor: "pointer",
-                  display: "inline-block",
-                }}
-                onClick={this.hideComponent}
-                class="default-button"
-              >
-                {" "}
-                I do not have an account
-              </button>
-              <h3>Sign in with email and password</h3>
-               <SignInForm />
-            </div>
-          )}
-          {show && (
-            <div style={{ padding: "2%", width: "50%" }}>
-              <button
-                style={{
-                  border: "none",
-                  backgroundColor: "inherit",
-                  marginBottom: "10%",
-                  minWidth: "400px",
-                  fontSize: "25px",
-                  cursor: "pointer",
-                  display: "inline-block",
-                }}
-                onClick={this.hideComponent}
-                class="default-button"
-              >
-                I already have an account
-              </button>
-              <h3>Sign Up with email and password</h3>
-              <SignUp />
-            </div>
-          )}
-        </div>
-      );
+
   }
 }
 export default ProfileDetailPage;
+// else
+// return (
+//   <div>
+//     {!show && (
+//       <div>
+//         <button
+//           style={{
+//             border: "none",
+//             backgroundColor: "inherit",
+//             marginBottom: "10%",
+//             minWidth: "340px",
+//             fontSize: "25px",
+//             cursor: "pointer",
+//             display: "inline-block",
+//           }}
+//           onClick={this.hideComponent}
+//           class="default-button"
+//         >
+//           {" "}
+//           I do not have an account
+//         </button>
+//         <h3>Sign in with email and password</h3>
+//          <SignInForm />
+//       </div>
+//     )}
+//     {show && (
+//       <div style={{ padding: "2%", width: "50%" }}>
+//         <button
+//           style={{
+//             border: "none",
+//             backgroundColor: "inherit",
+//             marginBottom: "10%",
+//             minWidth: "400px",
+//             fontSize: "25px",
+//             cursor: "pointer",
+//             display: "inline-block",
+//           }}
+//           onClick={this.hideComponent}
+//           class="default-button"
+//         >
+//           I already have an account
+//         </button>
+//         <h3>Sign Up with email and password</h3>
+//         <SignUp />
+//       </div>
+//     )}
+//   </div>
+// );

@@ -3,45 +3,66 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import HomePage from "../../pages/homepage/homepage.component";
 import GoogleLogin from "react-google-login";
+
 const styles = (theme) => ({
   button: {
     display: "flex",
-    marginLeft: "auto",
+    margin: theme.spacing.unit,
+    justifyContent: "flex-end",
   },
   input: {
     display: "none",
+    width: "400px",
   },
 });
 
+
 export default class Login extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state={
+      gmail:''
+    }
+  }
+  
+
   responseGoogle = (response) => {
     console.log(response);
+    this.setState({
+      gmail:response.profileObj.email,
+     
+    })
+    this.props.setEmail(response.profileObj.email)
   };
 
   render() {
+ 
+    console.log(this.props)
     return (
-      <form align="center">
+      <center>
+      <div className="sign-in-form" style={{maxWidth:"400px",alignSelf:"center"}}>
+      <form >
         <div style={{ fontSize: 28 }}>Sign In</div>
         <br />
 
         <TextField
           id="email"
           label="Email"
+          type="email"
           style={{ margin: 8 }}
-          placeholder="enter email address"
+          placeholder="Enter email address"
           helperText="Mandotary"
-          //fullWidth
+          fullWidth
           margin="normal"
           variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
+
         />
         <br />
         <TextField
           id="standard-password-input"
           label="Password"
-          style={{ margin: 8 }}
+          style={{ margin: 8,minWidth:"400px" }}
           //fullWidth
           type="password"
           helperText="Mandotary"
@@ -51,32 +72,43 @@ export default class Login extends Component {
         />
         <br />
         <br />
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={(event) => (window.location.href = "/")}
-        >
-          Submit
-        </Button>
+   
         <br />
         <div
           className="sign-in-options"
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "space-between",
-            marginTop: "3%",
+            marginTop: "1%",
           }}
         >
-          <GoogleLogin
+          <span>    
+            <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={(event) => (window.location.href = "/")}
+          >
+            Sign In
+          </Button>
+        </span>
+        <div>
+        <GoogleLogin
+        className="google-signin-button"
             clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
-            buttonText="Google Login"
+            // isSignedIn={true}
+            buttonText="Login"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
-            cookiePolicy={"single_host_origin"}
+            cookiePolicy={"single_host_origin"}          
           />
-        </div>
+        </div>      
+         </div>
+        <a href="/signup">Don't have an account?</a>
       </form>
+      </div>
+      </center>
     );
   }
 }

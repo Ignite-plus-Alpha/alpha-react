@@ -9,6 +9,8 @@ import Addresses from "./addresses.component";
 import ProfileDetailPage from "./profile-detail.component";
 import Wallets from "./wallets.components";
 import "./profile.styles.scss";
+import Login from "../../components/login/login.component";
+import {  Redirect } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,16 +57,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile() {
+export default function Profile(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  return (
+  if (props.email==null) return <Redirect to="/login"/>;
+   return (
+    
     <div className={classes.root}>
+      {console.log(props)}
       <Tabs
         orientation="vertical"
         // variant="scrollable"
@@ -79,7 +83,7 @@ export default function Profile() {
       </Tabs>
       <div className="tabs" style={{ marginLeft: "5%", minWidth: "40%" }}>
         <TabPanel value={value} index={0}>
-          <ProfileDetailPage />
+          <ProfileDetailPage userEmail={props.email} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Addresses />
@@ -90,4 +94,5 @@ export default function Profile() {
       </div>
     </div>
   );
+
 }

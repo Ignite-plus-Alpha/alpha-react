@@ -16,31 +16,51 @@ import ProductDetailsPage from "./pages/product-details-page/product-details.com
 import SubHeader from "./components/subheader/subheader.component";
 import Login from "./components/login/login.component";
 
-function App() {
-  return (
-    <div>
-      <Header />
-      <SubHeader />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/aboutus" component={AboutUs} />
-        <Route exact path="/profile" component={TabPanel} />
-        <Route exact path="/wishlist" component={Wishlist} />
-        <Route exact path="/signup" component={Signup} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/confirmation" component={Confirmation} />
-        <Route exact path="/:groupId" component={CategoryPage} />
-        <Route exact path="/:groupId/:categoryId" component={ItemPage} />
-        <Route
-          exact
-          path="/:groupId/:categoryId/:itemId"
-          component={ProductDetailsPage}
-        />
-      </Switch>
-      <Footer />
-    </div>
-  );
+
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state={
+      email:null,
+      
+
+    }
+  }
+
+
+  setEmail=(newEmail)=>{
+    this.setState({
+      email:newEmail
+    })
+  }
+
+  render() {
+    const {email,bhak}=this.state
+    console.log(this.state)
+    return (
+      <div>
+        <Header />
+        <SubHeader />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/aboutus" component={AboutUs} />
+          <Route exact path="/profile" render={(props) => ( <TabPanel email={email}  /> )} />
+           <Route exact path="/wishlist" component={Wishlist} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" render={(props) => ( <Login email={email} setEmail={this.setEmail} /> )} />
+          <Route exact path="/confirmation" component={Confirmation} />
+          <Route exact path="/:groupId" component={CategoryPage} />
+          <Route exact path="/:groupId/:categoryId" component={ItemPage} />
+          <Route
+            exact
+            path="/:groupId/:categoryId/:itemId"
+            component={ProductDetailsPage}
+          />
+        </Switch>
+        <Footer />
+      </div>
+    );
+  }
 }
 
-export default App;
