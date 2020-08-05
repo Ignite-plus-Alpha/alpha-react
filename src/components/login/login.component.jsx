@@ -3,6 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import HomePage from "../../pages/homepage/homepage.component";
 import GoogleLogin from "react-google-login";
+import profileService from "../../services/profile-service";
 
 const styles = (theme) => ({
   button: {
@@ -21,19 +22,19 @@ export default class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state={
-      gmail:''
-    }
+ 
   }
   
 
   responseGoogle = (response) => {
     console.log(response);
-    this.setState({
-      gmail:response.profileObj.email,
-     
-    })
     this.props.setEmail(response.profileObj.email)
+    profileService.userRegistration(response.profileObj.email)
+    .then(response=>(
+      this.props.setUserId(response.data)
+      
+    ))
+
   };
 
   render() {

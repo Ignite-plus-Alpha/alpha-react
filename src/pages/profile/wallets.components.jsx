@@ -10,8 +10,8 @@ class Wallets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "chinmay@gmail.com",
-      currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
+      email: null,
+      currentUserUserId: null,
       wallets: [],
       cardHolderName: "",
       cardNumber: "",
@@ -22,6 +22,11 @@ class Wallets extends React.Component {
   }
 
   componentDidMount() {
+    this.setState({
+      email:this.props.email,
+      currentUserUserId:this.props.UserId
+
+    })
     this.loadProfileData();
     this.loadWallets();
   }
@@ -52,6 +57,8 @@ class Wallets extends React.Component {
   };
 
   render() {
+    console.log(this.state,"#################################")
+    console.log(this.props,"#################################")
     return (
       <div className="profile-addresses-page">
         <div

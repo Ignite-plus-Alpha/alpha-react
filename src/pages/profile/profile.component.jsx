@@ -86,10 +86,10 @@ export default function Profile(props) {
           <ProfileDetailPage userEmail={props.email} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Addresses />
+          <Addresses userEmail={props.email} userId={props.userId}/>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Wallets />
+          <Wallets userEmail={props.email} userId={props.userId} />
         </TabPanel>
       </div>
     </div>

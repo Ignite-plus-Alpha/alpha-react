@@ -65,6 +65,11 @@ getAddressesByUserId(userId){
       updateAddress(userId,addressId,data){
         return http.put(`/address/${userId}/${addressId}`,data)
       }
+
+      //register user if not exists
+      userRegistration(emailId){
+        return http.get(`/register/${emailId}`)
+      }
             
       
 

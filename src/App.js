@@ -22,6 +22,7 @@ export default class App extends React.Component {
     super(props);
     this.state={
       email:null,
+      userId:null
       
 
     }
@@ -33,9 +34,15 @@ export default class App extends React.Component {
       email:newEmail
     })
   }
+  setUserId=(newUserId)=>{
+    this.setState({
+      userId:newUserId
+    })
+  }
+
 
   render() {
-    const {email,bhak}=this.state
+    const {email,userId}=this.state
     console.log(this.state)
     return (
       <div>
@@ -45,10 +52,10 @@ export default class App extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/aboutus" component={AboutUs} />
-          <Route exact path="/profile" render={(props) => ( <TabPanel email={email}  /> )} />
+          <Route exact path="/profile" render={(props) => ( <TabPanel email={email} userId={userId} /> )} />
            <Route exact path="/wishlist" component={Wishlist} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/login" render={(props) => ( <Login email={email} setEmail={this.setEmail} /> )} />
+          <Route exact path="/login" render={(props) => ( <Login email={email} setEmail={this.setEmail} setUserId={this.setUserId} /> )} />
           <Route exact path="/confirmation" component={Confirmation} />
           <Route exact path="/:groupId" component={CategoryPage} />
           <Route exact path="/:groupId/:categoryId" component={ItemPage} />
