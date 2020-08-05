@@ -23,11 +23,11 @@ const useStyles = makeStyles({
   },
 });
 
-export function AddressCard({ loadAddresses,emailId,currentUserUserId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,city,state,country,zipcode,defaultAddress}){
+export function AddressCard({ loadAddresses,emailId,userId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,city,state,country,zipcode,defaultAddress}){
   const classes = useStyles();
 
-const handleDelete=(currentUserUserId,addressId)=>{
-  console.log("deleted for" ,currentUserUserId,"*****",addressId)
+const handleDelete=(userId,addressId)=>{
+  console.log("deleted for" ,userId,"*****",addressId)
 
   const st="."
   if(addressId===defaultAddress)
@@ -36,7 +36,7 @@ const handleDelete=(currentUserUserId,addressId)=>{
   .catch(e=>console.log(e))
 
   ProfileService.
-  deleteAddressByUserIdAddressId(currentUserUserId,addressId)
+  deleteAddressByUserIdAddressId(userId,addressId)
   .then(response=>console.log(response))
   .then(loadAddresses)
   .catch(e=>{
@@ -48,8 +48,8 @@ const handleDelete=(currentUserUserId,addressId)=>{
 
 
 
-const handleEdit=(currentUserUserId,addressId,defaultAddress)=>{
-  console.log("edited for" ,currentUserUserId,"*****",addressId,"*******",defaultAddress,"*****",emailId)
+const handleEdit=(userId,addressId,defaultAddress)=>{
+  console.log("edited for" ,userId,"*****",addressId,"*******",defaultAddress,"*****",emailId)
 }
 
   return (
@@ -74,11 +74,11 @@ const handleEdit=(currentUserUserId,addressId,defaultAddress)=>{
       <CardActions>
       <div className= "optionButtons" style={{display:"flex",flexDirection:"row",justifyContent:"space-between"  ,minWidth:"100%",padding:"1%" }}>
         <Button variant="outlined" color="secondary"
-       startIcon={<DeleteIcon />}  onClick={()=>handleDelete(currentUserUserId,addressId)}>        
+       startIcon={<DeleteIcon />}  onClick={()=>handleDelete(userId,addressId)}>        
         Delete
       </Button>
     
-      <UpdateAddressForm loadAddresses={loadAddresses} userId={currentUserUserId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />
+      <UpdateAddressForm loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />
        
   
       </div>

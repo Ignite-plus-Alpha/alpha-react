@@ -8,8 +8,8 @@ class Addresses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: "chinmay@gmail.com",
-      currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
+      // userEmail: "chinmay@gmail.com",
+      // currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
       addresses: [],
       defaultAddress: "",
       default: "",
@@ -23,7 +23,7 @@ class Addresses extends React.Component {
   }
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId(this.state.userEmail)
+    ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
         this.setState(
           {
@@ -42,7 +42,7 @@ class Addresses extends React.Component {
   };
 
   loadAddresses = () => {
-    ProfileDataService.getAddressesByUserId(this.state.currentUserUserId)
+    ProfileDataService.getAddressesByUserId(this.props.userId)
       .then((response) => {
         this.setState({
           addresses: response.data,
@@ -70,8 +70,8 @@ class Addresses extends React.Component {
             <h2>Saved ADDRESSES</h2>
           </span>
           <AddAddressModal
-            userId={this.state.currentUserUserId}
-            email={this.state.userEmail}
+            userId={this.props.userId}
+            email={this.props.userEmail}
             loadAddresses={this.loadAddresses}
           />
         </div>
@@ -84,8 +84,8 @@ class Addresses extends React.Component {
                 <AddressCard
                   loadAddresses={this.loadAddresses}
                   loadProfileData={this.loadProfileData}
-                  emailId={this.state.userEmail}
-                  currentUserUserId={this.state.currentUserUserId}
+                  emailId={this.props.userEmail}
+                  userId={this.props.userId}
                   addressId={address.address_id}
                   firstName={this.state.firstName}
                   lastName={this.state.lastName}
@@ -108,7 +108,8 @@ class Addresses extends React.Component {
                   loadAddresses={this.loadAddresses}
                   loadProfileData={this.loadProfileData}
                   emailId={this.state.userEmail}
-                  currentUserUserId={this.state.currentUserUserId}
+                  userId={this.props.userId}
+                  userId={this.props.userId}
                   addressId={address.address_id}
                   firstName={this.state.firstName}
                   lastName={this.state.lastName}
