@@ -38,6 +38,7 @@ class AddCardModal extends Component {
       userid: this.props.UserId,
       upi_id: this.state.upiid,
     };
+    console.log(this.props)
 
     // profileService.createWallet(data)
     // .then(response=>console.log(response.data))

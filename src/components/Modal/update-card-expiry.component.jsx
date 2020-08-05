@@ -46,11 +46,11 @@ handleToggleChange = (event) => {
       profileService.updateWalletExpiry(this.props.userId,this.props.walletId,data)
       .then(response=>console.log(response.data))
       .then(() => {
-        console.log(this.props.emailId, this.state.walletId);
+        console.log(this.props.email, this.state.walletId);
         if (this.state.checkedA === true) {
           profileService
-            .setDefaultWalletByEmailId(this.props.emailId, this.props.walletId)
-            .then((response) => console.log(response))
+            .setDefaultWalletByEmailId(this.props.email, this.props.walletId)
+            .then((response) => console.log(response,"^^^^^^^^^^^"))
             .then(this.props.loadWallets)
             .catch((e) => console.log(e));
         }

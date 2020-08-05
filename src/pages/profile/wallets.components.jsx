@@ -10,8 +10,8 @@ class Wallets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: null,
-      currentUserUserId: null,
+      // email: this.props.userEmail,
+      // currentUserUserId: null,
       wallets: [],
       cardHolderName: "",
       cardNumber: "",
@@ -22,17 +22,17 @@ class Wallets extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      email:this.props.email,
-      currentUserUserId:this.props.UserId
+    // this.setState({
+    //   email:this.props.email,
+    //   currentUserUserId:this.props.UserId
 
-    })
+    // })
     this.loadProfileData();
     this.loadWallets();
   }
 
   loadWallets = () => {
-    ProfileDataService.getWalletsByUserId(this.state.currentUserUserId)
+    ProfileDataService.getWalletsByUserId(this.props.userId)
       .then((response) => {
         this.setState({
           wallets: response.data,
@@ -44,7 +44,7 @@ class Wallets extends React.Component {
   };
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId(this.state.email)
+    ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
         this.setState({
           user: response.data,
@@ -74,8 +74,8 @@ class Wallets extends React.Component {
             <h2>Saved Cards</h2>
           </span>
           <AddCardModal
-            UserId={this.state.currentUserUserId}
-            email={this.state.email}
+            UserId={this.props.userId}
+            email={this.props.userEmail}
             loadWallets={this.loadWallets}
           />
         </div>
@@ -85,9 +85,9 @@ class Wallets extends React.Component {
             return (
               <WalletCard
                 loadWallets={this.loadWallets}
-                emailId={this.state.email}
+                email={this.props.userEmail}
                 walletId={wallet.wallet_id}
-                currentUserUserId={this.state.currentUserUserId}
+                currentUserUserId={this.props.userId}
                 cardHolderName={wallet.cardholder_name}
                 cardNumber={wallet.card_number}
                 expiryDate={wallet.expiry_date}
@@ -101,9 +101,9 @@ class Wallets extends React.Component {
             return (
               <WalletCard
                 loadWallets={this.loadWallets}
-                emailId={this.state.email}
+                email={this.props.userEmail}
                 walletId={wallet.wallet_id}
-                currentUserUserId={this.state.currentUserUserId}
+                currentUserUserId={this.props.userId}
                 cardHolderName={wallet.cardholder_name}
                 cardNumber={wallet.card_number}
                 expiryDate={wallet.expiry_date}

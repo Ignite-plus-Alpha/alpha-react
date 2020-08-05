@@ -31,7 +31,8 @@ export default class Login extends Component {
     this.props.setEmail(response.profileObj.email)
     profileService.userRegistration(response.profileObj.email)
     .then(response=>(
-      this.props.setUserId(response.data)
+      this.props.setUserId(response.data),
+      localStorage.setItem("userId",response.data)
       
     ))
 
@@ -98,7 +99,7 @@ export default class Login extends Component {
         <GoogleLogin
         className="google-signin-button"
             clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
-            // isSignedIn={true}
+             isSignedIn={true}
             buttonText="Login"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}

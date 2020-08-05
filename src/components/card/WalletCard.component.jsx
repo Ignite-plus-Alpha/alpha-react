@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function WalletCard({loadWallets,emailId,currentUserUserId,walletId,cardHolderName,cardNumber,expiryDate,defaultCard}) {
+export function WalletCard({loadWallets,email,currentUserUserId,walletId,cardHolderName,cardNumber,expiryDate,defaultCard}) {
   const classes = useStyles();
 
 
@@ -32,7 +32,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
 
   const st=".";
   if(walletId===defaultCard)
-  ProfileService.setDefaultWalletByEmailId(emailId,st)
+  ProfileService.setDefaultWalletByEmailId(email,st)
   .then(response=>console.log(response))
   .catch(e=>console.log(e))
   
@@ -47,7 +47,8 @@ const handleDelete=(currentUserUserId,walletId)=>{
 
   return (
     <div>    
-    <Card className={classes.root}>              
+    <Card className={classes.root}>     
+    {console.log(walletId,email,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")}         
        
       <CardContent>         
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
@@ -74,7 +75,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
       </Button>
       </span>
       <span>  
-        <UpdateCardExpiry loadWallets={loadWallets} emailId={emailId} userId={currentUserUserId} expiryDate={expiryDate} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
+        <UpdateCardExpiry loadWallets={loadWallets} email={email} userId={currentUserUserId} expiryDate={expiryDate} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
         </span>
       </div>    
       </CardActions>
