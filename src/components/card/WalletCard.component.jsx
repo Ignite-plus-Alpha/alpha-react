@@ -10,7 +10,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Chip from '@material-ui/core/Chip';
 import ProfileService from '../../services/profile-service'
-import {ActionConformationModal} from '../../components/Modal/action-conformation-modal.component'
 import UpdateCardExpiry from '../../components/Modal/update-card-expiry.component'
 
 const useStyles = makeStyles({

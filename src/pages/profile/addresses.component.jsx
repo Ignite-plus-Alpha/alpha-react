@@ -33,7 +33,7 @@ class Addresses extends React.Component {
             mobile: response.data.mobile,
             defaultAddress: response.data.default_address,
           },
-          console.log(response.data)
+       
         );
       })
       .catch((e) => {
@@ -54,7 +54,7 @@ class Addresses extends React.Component {
   };
 
   render() {
-    console.log(this.state.addresses);
+    
     return (
       <div className="profile-addresses-page">
         <div
@@ -107,7 +107,7 @@ class Addresses extends React.Component {
                 <AddressCard
                   loadAddresses={this.loadAddresses}
                   loadProfileData={this.loadProfileData}
-                  emailId={this.state.userEmail}
+                  emailId={this.props.userEmail}
                   userId={this.props.userId}
                   userId={this.props.userId}
                   addressId={address.address_id}

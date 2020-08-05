@@ -27,7 +27,7 @@ export function AddressCard({ loadAddresses,emailId,userId,addressId,firstName,l
   const classes = useStyles();
 
 const handleDelete=(userId,addressId)=>{
-  console.log("deleted for" ,userId,"*****",addressId)
+ 
 
   const st="."
   if(addressId===defaultAddress)
@@ -48,12 +48,11 @@ const handleDelete=(userId,addressId)=>{
 
 
 
-const handleEdit=(userId,addressId,defaultAddress)=>{
-  console.log("edited for" ,userId,"*****",addressId,"*******",defaultAddress,"*****",emailId)
-}
+
 
   return (
       <div>
+        { console.log("edited for" ,userId,"*****",addressId,"*******",defaultAddress,"*****",emailId)}
     
     <Card className={classes.root}>            
       <CardContent>
