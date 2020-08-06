@@ -7,6 +7,7 @@ import HomeAndLiving from "./item-detail-table/homeAndLiving";
 import "./product-details.styles.scss";
 import Footwear from "./item-detail-table/footwear";
 import Axios from "axios";
+import CustomAlert from './customAlert';
 
 class ProductDetailsPage extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class ProductDetailsPage extends React.Component {
       chosenSize: "na",
       addToCart: false,
       cartId: "",
+      showAlert:false,
     };
   }
 
@@ -56,6 +58,10 @@ class ProductDetailsPage extends React.Component {
       });
   };
 
+  handleAlertClose = () => {
+    this.setState({ showAlert:false });
+  };
+
   handleClick = (event) => {
     console.log("add to Bag");
     {
@@ -68,7 +74,8 @@ class ProductDetailsPage extends React.Component {
       window.location = "/signup";
     }
     if (this.state.size !== null) {
-      if (this.state.chosenSize === "na") alert("Select a size.");
+      if (this.state.chosenSize === "na") 
+        this.setState({showAlert:true});
       else {
         this.checkInBag();
       }
@@ -250,6 +257,7 @@ class ProductDetailsPage extends React.Component {
                 <></>
               )}
             </div>
+            
             <div class="ui divider"></div>
             <div className="specification-table" style={{ width: "500px" }}>
               {this.renderSwitchCategory(this.state.categoryId)}
@@ -260,7 +268,7 @@ class ProductDetailsPage extends React.Component {
             <span>
               <button
                 class="ui teal button"
-                style={{ margin: "7%" }}
+                style={{ margin: "7%",minWidth:200}}
                 onClick={this.handleClick}
               >
                 {" "}
@@ -270,6 +278,7 @@ class ProductDetailsPage extends React.Component {
           </div>
           {console.log(this.state.chosenSize)}
         </div>
+        {this.state.showAlert && <CustomAlert handleAlertClose={this.handleAlertClose} showAlert={this.state.showAlert}/>}
       </div>
     );
   }

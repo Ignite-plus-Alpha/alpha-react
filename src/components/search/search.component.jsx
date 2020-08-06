@@ -10,19 +10,33 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { fade } from '@material-ui/core/styles/colorManipulator';
 import { capitalize } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    height: 250,
-    marginTop: 25,
+    height: "auto",
+    //marginTop: 100,
     marginLeft: 100,
     textTransform: "capitalize",
+    // position: 'relative',
+    // borderRadius: theme.shape.borderRadius ,
+    // backgroundColor: fade(theme.palette.common.white, 0.15),
+    // '&:hover': {
+    //   backgroundColor: fade(theme.palette.common.white, 0.25),
+    // },
+    // marginRight: theme.spacing.unit * 2,
+    // marginLeft: 100,
+    // width:'100%',
+    // [theme.breakpoints.up('sm')]: {
+    //   marginLeft: theme.spacing.unit * 5,
+    //   width: 400,}
   },
   input: {
     display: "flex",
     padding: 0,
+    height:"30px"
   },
   valueContainer: {
     display: "flex",
@@ -53,7 +67,7 @@ const styles = (theme) => ({
   divider: {
     height: theme.spacing(2),
   },
-});
+ });
 
 function NoOptionsMessage(props) {
   return (

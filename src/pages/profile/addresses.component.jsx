@@ -67,7 +67,7 @@ class Addresses extends React.Component {
           }}
         >
           <span>
-            <h2>Saved ADDRESSES</h2>
+            <h2>SAVED ADDRESSES</h2>
           </span>
           <AddAddressModal
             userId={this.props.userId}

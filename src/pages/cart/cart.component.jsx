@@ -31,7 +31,7 @@ class CartDirectory extends React.Component {
   };
 
   render() {
-    if (!localStorage.getItem("userId")) return <Redirect to="/signup" />;
+    if (!localStorage.getItem("userId")) return <Redirect push to={{pathname: '/login',state: { from: this.props.location },}}/>;
     if (this.state.isLoaded)
       return (
         <div>

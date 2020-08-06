@@ -78,10 +78,11 @@ class AddAddressModal extends Component {
 
     return (
       <div>
+        &nbsp;&nbsp;&nbsp;&nbsp;
         <button
           onClick={this.show("blurring")}
           class="ui teal button"
-          style={{ position: "right", minWidth: "250px" }}
+          style={{ position: "right", minWidth: "230px" }}
         >
           <i  className="fa fa-home fa-lg"></i>&nbsp;&nbsp;&nbsp;
           <b>ADD NEW ADDRESS</b>

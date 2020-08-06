@@ -64,6 +64,8 @@ class ProfileDetailPage extends React.Component {
     
       return (
         <div className="profilePage">
+          <h2>PROFILE INFORMATION</h2>
+          <br/><br/>
           <ProfileDetailCard
             email={userEmail}
             firstName={firstName}
@@ -71,6 +73,7 @@ class ProfileDetailPage extends React.Component {
             mobile={mobile}
             loadData={this.loadData}
           />
+          
         </div>
       );
 

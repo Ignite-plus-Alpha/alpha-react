@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `0px solid ${theme.palette.divider}`,
+    width:200
   },
 }));
 
@@ -81,7 +82,7 @@ export default function Profile(props) {
         <Tab label="Addresses" {...a11yProps(1)} />
         <Tab label="SaveCards" {...a11yProps(2)} />
       </Tabs>
-      <div className="tabs" style={{ marginLeft: "5%", minWidth: "40%" }}>
+      <div className="tabs" style={{ marginLeft: "10%", minWidth: "30%" ,fontStyle:"bold"}}>
         <TabPanel value={value} index={0}>
           <ProfileDetailPage userEmail={props.email} />
         </TabPanel>

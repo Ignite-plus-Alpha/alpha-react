@@ -71,7 +71,7 @@ class Wallets extends React.Component {
           }}
         >
           <span>
-            <h2>Saved Cards</h2>
+            <h2>SAVED CARDS</h2>
           </span>
           <AddCardModal
             UserId={this.props.userId}

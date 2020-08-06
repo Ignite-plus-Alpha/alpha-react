@@ -67,7 +67,7 @@ render() {
 
       <Modal dimmer={dimmer} open={open} onClose={this.close} style={{padding:"3%", width:"35%"}}>      
       <form className="ui form" onSubmit={this.handleSubmit}>
-            <h4>Edit Profil</h4>
+            <h4>Edit Profile</h4>
             <div className="field">
               <label>First Name</label>
               <div className="fields">

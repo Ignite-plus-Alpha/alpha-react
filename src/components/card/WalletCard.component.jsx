@@ -54,13 +54,13 @@ const handleDelete=(currentUserUserId,walletId)=>{
       {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:null} Card Details     
              </Typography>
         <Divider style={{marginBottom:"1%"}}/>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         Card Holder Name&nbsp;:&nbsp;{cardHolderName}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         Card Number &nbsp;:&nbsp;{cardNumber=cardNumber.toString().replace(/\d(?=\d{4})/g, "*")}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         Expiry&nbsp;Date&nbsp;:&nbsp;{expiryDate}
         </Typography>
  

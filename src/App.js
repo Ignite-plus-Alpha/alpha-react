@@ -5,7 +5,7 @@ import TabPanel from "./pages/profile/profile.component";
 import Wishlist from "./pages/wishlist/wishlist.component";
 import Cart from "./pages/cart/cart.component";
 import { Route, Switch } from "react-router-dom";
-import { Header } from "./components/header/header.component";
+import  Header  from "./components/header/header.component";
 import AboutUs from "./pages/AboutUs/aboutus.component";
 import Signup from "./pages/signup/signup";
 import { Footer } from "./components/footer/footer.components";

@@ -27,16 +27,16 @@ export default function ProfileDetailCard({email,firstName,lastName,mobile,loadD
           Profile Details
         </Typography>
         <Divider style={{marginBottom:"3%"}}/>
-        <Typography className={classes.pos} color="textSecondary">
-          email&nbsp;:&nbsp;{email}
+        <Typography className={classes.pos} color="bold" >
+          Email&nbsp;:&nbsp;{email}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         First&nbsp;Name&nbsp;:&nbsp;{firstName}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         Last&nbsp;Name&nbsp;:&nbsp;{lastName}
         </Typography>
-        <Typography className={classes.pos} color="textSecondary">
+        <Typography className={classes.pos} color="bold">
         Mobile&nbsp;Number&nbsp;:&nbsp;{mobile}
         </Typography>
       </CardContent>

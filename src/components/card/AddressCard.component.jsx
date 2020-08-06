@@ -60,13 +60,13 @@ const handleDelete=(userId,addressId)=>{
      {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:null} Address Details     
         </Typography>
        <Divider style={{marginBottom:"1%"}}/>         
-      <Typography className={classes.pos} color="textSecondary">
+      <Typography className={classes.pos} color="bold">
        {firstName}&nbsp;{lastName} 
        </Typography>
-       <Typography className={classes.pos} color="textSecondary">
+       <Typography className={classes.pos} color="bold">
        {addressLine1}&nbsp;{addressLine2}<br/>{city},&nbsp;{state},&nbsp;{country}<br/>zipcode : {zipcode}
        </Typography>
-       <Typography className={classes.pos} color="textSecondary">
+       <Typography className={classes.pos} color="bold">
        mobile : {mobile}
        </Typography>
         </CardContent>
