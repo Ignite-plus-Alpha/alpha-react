@@ -6,6 +6,7 @@ import GoogleLogin from "react-google-login";
 import profileService from "../../services/profile-service";
 import Axios from "axios";
 import { Divider } from "@material-ui/core";
+import {Redirect} from 'react-router-dom'
 import { withRouter, useHistory } from "react-router-dom";
 
 
@@ -27,7 +28,8 @@ const styles = (theme) => ({
   constructor(props) {
     super(props);
     this.state={
-      isUserId:false
+      isUserId:false,
+      redirect:false
     }
  
   }
@@ -36,11 +38,15 @@ const styles = (theme) => ({
   responseGoogle = (response) => {
     console.log(response);
     this.props.setEmail(response.profileObj.email)
+  
+    sessionStorage.setItem('userId',response.profileObj)
+    localStorage.setItem('imageUrl',response.profileObj.imageUrl)
+    localStorage.setItem('firstName',response.Ot.sW)
+    localStorage.setItem('lastName',response.Ot.sU)
     profileService.userRegistration(response.profileObj.email)
     .then(response=>(
-      this.props.setUserId(response.data) ,
-      localStorage.setItem("userId",response.data),
-      this.setState({isUserId:true})
+      this.props.setUserId(response.data),
+      this.setState({redirect:true})  
     ))
     if(this.state.isUserId){
     const data={userId:localStorage.getItem("userId")}
@@ -51,7 +57,31 @@ const styles = (theme) => ({
     }
   };
 
+  // responseGoogle = (response) => {
+  //   console.log(response);
+  //   this.props.setEmail(response.profileObj.email)
+  
+  //   sessionStorage.setItem('userId',response.profileObj)
+  //   localStorage.setItem('imageUrl',response.profileObj.imageUrl)
+  //   localStorage.setItem('firstName',response.Ot.sW)
+  //   localStorage.setItem('lastName',response.Ot.sU)
+  //   profileService.userRegistration(response.profileObj.email)
+  //   .then(response=>(
+  //     this.props.setUserId(response.data),
+  //     this.setState({redirect:true})  
+  //   ))
+
+  // };
+
+
   render() {
+
+
+    if(this.state.redirect){
+  
+      return(<Redirect to={'/'}/>)
+    }  
+ 
     console.log(this.props,"!!!")
     return (
       <center>
