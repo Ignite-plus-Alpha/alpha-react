@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import "./confirmation.styles.scss";
-import PayWithPayPal from "./PayWithPayPal";
+import PayPalBtn from "./PayWithPayPal";
 
 const styles = {
   card: {
@@ -91,11 +91,10 @@ class Confirmation extends Component {
             <br />
             Total Items:{this.state.total_quantity}
           </h3>
-          <PayWithPayPal
-                    total = {this.state.total_price}
-                    items={this.state.total_quantity}
+          <PayPalBtn
+                    amount = {this.state.total_price}
                     currency = {'INR'}
-                    onSuccess={this.paymentHandle}/>
+                    onSuccess={this.paymentHandler}/>
         </center>
         </div>
       </div>

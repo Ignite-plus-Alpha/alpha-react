@@ -31,7 +31,7 @@ function PayWithPayPal (props) {
                     console.error('ERROR',err);
                 },
             })
-            .render(paypalRef.current);
+             .render(paypalRef.current);
     }, [items]);
 
     if (paidFor) {
@@ -58,7 +58,6 @@ function PayWithPayPal (props) {
                     //     {item.name} - Rs. {item.value}
                     // </ListGroupItem>)}
             </ListGroup> */}
-            <div>Total - Rs. {total}</div>
             <div ref={paypalRef} />
         </div>
     )
