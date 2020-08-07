@@ -27,8 +27,8 @@ export default function ProfileDetailCard({email,firstName,lastName,mobile,loadD
           Profile Details
         </Typography>
         <Divider style={{marginBottom:"3%"}}/>
-        <Typography className={classes.pos} color="textSecondary">
-          email&nbsp;:&nbsp;{email}
+        <Typography className={classes.pos} color="Bold">
+          Email&nbsp;:&nbsp;{email}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
         First&nbsp;Name&nbsp;:&nbsp;{firstName}

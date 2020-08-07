@@ -1,11 +1,14 @@
 .collection-item {
   width: 22%;
   display: flex;
-  flex-direction: column;
+  flex-direction:column;
   height: 400px;
-  align-items: center;
+ align-items: center;
   margin-bottom: 5vw;
-  // margin-right: 2vw;
+  justify-self: start;
+
+  
+  
 
   .image-item {
     width: 100%;
@@ -14,6 +17,7 @@
     background-size: cover;
     background-position: center;
     margin-bottom: 0px;
+    flex-wrap: wrap;
   }
 
   .collection-footer {

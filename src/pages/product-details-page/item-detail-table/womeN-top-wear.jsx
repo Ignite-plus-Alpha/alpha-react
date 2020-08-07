@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
 class WomenTopWear extends Component {
 
     constructor(props) {
         super(props);
         
     }
+    
     
     render() {
         console.log(this.props.description)

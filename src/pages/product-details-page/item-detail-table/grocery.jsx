@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
+
+
+
 class Grocery extends Component {
 
     constructor(props) {
-        super(props);
-        
+        super(props);    
     }
-    
+     
     render() {
+        
         console.log(this.props.description)
         return (
+           
             <div style={{width:"60%" ,marginLeft:"30px"}}>      
                 <table class="ui very basic table">
                 <tbody>
@@ -19,12 +24,11 @@ class Grocery extends Component {
                     <td> {this.props.description.quantityt}</td>      
                     </tr>
                 </tbody>
-                </table>                               
+                </table>   
+                                      
             </div>
+      
         );
     }
 }
-
-
-
 export default Grocery;
