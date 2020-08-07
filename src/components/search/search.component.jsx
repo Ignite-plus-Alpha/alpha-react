@@ -240,7 +240,7 @@ class Search extends React.Component {
           }))}
           components={components}
           onChange={this.handleChange()}
-          placeholder="Search category here..."
+          placeholder="Search.."
           isClearable
         />
       </div>

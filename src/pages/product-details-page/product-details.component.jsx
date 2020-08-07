@@ -70,7 +70,7 @@ class ProductDetailsPage extends React.Component {
   };
 
   addToBag = () => {
-    if (!localStorage.getItem("userId")) {
+    if (!localStorage.getItem("userId")||localStorage.getItem("userId")==="") {
       window.location = "/signup";
     }
     if (this.state.size !== null) {
