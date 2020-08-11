@@ -9,3 +9,9 @@ button.google-signin-button {
 button.google-signin-button>div {
     margin-left: 40%;
 }
+.sign-in-form {
+    margin-top: 10%;
+    margin-right: auto;
+    margin-bottom: 0;
+    margin-left: auto;
+}
