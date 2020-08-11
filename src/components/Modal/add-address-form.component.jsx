@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
 import Switch from '@material-ui/core/Switch';
-
+import   RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
 
 class AddAddressModal extends Component {
 
@@ -17,7 +17,8 @@ class AddAddressModal extends Component {
             country: "",
             zipcode:"",
             checkedB:"false",
-            AddressId:""
+            AddressId:"",
+            addressType:"home"
           };        
     }
      handleToggleChange = (event) => {
@@ -37,6 +38,11 @@ class AddAddressModal extends Component {
         this.setState({[name]:value})
       };
 
+          //handle field change
+   handleTypeChange = (type) => {
+    this.setState({addressType:type})
+  };
+
       //handleFormSubmit
     handleSubmit= event => {
         event.preventDefault();
@@ -47,12 +53,14 @@ class AddAddressModal extends Component {
           city:this.state.city,
           zipcode:this.state.zipcode,
           state:this.state.state,
-          country:this.state.country  
+          country:this.state.country,
+          address_type:this.state.addressType  
         }
         if(this.state.checkedB===true)
         console.log("set as deafult",this.props.email)
         else console.log("no")
         // profileService.setDefaultAddressByEmailId()
+        console.log(this.state)
 
         profileService.createAddress(data)
         .then(response=>this.setState({ AddressId: response.data.address_id }))
@@ -179,6 +187,7 @@ class AddAddressModal extends Component {
                 />
               </div>
             </div>
+            <RadioButtonsGroup handleTypeChange={this.handleTypeChange}/>
             <div>Make default addresss</div>
             <Switch
         checked={state.checkedB}

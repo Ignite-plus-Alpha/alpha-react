@@ -46,7 +46,7 @@ class Addresses extends React.Component {
       .then((response) => {
         this.setState({
           addresses: response.data,
-        });
+        },console.log(response.data));
       })
       .catch((e) => {
         console.log(e);
@@ -90,6 +90,7 @@ class Addresses extends React.Component {
                   firstName={this.state.firstName}
                   lastName={this.state.lastName}
                   mobile={this.state.mobile}
+                  addressType={address.address_type}
                   addressLine1={address.address_line1}
                   addressLine2={address.address_line2}
                   city={address.city}
@@ -115,6 +116,7 @@ class Addresses extends React.Component {
                   lastName={this.state.lastName}
                   mobile={this.state.mobile}
                   addressLine1={address.address_line1}
+                  addressType={address.address_type}
                   addressLine2={address.address_line2}
                   city={address.city}
                   state={address.state}

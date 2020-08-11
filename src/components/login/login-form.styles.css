@@ -1,0 +1,11 @@
+button.google-signin-button {
+    align-content: center;
+    display: flex;
+    width: 400px;
+    margin-left: 1px;
+    padding-left: 50px;
+    align-items: center;
+}
+button.google-signin-button>div {
+    margin-left: 40%;
+}

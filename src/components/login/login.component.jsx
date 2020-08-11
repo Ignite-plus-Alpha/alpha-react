@@ -8,6 +8,7 @@ import Axios from "axios";
 import { Divider } from "@material-ui/core";
 import {Redirect} from 'react-router-dom'
 import { withRouter, useHistory } from "react-router-dom";
+import './login-form.styles.css'
 
 
 const styles = (theme) => ({
@@ -136,15 +137,15 @@ const styles = (theme) => ({
             Sign In
           </Button>
         </span><br/>
-        <Divider/>
+       <Divider/>
         <div style={{fontSize:16}}>
         <br/>
-        Sign in with Google
+       
         <GoogleLogin
         className="google-signin-button"
             clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
              //isSignedIn={true}
-            buttonText="Login"
+            buttonText="SIGN IN"
             onSuccess={this.responseGoogle}
             onFailure={this.responseGoogle}
             cookiePolicy={"single_host_origin"}   

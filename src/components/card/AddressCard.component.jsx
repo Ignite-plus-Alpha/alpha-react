@@ -11,6 +11,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Chip from '@material-ui/core/Chip';
 import ProfileService from '../../services/profile-service'
 import UpdateAddressForm from '../Modal/update-address-form.component';
+import LocationOn from '@material-ui/icons/LocationOn';
+import './location-chip.styles.css'
 
 
 const useStyles = makeStyles({
@@ -23,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function AddressCard({ loadAddresses,emailId,userId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,city,state,country,zipcode,defaultAddress}){
+export function AddressCard({ loadAddresses,emailId,userId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,addressType,city,state,country,zipcode,defaultAddress}){
   const classes = useStyles();
 
 const handleDelete=(userId,addressId)=>{
@@ -46,10 +48,6 @@ const handleDelete=(userId,addressId)=>{
 
 
 
-
-
-
-
   return (
       <div>
         { console.log("edited for" ,userId,"*****",addressId,"*******",defaultAddress,"*****",emailId)}
@@ -59,6 +57,22 @@ const handleDelete=(userId,addressId)=>{
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
      {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:null} Address Details     
         </Typography>
+        {/* <div className="location-type" style={{position: "absolute", right:" 10px"}}> */}
+        <Chip
+        icon={<LocationOn />}
+        label={addressType}       
+        className={classes.chip}
+        color="primary"    
+        position= "relative"
+        left= "20px"
+        size="small"
+        
+        
+
+       
+      />
+      {/* </div> */}
+     
        <Divider style={{marginBottom:"1%"}}/>         
       <Typography className={classes.pos} color="bold">
        {firstName}&nbsp;{lastName} 
@@ -77,9 +91,7 @@ const handleDelete=(userId,addressId)=>{
         Delete
       </Button>
     
-      <UpdateAddressForm loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />
-       
-  
+      <UpdateAddressForm addressType={addressType} loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />       
       </div>
     
       </CardActions>

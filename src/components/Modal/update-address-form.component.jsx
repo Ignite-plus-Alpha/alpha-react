@@ -4,6 +4,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import Switch from '@material-ui/core/Switch';
 import profileService from "../../services/profile-service";
+import   RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
 
 
 class UpdateAddressForm extends Component {
@@ -17,13 +18,19 @@ class UpdateAddressForm extends Component {
       state: this.props.state,
       country: this.props.country,
       zipcode:this.props.zipcode,
+      addressType:this.props.addressType,
       checkedB: "false",
    
       }
+      console.log("********",this.state)
   }
 
 show = (dimmer) => () => this.setState({ dimmer, open: true })
 close = () => this.setState({ open: false })
+          //handle field change
+          handleTypeChange = (type) => {
+            this.setState({addressType:type})
+          };
 
     //handle field change
     handleChange = event  => {
@@ -42,7 +49,8 @@ close = () => this.setState({ open: false })
         city:this.state.city,
         zipcode:this.state.zipcode,
         state:this.state.state,
-        country:this.state.country            
+        country:this.state.country,   
+        address_type:   this.state.addressType      
       }   
   
       console.log(this.props.userId,"******",this.props.addressId,"************",data )
@@ -169,6 +177,7 @@ render() {
                 />
               </div>
             </div>
+            <RadioButtonsGroup handleTypeChange={this.handleTypeChange} addressType={this.props.addressType}/>
             <div>Make default addresss</div>
             <Switch
             checked={state.checkedB}

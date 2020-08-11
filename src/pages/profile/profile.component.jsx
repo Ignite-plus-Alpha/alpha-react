@@ -82,13 +82,12 @@ export default function Profile(props) {
         <Tab label="Addresses" {...a11yProps(1)} />
         <Tab label="SaveCards" {...a11yProps(2)} />
       </Tabs>
-      <div    style={{
+      <div   style={{
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-around",
             marginLeft: "4%",
           }}> <img  className="option" class="ui small circular image" src={localStorage.getItem('imageUrl')}/><b><i>Welcome &nbsp;{localStorage.getItem('firstName')} &nbsp;{localStorage.getItem('lastName')} &nbsp;!!</i></b></div>
-   
       <div className="tabs" style={{ marginLeft: "10%", minWidth: "30%" ,fontStyle:"bold"}}>
         <TabPanel value={value} index={0}>
           <ProfileDetailPage userEmail={props.email} />
@@ -102,5 +101,4 @@ export default function Profile(props) {
       </div>
     </div>
   );
-
 }
