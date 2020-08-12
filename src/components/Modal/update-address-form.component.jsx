@@ -61,8 +61,7 @@ close = () => this.setState({ open: false })
         if (this.state.checkedB === true) {
           profileService
             .setDefaultAddressByEmailId(this.props.emailId, this.props.addressId)
-            .then((response) => console.log(response))
-            .then(this.props.loadAddresses)
+            .then(this.props.loadProfileData)
             .catch((e) => console.log(e));
         }
       })

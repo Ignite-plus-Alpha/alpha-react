@@ -40,12 +40,7 @@ class AddCardModal extends Component {
     };
     console.log(this.props)
 
-    // profileService.createWallet(data)
-    // .then(response=>console.log(response.data))
-    // .then(this.props.loadWallets)
-    // .catch(e=>console.log(e))
-
-    profileService
+      profileService
       .createWallet(data)
       .then((response) => this.setState({ cardId: response.data.wallet_id }))
       .then(() => {
@@ -54,10 +49,11 @@ class AddCardModal extends Component {
           profileService
             .setDefaultWalletByEmailId(this.props.email, this.state.cardId)
             .then((response) => console.log(response))
-            .then(this.props.loadWallets)
             .catch((e) => console.log(e));
         }
       })
+      .then(this.props.loadWallets)
+      .then(this.props.loadProfileData)
       .catch((e) => console.log(e));
     this.setState({
       cardHolderName: "",

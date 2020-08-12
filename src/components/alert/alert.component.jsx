@@ -6,10 +6,11 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import { withStyles } from '@material-ui/core/styles';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 
-const Alert = (props) =>{
+const CustomAlert = (props) =>{
     const DialogContent = withStyles(theme => ({
         root: {
-          width:300
+          width:400,
+       padding:20
         },
       }))(MuiDialogContent);
 return (
@@ -19,7 +20,7 @@ return (
         >
           <DialogContent>
             <DialogContentText>  
-             Select a size
+             {props.message}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -32,4 +33,4 @@ return (
   </div>
 );
 }
-export default Alert;
+export default CustomAlert;

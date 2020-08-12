@@ -47,7 +47,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
   return (
     <div>    
     <Card className={classes.root}>     
-    {console.log(walletId,email,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")}         
+         
        
       <CardContent>         
       <Typography variant="h5"  style={{marginBottom:"2%"}}>

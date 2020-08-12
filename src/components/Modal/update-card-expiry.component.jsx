@@ -52,6 +52,7 @@ handleToggleChange = (event) => {
             .setDefaultWalletByEmailId(this.props.email, this.props.walletId)
             .then((response) => console.log(response,"^^^^^^^^^^^"))
             .then(this.props.loadWallets)
+             .then(this.props.loadProfileData)
             .catch((e) => console.log(e));
         }
       })

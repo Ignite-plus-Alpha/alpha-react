@@ -30,7 +30,16 @@ class AddAddressModal extends Component {
 
 
   show = (dimmer) => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
+  close = () => this.setState({ open: false,  
+    addressLine1: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  country: "",
+  zipcode:"",
+  checkedB:"false",
+  AddressId:"",
+  addressType:"home" });
 
     //handle field change
    handleChange = event  => {
@@ -71,6 +80,7 @@ class AddAddressModal extends Component {
               .setDefaultAddressByEmailId(this.props.email, this.state.AddressId)
               .then((response) => console.log(response))
               .then(this.props.loadAddresses)
+              .then(this.props.loadProfileData)
               .catch((e) => console.log(e));
           }
         })

@@ -16,7 +16,7 @@ class Grocery extends Component {
                 <tbody>
                     <tr>
                     <td>Quantity</td>
-                    <td> {this.props.description.quantityt}</td>      
+                    <td> {this.props.description.quantity}</td>      
                     </tr>
                 </tbody>
                 </table>                               

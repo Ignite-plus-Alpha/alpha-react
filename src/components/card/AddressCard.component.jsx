@@ -13,6 +13,9 @@ import ProfileService from '../../services/profile-service'
 import UpdateAddressForm from '../Modal/update-address-form.component';
 import LocationOn from '@material-ui/icons/LocationOn';
 import './location-chip.styles.css'
+import Alert from "../alert/alert.component"
+import TextButtons from '../../components/text-button/text-button.component'
+import OutlinedChips from '../../components/chip/chip.component'
 
 
 const useStyles = makeStyles({
@@ -25,18 +28,15 @@ const useStyles = makeStyles({
   },
 });
 
-export function AddressCard({ loadAddresses,emailId,userId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,addressType,city,state,country,zipcode,defaultAddress}){
+export function AddressCard({ loadProfileData,loadAddresses,emailId,userId,addressId,firstName,lastName,mobile,addressLine1,addressLine2,addressType,city,state,country,zipcode,defaultAddress}){
   const classes = useStyles();
+  const [showAlert, setShowAlert] = React.useState(false)
 
-const handleDelete=(userId,addressId)=>{
- 
+const handleDelete=(userId,addressId)=>{ 
 
-  const st="."
-  if(addressId===defaultAddress)
-  ProfileService.setDefaultAddressByEmailId(emailId,st)
-  .then(response=>console.log(response))
-  .catch(e=>console.log(e))
-
+   if(addressId===defaultAddress)
+  setShowAlert(true);
+  else
   ProfileService.
   deleteAddressByUserIdAddressId(userId,addressId)
   .then(response=>console.log(response))
@@ -45,8 +45,17 @@ const handleDelete=(userId,addressId)=>{
     console.log(e)
   })
 }
+const handleAlertClose = () => {
+  setShowAlert(false);
+};
 
-
+// const makeDefault=(emailId,addressId)=>{ 
+//   // ProfileService.setDefaultAddressByEmailId(emailId,addressId)
+//   //             .then((response) => console.log(response))
+//   //             .then(loadAddresses)
+//   //             .catch((e) => console.log(e));
+//   console.log(emailId,addressId)
+// }
 
   return (
       <div>
@@ -54,9 +63,12 @@ const handleDelete=(userId,addressId)=>{
     
     <Card className={classes.root}>            
       <CardContent>
+        <div className="card header">
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
-     {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:null} Address Details     
+     {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips/> } Address Details    
+     
         </Typography>
+        </div>
         {/* <div className="location-type" style={{position: "absolute", right:" 10px"}}> */}
         <Chip
         icon={<LocationOn />}
@@ -65,10 +77,7 @@ const handleDelete=(userId,addressId)=>{
         color="primary"    
         position= "relative"
         left= "20px"
-        size="small"
-        
-        
-
+        size="small"     
        
       />
       {/* </div> */}
@@ -91,11 +100,17 @@ const handleDelete=(userId,addressId)=>{
         Delete
       </Button>
     
-      <UpdateAddressForm addressType={addressType} loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  />       
-      </div>
-    
+      <UpdateAddressForm addressType={addressType} loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  loadProfileData={loadProfileData}/>       
+      </div>    
       </CardActions>
     </Card>
+    {showAlert && (
+          <Alert
+            handleAlertClose={handleAlertClose}
+            message={"set another card as default to proceed with deletion"}
+            showAlert={showAlert}
+          />
+        )}
     </div>
   );
 }
