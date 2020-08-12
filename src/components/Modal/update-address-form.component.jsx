@@ -22,7 +22,7 @@ class UpdateAddressForm extends Component {
       checkedB: "false",
    
       }
-      console.log("********",this.state)
+     
   }
 
 show = (dimmer) => () => this.setState({ dimmer, open: true })
@@ -53,7 +53,7 @@ close = () => this.setState({ open: false })
         address_type:   this.state.addressType      
       }   
   
-      console.log(this.props.userId,"******",this.props.addressId,"************",data )
+     
       profileService.updateAddress(this.props.userId,this.props.addressId,data)
       .then(response=>console.log(response.data))
       .then(() => {

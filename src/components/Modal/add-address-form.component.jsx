@@ -4,6 +4,8 @@ import profileService from "../../services/profile-service";
 import Switch from '@material-ui/core/Switch';
 import   RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
 
+import Alert from "../alert/alert.component"
+
 class AddAddressModal extends Component {
 
     constructor(props) {
@@ -18,9 +20,17 @@ class AddAddressModal extends Component {
             zipcode:"",
             checkedB:"false",
             AddressId:"",
-            addressType:"home"
+            addressType:"home",
+            ShowAlert:false
+           
           };        
     }
+
+  
+
+     handleAlertClose = () => {
+      this.setState({showAlert:false});
+    };
      handleToggleChange = (event) => {
       this.setState({ [event.target.name]: event.target.checked });
       console.log( event.target.checked)
@@ -29,7 +39,12 @@ class AddAddressModal extends Component {
     };
 
 
-  show = (dimmer) => () => this.setState({ dimmer, open: true });
+  show = (dimmer) => () => {
+    console.log(this.props.addressCounter,"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    if(this.props.addressCounter<5)
+    this.setState({ dimmer, open: true });
+    else this.setState({showAlert:true})
+  }
   close = () => this.setState({ open: false,  
     addressLine1: "",
   addressLine2: "",
@@ -235,6 +250,13 @@ class AddAddressModal extends Component {
             </div>
           </form>
         </Modal>
+        {this.state.showAlert && (
+          <Alert
+            handleAlertClose={this.handleAlertClose}
+            message={"you have reached your max address storage limit to add a new address delete an existing one"}
+            showAlert={this.state.showAlert}
+          />
+        )}
       </div>
     );
   }

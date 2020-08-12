@@ -12,18 +12,16 @@ const styles = (theme) => ({
     
     flexWrap: "wrap"
   },
-//   chip: {
-//     margin: theme.spacing.unit
-//   }
   
 });
 
 
-function handleClick() {
-  alert("You clicked the Chip."); // eslint-disable-line no-alert
-}
+
 
 function OutlinedChips(props) {
+  function handleClick() {
+  alert("You clicked the Chip."); // eslint-disable-line no-alert
+}
   const { classes } = props;
   return (
     <span className={classes.root}>

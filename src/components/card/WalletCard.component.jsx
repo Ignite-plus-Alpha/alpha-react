@@ -13,6 +13,8 @@ import ProfileService from '../../services/profile-service'
 import UpdateCardExpiry from '../../components/Modal/update-card-expiry.component'
 import Alert from "../alert/alert.component"
 
+import OutlinedChips from '../../components/chip/chip.component'
+
 const useStyles = makeStyles({
   root: {
     minWidth: 10,
@@ -54,7 +56,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
     <Card className={classes.root}>      
       <CardContent>         
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
-      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:null} Card Details     
+      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips/>} Card Details     
              </Typography>
         <Divider style={{marginBottom:"1%"}}/>
         <Typography className={classes.pos} color="bold">

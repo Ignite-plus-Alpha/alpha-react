@@ -49,17 +49,17 @@ const handleAlertClose = () => {
   setShowAlert(false);
 };
 
-// const makeDefault=(emailId,addressId)=>{ 
-//   // ProfileService.setDefaultAddressByEmailId(emailId,addressId)
-//   //             .then((response) => console.log(response))
-//   //             .then(loadAddresses)
-//   //             .catch((e) => console.log(e));
-//   console.log(emailId,addressId)
-// }
+const makeDefault=(emailId,addressId)=>{ 
+  // ProfileService.setDefaultAddressByEmailId(emailId,addressId)
+  //             .then((response) => console.log(response))
+  //             .then(loadProfileData)
+  //             .catch((e) => console.log(e));
+   console.log(emailId,addressId,"make default....................................")
+}
 
   return (
       <div>
-        { console.log("edited for" ,userId,"*****",addressId,"*******",defaultAddress,"*****",emailId)}
+        
     
     <Card className={classes.root}>            
       <CardContent>
@@ -98,8 +98,7 @@ const handleAlertClose = () => {
         <Button variant="outlined" color="secondary"
        startIcon={<DeleteIcon />}  onClick={()=>handleDelete(userId,addressId)}>        
         Delete
-      </Button>
-    
+      </Button>    
       <UpdateAddressForm addressType={addressType} loadAddresses={loadAddresses} userId={userId} addressId={addressId} emailId={emailId} addressLine1={addressLine1} addressLine2={addressLine2} city={city} state={state} country={country} zipcode={zipcode}  loadProfileData={loadProfileData}/>       
       </div>    
       </CardActions>

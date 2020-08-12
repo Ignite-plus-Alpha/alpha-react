@@ -15,6 +15,7 @@ class Addresses extends React.Component {
       defaultAddress: "",
       default: "",
       otherAddresses: "",
+      addressCounter:""
     };
   }
 
@@ -46,7 +47,8 @@ class Addresses extends React.Component {
       .then((response) => {
         this.setState({
           addresses: response.data,
-        },console.log(response.data));
+         addressCounter:response.data.length
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -54,6 +56,7 @@ class Addresses extends React.Component {
   };
 
   render() {    
+    console.log(this.state)
     if ( this.state.addresses.length === 0)
     return (
       <div className="no-address">
@@ -62,6 +65,7 @@ class Addresses extends React.Component {
             email={this.props.userEmail}
             loadAddresses={this.loadAddresses}
             loadProfileData={this.loadProfileData}
+            addressCounter={this.state.addressCounter}
           />
         <div className="NoAddress">       
             <img src={LocationImage} style={{width:"auto",height:"25vw"}}/>          
@@ -83,11 +87,14 @@ class Addresses extends React.Component {
           <span>
             <h2>SAVED ADDRESSES</h2>
           </span>
-          <AddAddressModal
+          
+         <AddAddressModal
             userId={this.props.userId}
             email={this.props.userEmail}
             loadAddresses={this.loadAddresses}
             loadProfileData={this.loadProfileData}
+            addressCounter={this.state.addressCounter}
+            
           />
    
         </div>
@@ -114,6 +121,7 @@ class Addresses extends React.Component {
                   country={address.country}
                   zipcode={address.zipcode}
                   defaultAddress={this.state.defaultAddress}
+            
                 />
               );
           })}
