@@ -59,6 +59,7 @@ class Wallets extends React.Component {
             UserId={this.props.userId}
             email={this.props.userEmail}
             loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
           />
         <div className="No-wallet-placeholder"> 
           
@@ -85,6 +86,7 @@ class Wallets extends React.Component {
             UserId={this.props.userId}
             email={this.props.userEmail}
             loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
           />
         </div>
         <h5>DEFAULT CARD</h5>

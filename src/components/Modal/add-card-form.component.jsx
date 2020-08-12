@@ -18,7 +18,10 @@ class AddCardModal extends Component {
   }
 
   show = (dimmer) => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
+  close = () => this.setState({ open: false,    cardHolderName: "",
+  cardNumber: "",
+  expirydate: "",
+  upiid: "" });
   handleToggleChange = (event) => {
     this.setState({ [event.target.name]: event.target.checked });
   };
@@ -48,12 +51,11 @@ class AddCardModal extends Component {
         if (this.state.checkedA === true) {
           profileService
             .setDefaultWalletByEmailId(this.props.email, this.state.cardId)
-            .then((response) => console.log(response))
+            .then(this.props.loadProfileData)
             .catch((e) => console.log(e));
         }
       })
       .then(this.props.loadWallets)
-      .then(this.props.loadProfileData)
       .catch((e) => console.log(e));
     this.setState({
       cardHolderName: "",

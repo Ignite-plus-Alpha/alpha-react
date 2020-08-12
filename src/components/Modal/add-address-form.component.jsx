@@ -39,7 +39,7 @@ class AddAddressModal extends Component {
   zipcode:"",
   checkedB:"false",
   AddressId:"",
-  addressType:"home" });
+  addressType:"" });
 
     //handle field change
    handleChange = event  => {
@@ -79,7 +79,6 @@ class AddAddressModal extends Component {
             profileService
               .setDefaultAddressByEmailId(this.props.email, this.state.AddressId)
               .then((response) => console.log(response))
-              .then(this.props.loadAddresses)
               .then(this.props.loadProfileData)
               .catch((e) => console.log(e));
           }

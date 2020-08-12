@@ -107,7 +107,7 @@ const handleAlertClose = () => {
     {showAlert && (
           <Alert
             handleAlertClose={handleAlertClose}
-            message={"set another card as default to proceed with deletion"}
+            message={"set another address as default to proceed with deletion of defaul address"}
             showAlert={showAlert}
           />
         )}
