@@ -69,7 +69,7 @@ const makeDefault=(emailId,addressId)=>{
      
         </Typography>
         </div>
-        {/* <div className="location-type" style={{position: "absolute", right:" 10px"}}> */}
+       
         <Chip
         icon={<LocationOn />}
         label={addressType}       
@@ -80,7 +80,7 @@ const makeDefault=(emailId,addressId)=>{
         size="small"     
        
       />
-      {/* </div> */}
+     
      
        <Divider style={{marginBottom:"1%"}}/>         
       <Typography className={classes.pos} color="bold">

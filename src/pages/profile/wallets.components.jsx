@@ -16,6 +16,7 @@ class Wallets extends React.Component {
       expiryDate: "",
       defaultCard: "",
       user: null,
+      walletCounter:""
     };
   }
 
@@ -30,6 +31,7 @@ class Wallets extends React.Component {
       .then((response) => {
         this.setState({
           wallets: response.data,
+          walletCounter:response.data.length
         });
       })
       .catch((e) => {
@@ -87,6 +89,7 @@ class Wallets extends React.Component {
             email={this.props.userEmail}
             loadWallets={this.loadWallets}
             loadProfileData={this.loadProfileData}
+            walletCounter={this.state.walletCounter}
           />
         </div>
         <h5>DEFAULT CARD</h5>

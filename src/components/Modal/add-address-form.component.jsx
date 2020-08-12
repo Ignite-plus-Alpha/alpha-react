@@ -40,7 +40,7 @@ class AddAddressModal extends Component {
 
 
   show = (dimmer) => () => {
-    console.log(this.props.addressCounter,"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+    
     if(this.props.addressCounter<5)
     this.setState({ dimmer, open: true });
     else this.setState({showAlert:true})

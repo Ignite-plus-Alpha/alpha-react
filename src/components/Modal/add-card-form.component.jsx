@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Header, Image, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
 import Switch from "@material-ui/core/Switch";
+import Alert from "../alert/alert.component"
 
 class AddCardModal extends Component {
   constructor(props) {
@@ -14,10 +15,20 @@ class AddCardModal extends Component {
       upiid: "",
       checkedA: "false",
       cardId: "",
+      ShowAlert:false
     };
   }
+  handleAlertClose = () => {
+    this.setState({showAlert:false});
+  };
 
-  show = (dimmer) => () => this.setState({ dimmer, open: true });
+  show = (dimmer) => () => {
+    if(this.props.walletCounter<5)
+    this.setState({ dimmer, open: true });
+    else this.setState({showAlert:true})
+  }
+
+
   close = () => this.setState({ open: false,    cardHolderName: "",
   cardNumber: "",
   expirydate: "",
@@ -186,6 +197,13 @@ class AddCardModal extends Component {
             </div>
           </form>
         </Modal>
+        {this.state.showAlert && (
+          <Alert
+            handleAlertClose={this.handleAlertClose}
+            message={"sorry!! you have reached your max wallet limit.to add a new wallet delete an existing one"}
+            showAlert={this.state.showAlert}
+          />
+        )}
       </div>
     );
   }
