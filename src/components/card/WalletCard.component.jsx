@@ -32,6 +32,14 @@ export function WalletCard({loadWallets, loadProfileData,email,currentUserUserId
   const handleAlertClose = () => {
     setShowAlert(false);
   };
+
+  const makeDefault=()=>{ 
+  ProfileService.setDefaultWalletByEmailId(email,walletId)
+              .then(loadProfileData)
+              .catch((e) => console.log(e));
+   console.log(email,walletId,"make default....................................")
+}
+
   
 
 
@@ -56,7 +64,7 @@ const handleDelete=(currentUserUserId,walletId)=>{
     <Card className={classes.root}>      
       <CardContent>         
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
-      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips/>} Card Details     
+      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips makeDefault={makeDefault}/>} Card Details     
              </Typography>
         <Divider style={{marginBottom:"1%"}}/>
         <Typography className={classes.pos} color="bold">

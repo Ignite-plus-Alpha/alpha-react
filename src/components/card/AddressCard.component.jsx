@@ -49,11 +49,10 @@ const handleAlertClose = () => {
   setShowAlert(false);
 };
 
-const makeDefault=(emailId,addressId)=>{ 
-  // ProfileService.setDefaultAddressByEmailId(emailId,addressId)
-  //             .then((response) => console.log(response))
-  //             .then(loadProfileData)
-  //             .catch((e) => console.log(e));
+const makeDefault=()=>{ 
+  ProfileService.setDefaultAddressByEmailId(emailId,addressId)
+              .then(loadProfileData)
+              .catch((e) => console.log(e));
    console.log(emailId,addressId,"make default....................................")
 }
 
@@ -65,7 +64,7 @@ const makeDefault=(emailId,addressId)=>{
       <CardContent>
         <div className="card header">
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
-     {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips/> } Address Details    
+     {defaultAddress===addressId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips makeDefault={makeDefault}/> } Address Details    
      
         </Typography>
         </div>
@@ -79,8 +78,7 @@ const makeDefault=(emailId,addressId)=>{
         left= "20px"
         size="small"     
        
-      />
-     
+      />    
      
        <Divider style={{marginBottom:"1%"}}/>         
       <Typography className={classes.pos} color="bold">
