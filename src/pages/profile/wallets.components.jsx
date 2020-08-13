@@ -93,7 +93,7 @@ class Wallets extends React.Component {
               walletCounter={this.state.walletCounter}
             />
           </div>
-          <h5>DEFAULT CARD</h5>
+          <h5>PREFERRED CARD</h5>
           {this.state.wallets.map((wallet) => {
             if (wallet.wallet_id === this.state.defaultCard)
               return (

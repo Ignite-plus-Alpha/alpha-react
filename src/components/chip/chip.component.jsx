@@ -6,38 +6,32 @@ import Chip from "@material-ui/core/Chip";
 import FaceIcon from "@material-ui/icons/Face";
 import DoneIcon from "@material-ui/icons/Done";
 
-
 const styles = (theme) => ({
   root: {
-    flexWrap: "wrap"
-  },  
+    flexWrap: "wrap",
+  },
 });
 
 function OutlinedChips(props) {
   function handleClick() {
-  props.makeDefault() // eslint-disable-line no-alert
-}
+    props.makeDefault(); // eslint-disable-line no-alert
+  }
   const { classes } = props;
   return (
     <span className={classes.root}>
-      
       <Chip
-        avatar={<Avatar>D</Avatar>}
-        label="Make default"
+        avatar={<Avatar>P</Avatar>}
+        label="Make Preferred"
         onClick={handleClick}
         className={classes.chip}
         variant="outlined"
       />
-  
-
-     
- 
     </span>
   );
 }
 
 OutlinedChips.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(OutlinedChips);

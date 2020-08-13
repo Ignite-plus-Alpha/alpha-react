@@ -13,7 +13,7 @@ class AddCardModal extends Component {
       cardNumber: "",
       expirydate: "",
       upiid: "",
-      checkedA: "false",
+      checkedA: false,
       cardId: "",
       ShowAlert: false,
     };
@@ -86,7 +86,7 @@ class AddCardModal extends Component {
       dimmer,
       cardHolderName,
       cardNumber,
-      checkedB,
+      checkedA,
       upiid,
       expirydate,
     } = this.state;
@@ -167,7 +167,7 @@ class AddCardModal extends Component {
             </div>
             <div>Make default Wallet</div>
             <Switch
-              checked={checkedB}
+              checked={checkedA}
               onChange={this.handleToggleChange}
               color="primary"
               name="checkedA"
