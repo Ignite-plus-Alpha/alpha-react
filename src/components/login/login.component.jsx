@@ -8,7 +8,7 @@ import Axios from "axios";
 import { Divider } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { withRouter, useHistory } from "react-router-dom";
-import './login-form.styles.css'
+import "./login-form.styles.css";
 
 const styles = (theme) => ({
   button: {
@@ -74,85 +74,80 @@ class Login extends Component {
 
     console.log(this.props, "!!!");
     return (
-      
-        <div
-          className="sign-in-form"
-          style={{ maxWidth: "400px", float: "center" }}
-          >      
-      
+      <div
+        className="sign-in-form"
+        style={{ maxWidth: "400px", float: "center" }}
+      >
+        <form>
+          <div style={{ fontSize: 28, alignContent: "center" }}>Sign In</div>
+          <br />
 
-          <form>
-            <div style={{ fontSize: 28,alignContent:"center" }}>Sign In</div>
-            <br />
+          <TextField
+            id="email"
+            label="Email"
+            type="email"
+            style={{ margin: 8 }}
+            placeholder="Enter email address"
+            helperText="Mandotary"
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <br />
+          <TextField
+            id="standard-password-input"
+            label="Password"
+            style={{ margin: 8, minWidth: "400px" }}
+            //fullWidth
+            type="password"
+            helperText="Mandotary"
+            autoComplete="current-password"
+            margin="normal"
+            variant="outlined"
+          />
+          <br />
+          <br />
 
-            <TextField
-              id="email"
-              label="Email"
-              type="email"
-              style={{ margin: 8 }}
-              placeholder="Enter email address"
-              helperText="Mandotary"
-              fullWidth
-              margin="normal"
-              variant="outlined"
-            />
+          <br />
+          <div
+            className="sign-in-options"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              marginTop: "1%",
+            }}
+          >
+            <span>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={(event) => (window.location.href = "/")}
+              >
+                Sign In
+              </Button>
+            </span>
             <br />
-            <TextField
-              id="standard-password-input"
-              label="Password"
-              style={{ margin: 8, minWidth: "400px" }}
-              //fullWidth
-              type="password"
-              helperText="Mandotary"
-              autoComplete="current-password"
-              margin="normal"
-              variant="outlined"
-            />
-            <br />
-            <br />
-
-            <br />
-            <div
-              className="sign-in-options"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                marginTop: "1%",
-              }}
-            >
-              <span>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  fullWidth
-                  onClick={(event) => (window.location.href = "/")}
-                >
-                  Sign In
-                </Button>
-              </span>
+            <Divider />
+            <div style={{ fontSize: 16 }}>
               <br />
-              <Divider />
-              <div style={{ fontSize: 16 }}>
-                <br />
-                <GoogleLogin
-                  className="google-signin-button"
-                  clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
-                  isSignedIn={true}
-                  buttonText="SIGN IN"
-                  onSuccess={this.responseGoogle}
-                  onFailure={this.responseGoogle}
-                  cookiePolicy={"single_host_origin"}
-                  style={({ marginLeft: 0 }, { padding: "50px" })}
-                />
-              </div>
-              <br />
+              <GoogleLogin
+                className="google-signin-button"
+                clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
+                //isSignedIn={true}
+                buttonText="SIGN IN"
+                onSuccess={this.responseGoogle}
+                onFailure={this.responseGoogle}
+                cookiePolicy={"single_host_origin"}
+                style={({ marginLeft: 0 }, { padding: "50px" })}
+              />
             </div>
-            <a href="/signup">Don't have an account?</a>
-          </form>
-        </div>
-
-     
+            <br />
+          </div>
+          <a href="/signup">Don't have an account?</a>
+        </form>
+      </div>
     );
   }
 }

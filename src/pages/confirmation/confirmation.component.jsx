@@ -39,7 +39,9 @@ class Confirmation extends Component {
       userId: "",
       selectedCardId: "",
       wallets: [],
-      isLoaded:false,
+      isLoaded: false,
+      addressCounter: "",
+      walletCounter: "",
     };
   }
 
@@ -53,7 +55,7 @@ class Confirmation extends Component {
     this.setState({
       total_price: this.props.location.state.total_price,
       total_quantity: this.props.location.state.total_quantity,
-      isLoaded:true,
+      isLoaded: true,
     });
     this.loadProfileData();
     this.loadAddresses();
@@ -78,9 +80,9 @@ class Confirmation extends Component {
   loadAddresses = () => {
     ProfileDataService.getAddressesByUserId(localStorage.getItem("userId"))
       .then((response) => {
-        console.log(response.data);
         this.setState({
           addresses: response.data,
+          addressCounter: response.data.length,
         });
       })
       .catch((e) => {
@@ -93,6 +95,7 @@ class Confirmation extends Component {
       .then((response) => {
         this.setState({
           wallets: response.data,
+          walletCounter: response.data.length,
         });
       })
       .catch((e) => {
@@ -110,8 +113,7 @@ class Confirmation extends Component {
 
   render() {
     const { classes } = this.props;
-    if(!this.state.isLoaded)
-    return<div></div>
+    if (!this.state.isLoaded) return <div></div>;
     return (
       <div className={classes.confirmation}>
         <div>
@@ -140,52 +142,46 @@ class Confirmation extends Component {
                   if (this.state.selectedAddressId === address.address_id) {
                     return (
                       <div>
-                        <Paper className={classes.paper}>
-                          <Typography
-                            className={classes.title}
-                            variant="h5"
-                            component="h2"
-                            width="auto"
-                            gutterBottom
-                          >
-                            <LocationOnIcon fontSize="inherit" />
-                            &nbsp; Delivery Address
-                          </Typography>
-                          <Typography>
-                            {address.address_line1}
-                            <br />
-                            {address.address_line2}
-                            <br />
-                            {address.city}
-                            <br />
-                            {address.state}
-                            <br />
-                            {address.country}
-                            <br />
-                            zipcode : {address.zipcode}
-                          </Typography>
-                        </Paper>
+                        <Typography
+                          className={classes.title}
+                          variant="h5"
+                          component="h2"
+                          width="auto"
+                          gutterBottom
+                        >
+                          <LocationOnIcon fontSize="inherit" />
+                          &nbsp; Delivery Address
+                        </Typography>
+                        <DeliveryAddressCard
+                          key={index}
+                          address={address}
+                          handleChangeAddress={this.handleChangeAddress}
+                          selectedAddressId={this.state.selectedAddressId}
+                        />
                         <AddAddressModal
-            userId={localStorage.getItem("userId")}
-            email="pragathiindran@gmail.com"
-            loadAddresses={this.loadAddresses}
-          />
+                          userId={localStorage.getItem("userId")}
+                          email="pragathiindran@gmail.com"
+                          loadAddresses={this.loadAddresses}
+                          loadProfileData={this.loadProfileData}
+                          addressCounter={this.state.addressCounter}
+                        />
                       </div>
                     );
                   }
                 })}
                 {this.state.value}
                 {this.state.addresses.map((address, index) => {
-                  if(this.state.selectedAddressId!==address.address_id){
-                    return(
-                  <DeliveryAddressCard
-                    key={index}
-                    address={address}
-                    handleChangeAddress={this.handleChangeAddress}
-                    selectedAddressId={this.state.selectedAddressId}
-                  />
-                    )}
-                 })}
+                  if (this.state.selectedAddressId !== address.address_id) {
+                    return (
+                      <DeliveryAddressCard
+                        key={index}
+                        address={address}
+                        handleChangeAddress={this.handleChangeAddress}
+                        selectedAddressId={this.state.selectedAddressId}
+                      />
+                    );
+                  }
+                })}
               </Grid>
               <Grid
                 item
@@ -200,50 +196,47 @@ class Confirmation extends Component {
                   if (this.state.selectedCardId === wallet.wallet_id) {
                     return (
                       <div>
-                        <Paper className={classes.paper}>
-                          <Typography
-                            className={classes.title}
-                            variant="h5"
-                            component="h2"
-                            width="auto"
-                            gutterBottom
-                          >
-                            <CreditCardIcon fontSize="inherit" />
-                            &nbsp; Selected Card
-                          </Typography>
-                          <Typography>
-                            {wallet.cardholder_name}
-                            <br />
-                            {wallet.card_number}
-                            <br />
-                            {wallet.expiry_date}
-                            <br />
-                            {wallet.upi_id}
-                            <br />
-                            <br />
-                          </Typography>
-                        </Paper>
+                        {/* <Paper className={classes.paper}> */}
+                        <Typography
+                          className={classes.title}
+                          variant="h5"
+                          component="h2"
+                          width="auto"
+                          gutterBottom
+                        >
+                          <CreditCardIcon fontSize="inherit" />
+                          &nbsp; Selected Card
+                        </Typography>
+                        <WalletCard
+                          key={index}
+                          wallet={wallet}
+                          handleChangeCard={this.handleChangeCard}
+                          selectedCardId={this.state.selectedCardId}
+                        />
                         <AddCardModal
-            UserId={localStorage.getItem("userId")}
-            email="pragathiindran@gmail.com"
-            loadWallets={this.loadWallets}
-          />
+                          UserId={localStorage.getItem("userId")}
+                          email="pragathiindran@gmail.com"
+                          loadWallets={this.loadWallets}
+                          loadProfileData={this.loadProfileData}
+                          walletCounter={this.state.walletCounter}
+                        />
                       </div>
                     );
                   }
                 })}
                 {this.state.value}
                 {this.state.wallets.map((wallet, index) => {
-                  if(this.state.selectedCardId!==wallet.wallet_id){
-                    return(
-                  <WalletCard
-                    key={index}
-                    wallet={wallet}
-                    handleChangeCard={this.handleChangeCard}
-                    selectedCardId={this.state.selectedCardId}
-                  />
-                    )
-  }})}
+                  if (this.state.selectedCardId !== wallet.wallet_id) {
+                    return (
+                      <WalletCard
+                        key={index}
+                        wallet={wallet}
+                        handleChangeCard={this.handleChangeCard}
+                        selectedCardId={this.state.selectedCardId}
+                      />
+                    );
+                  }
+                })}
               </Grid>
             </Grid>
           </div>
@@ -254,8 +247,8 @@ class Confirmation extends Component {
             Total Items:{this.state.total_quantity}
           </h3>
           <PayPalBtn
-             total={this.state.total_price}
-           // total={32}
+            total={this.state.total_price}
+            // total={32}
             currency={"INR"}
             onSuccess={this.paymentHandler}
           />

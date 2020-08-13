@@ -15,7 +15,7 @@ class Addresses extends React.Component {
       defaultAddress: "",
       default: "",
       otherAddresses: "",
-      addressCounter:""
+      addressCounter: "",
     };
   }
 
@@ -27,15 +27,13 @@ class Addresses extends React.Component {
   loadProfileData = () => {
     ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
-        this.setState(
-          {
-            // user: response.data,
-            firstName: response.data.first_name,
-            lastName: response.data.last_name,
-            mobile: response.data.mobile,
-            defaultAddress: response.data.default_address,
-          },       
-        );
+        this.setState({
+          // user: response.data,
+          firstName: response.data.first_name,
+          lastName: response.data.last_name,
+          mobile: response.data.mobile,
+          defaultAddress: response.data.default_address,
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -47,7 +45,7 @@ class Addresses extends React.Component {
       .then((response) => {
         this.setState({
           addresses: response.data,
-         addressCounter:response.data.length
+          addressCounter: response.data.length,
         });
       })
       .catch((e) => {
@@ -55,104 +53,106 @@ class Addresses extends React.Component {
       });
   };
 
-  render() {    
-    console.log(this.state)
-    if ( this.state.addresses.length === 0)
-    return (
-      <div className="no-address">
-               <AddAddressModal
+  render() {
+    console.log(this.state);
+    if (this.state.addresses.length === 0)
+      return (
+        <div className="no-address">
+          <AddAddressModal
             userId={this.props.userId}
             email={this.props.userEmail}
             loadAddresses={this.loadAddresses}
             loadProfileData={this.loadProfileData}
             addressCounter={this.state.addressCounter}
           />
-        <div className="NoAddress">       
-            <img src={LocationImage} style={{width:"auto",height:"25vw"}}/>          
+          <div className="NoAddress">
+            <img
+              src={LocationImage}
+              style={{ width: "auto", height: "25vw" }}
+            />
+          </div>
         </div>
-      </div>
-    );
-    
-    else return (
-      <div className="profile-addresses-page">
-        <div
-          className="heading"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: "3%",
-          }}
-        >
-          <span>
-            <h2>SAVED ADDRESSES</h2>
-          </span>
-          
-         <AddAddressModal
-            userId={this.props.userId}
-            email={this.props.userEmail}
-            loadAddresses={this.loadAddresses}
-            loadProfileData={this.loadProfileData}
-            addressCounter={this.state.addressCounter}
-            
-          />
-   
-        </div>
+      );
+    else
+      return (
+        <div className="profile-addresses-page">
+          <div
+            className="heading"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: "3%",
+            }}
+          >
+            <span>
+              <h2>SAVED ADDRESSES</h2>
+            </span>
 
-        <div className="card-list">
-          <h5>DEFAULT ADDRESS</h5>
-          {this.state.addresses.map((address) => {
-            if (address.address_id === this.state.defaultAddress)
-              return (
-                <AddressCard key={address.addressId}
-                  loadAddresses={this.loadAddresses}
-                  loadProfileData={this.loadProfileData}
-                  emailId={this.props.userEmail}
-                  userId={this.props.userId}
-                  addressId={address.address_id}
-                  firstName={this.state.firstName}
-                  lastName={this.state.lastName}
-                  mobile={this.state.mobile}
-                  addressType={address.address_type}
-                  addressLine1={address.address_line1}
-                  addressLine2={address.address_line2}
-                  city={address.city}
-                  state={address.state}
-                  country={address.country}
-                  zipcode={address.zipcode}
-                  defaultAddress={this.state.defaultAddress}
-            
-                />
-              );
-          })}
-          <h5>Other ADDRESSES</h5>
-          {this.state.addresses.map((address) => {
-            if (address.address_id !== this.state.defaultAddress)
-              return (
-                <AddressCard key={address.addressId}
-                  loadAddresses={this.loadAddresses}
-                  loadProfileData={this.loadProfileData}
-                  emailId={this.props.userEmail}
-                  userId={this.props.userId}
-                  userId={this.props.userId}
-                  addressId={address.address_id}
-                  firstName={this.state.firstName}
-                  lastName={this.state.lastName}
-                  mobile={this.state.mobile}
-                  addressLine1={address.address_line1}
-                  addressType={address.address_type}
-                  addressLine2={address.address_line2}
-                  city={address.city}
-                  state={address.state}
-                  country={address.country}
-                  zipcode={address.zipcode}
-                  defaultAddress={this.state.defaultAddress}
-                />
-              );
-          })}
+            <AddAddressModal
+              userId={this.props.userId}
+              email={this.props.userEmail}
+              loadAddresses={this.loadAddresses}
+              loadProfileData={this.loadProfileData}
+              addressCounter={this.state.addressCounter}
+            />
+          </div>
+
+          <div className="card-list">
+            <h5>DEFAULT ADDRESS</h5>
+            {this.state.addresses.map((address) => {
+              if (address.address_id === this.state.defaultAddress)
+                return (
+                  <AddressCard
+                    key={address.addressId}
+                    loadAddresses={this.loadAddresses}
+                    loadProfileData={this.loadProfileData}
+                    emailId={this.props.userEmail}
+                    userId={this.props.userId}
+                    addressId={address.address_id}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    mobile={this.state.mobile}
+                    addressType={address.address_type}
+                    addressLine1={address.address_line1}
+                    addressLine2={address.address_line2}
+                    city={address.city}
+                    state={address.state}
+                    country={address.country}
+                    zipcode={address.zipcode}
+                    defaultAddress={this.state.defaultAddress}
+                  />
+                );
+            })}
+            <h5>Other ADDRESSES</h5>
+            {this.state.addresses.map((address) => {
+              if (address.address_id !== this.state.defaultAddress)
+                return (
+                  <AddressCard
+                    key={address.addressId}
+                    loadAddresses={this.loadAddresses}
+                    loadProfileData={this.loadProfileData}
+                    emailId={this.props.userEmail}
+                    userId={this.props.userId}
+                    userId={this.props.userId}
+                    addressId={address.address_id}
+                    firstName={this.state.firstName}
+                    lastName={this.state.lastName}
+                    mobile={this.state.mobile}
+                    addressLine1={address.address_line1}
+                    addressType={address.address_type}
+                    addressLine2={address.address_line2}
+                    city={address.city}
+                    state={address.state}
+                    country={address.country}
+                    zipcode={address.zipcode}
+                    defaultAddress={this.state.defaultAddress}
+                  />
+                );
+            })}
+          </div>
         </div>
-      </div>
-    );
+      );
   }
 }
 export default Addresses;
