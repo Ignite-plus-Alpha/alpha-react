@@ -14,6 +14,7 @@ import UpdateCardExpiry from "../../components/Modal/update-card-expiry.componen
 import Alert from "../alert/alert.component";
 import CustomConfirmation from "../alert/confirmation-alert.component";
 import OutlinedChips from "../../components/chip/chip.component";
+import "./card.styles.css";
 
 const useStyles = makeStyles({
   root: {

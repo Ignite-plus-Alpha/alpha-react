@@ -5,6 +5,7 @@ import ProfileDataService from "../../services/profile-service";
 import { WalletCard } from "../../components/card/WalletCard.component";
 import AddCardModal from "../../components/Modal/add-card-form.component";
 import WalletImage from "../../assets/wallet.webp";
+import Grid from "@material-ui/core/Grid";
 
 class Wallets extends React.Component {
   constructor(props) {
@@ -111,7 +112,31 @@ class Wallets extends React.Component {
               );
           })}
           <h5>Other Cards</h5>
-          {this.state.wallets.map((wallet) => {
+
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="flex-start"
+          >
+            {this.state.wallets.map((wallet) => {
+              if (wallet.wallet_id !== this.state.defaultCard)
+                return (
+                  <WalletCard
+                    loadWallets={this.loadWallets}
+                    loadProfileData={this.loadProfileData}
+                    email={this.props.userEmail}
+                    walletId={wallet.wallet_id}
+                    currentUserUserId={this.props.userId}
+                    cardHolderName={wallet.cardholder_name}
+                    cardNumber={wallet.card_number}
+                    expiryDate={wallet.expiry_date}
+                    defaultCard={this.state.defaultCard}
+                  />
+                );
+            })}
+          </Grid>
+          {/* {this.state.wallets.map((wallet) => {
             if (wallet.wallet_id !== this.state.defaultCard)
               return (
                 <WalletCard
@@ -126,7 +151,7 @@ class Wallets extends React.Component {
                   defaultCard={this.state.defaultCard}
                 />
               );
-          })}
+          })} */}
         </div>
       );
   }

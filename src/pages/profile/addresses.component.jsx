@@ -4,6 +4,7 @@ import ProfileDataService from "../../services/profile-service";
 import { AddressCard } from "../../components/card/AddressCard.component";
 import AddAddressModal from "../../components/Modal/add-address-form.component";
 import LocationImage from "../../assets/map.webp";
+import Grid from "@material-ui/core/Grid";
 
 class Addresses extends React.Component {
   constructor(props) {
@@ -125,31 +126,38 @@ class Addresses extends React.Component {
                 );
             })}
             <h5>Other ADDRESSES</h5>
-            {this.state.addresses.map((address) => {
-              if (address.address_id !== this.state.defaultAddress)
-                return (
-                  <AddressCard
-                    key={address.addressId}
-                    loadAddresses={this.loadAddresses}
-                    loadProfileData={this.loadProfileData}
-                    emailId={this.props.userEmail}
-                    userId={this.props.userId}
-                    userId={this.props.userId}
-                    addressId={address.address_id}
-                    firstName={this.state.firstName}
-                    lastName={this.state.lastName}
-                    mobile={this.state.mobile}
-                    addressLine1={address.address_line1}
-                    addressType={address.address_type}
-                    addressLine2={address.address_line2}
-                    city={address.city}
-                    state={address.state}
-                    country={address.country}
-                    zipcode={address.zipcode}
-                    defaultAddress={this.state.defaultAddress}
-                  />
-                );
-            })}
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="flex-start"
+            >
+              {this.state.addresses.map((address) => {
+                if (address.address_id !== this.state.defaultAddress)
+                  return (
+                    <AddressCard
+                      key={address.addressId}
+                      loadAddresses={this.loadAddresses}
+                      loadProfileData={this.loadProfileData}
+                      emailId={this.props.userEmail}
+                      userId={this.props.userId}
+                      userId={this.props.userId}
+                      addressId={address.address_id}
+                      firstName={this.state.firstName}
+                      lastName={this.state.lastName}
+                      mobile={this.state.mobile}
+                      addressLine1={address.address_line1}
+                      addressType={address.address_type}
+                      addressLine2={address.address_line2}
+                      city={address.city}
+                      state={address.state}
+                      country={address.country}
+                      zipcode={address.zipcode}
+                      defaultAddress={this.state.defaultAddress}
+                    />
+                  );
+              })}
+            </Grid>
           </div>
         </div>
       );
