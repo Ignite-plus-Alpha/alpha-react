@@ -1,78 +1,73 @@
 import http from "../http-common2";
 
 class ProfileService {
-
-//get user by email id
-getProfileByEmailId(emailId){
-
-    return http.get(`/user/${emailId}`)
-  
-  }   
+  //get user by email id
+  getProfileByEmailId(emailId) {
+    return http.get(`/user/${emailId}`);
+  }
   //get user address userId id
-getAddressesByUserId(userId){
+  getAddressesByUserId(userId) {
+    return http.get(`/address/${userId}`);
+  }
 
-  return http.get(`/address/${userId}`)
+  //get address by userId addressId
+  getAddressByUserIdAddressId(userId, addressId) {
+    return http.get(`/address/${userId}/${addressId}`);
+  }
 
-}    
   //get user address userId id
-  getWalletsByUserId(userId){
+  getWalletsByUserId(userId) {
+    return http.get(`/wallet/${userId}`);
+  }
 
-    return http.get(`/wallet/${userId}`)
-  
-  } 
+  //get wallet by userId and WalletId
+  getWalletByUserIdWalletId(userId, walletId) {
+    return http.get(`/wallet/${userId}/${walletId}`);
+  }
 
-    //delete card by userId cardId
-    deleteCardByUserIdWalletId(userId,walletId){
+  //delete card by userId cardId
+  deleteCardByUserIdWalletId(userId, walletId) {
+    return http.delete(`/wallet/${userId}/${walletId}`);
+  }
 
-      return http.delete(`/wallet/${userId}/${walletId}`)
-    
-    }
+  //delete card by userId cardId
+  deleteAddressByUserIdAddressId(userId, addressId) {
+    return http.delete(`/address/${userId}/${addressId}`);
+  }
 
-        //delete card by userId cardId
-        deleteAddressByUserIdAddressId(userId,addressId){
+  //update profile default address by emailId
+  setDefaultAddressByEmailId(emailId, data) {
+    return http.put(`/user/address/${emailId}`, data);
+  }
+  //update profile default wallet by emailId
+  setDefaultWalletByEmailId(emailId, data) {
+    return http.put(`/user/wallet/${emailId}`, data);
+  }
+  //addWallet
+  createWallet(data) {
+    return http.post(`/wallet`, data);
+  }
+  //addAddress
+  createAddress(data) {
+    return http.post(`/address`, data);
+  }
+  //update profile
+  updateProfile(emailId, data) {
+    return http.put(`/user/${emailId}`, data);
+  }
+  //update Wallet Expiry
+  updateWalletExpiry(userId, walletId, data) {
+    return http.put(`/wallet/${userId}/${walletId}`, data);
+  }
 
-          return http.delete(`/address/${userId}/${addressId}`)
-        
-        }
+  //update Address
+  updateAddress(userId, addressId, data) {
+    return http.put(`/address/${userId}/${addressId}`, data);
+  }
 
-
-        //update profile default address by emailId
-        setDefaultAddressByEmailId(emailId,data){
-          return http.put(`/user/address/${emailId}`,data)        
-        }
-      //update profile default wallet by emailId
-       setDefaultWalletByEmailId(emailId,data){
-        return http.put(`/user/wallet/${emailId}`,data)        
-      }
-      //addWallet
-      createWallet(data){
-        return http.post(`/wallet`,data)
-      }
-      //addAddress
-      createAddress(data){
-        return http.post(`/address`,data)
-      }
-      //update profile
-      updateProfile(emailId,data){
-        return http.put(`/user/${emailId}`,data)
-      }
-      //update Wallet Expiry
-      updateWalletExpiry(userId,walletId,data){
-        return http.put(`/wallet/${userId}/${walletId}`,data)
-      }
-      
-      //update Address 
-      updateAddress(userId,addressId,data){
-        return http.put(`/address/${userId}/${addressId}`,data)
-      }
-
-      //register user if not exists
-      userRegistration(emailId){
-        return http.get(`/register/${emailId}`)
-      }
-            
-      
-
-        
+  //register user if not exists
+  userRegistration(emailId) {
+    return http.get(`/register/${emailId}`);
+  }
 }
 export default new ProfileService();

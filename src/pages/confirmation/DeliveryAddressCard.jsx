@@ -5,18 +5,19 @@ import Radio from "@material-ui/core/Radio";
 import CardActions from "@material-ui/core/CardActions";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import Chip from "@material-ui/core/Chip";
+import LocationOn from "@material-ui/icons/LocationOn";
+import Card from "@material-ui/core/Card";
+import { Divider } from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
-    marginBottom: "1%",
+    width: "300px",
+    margin: 5,
   },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    margin: `${theme.spacing(1)}px auto`,
-    minWidth: 300,
-    alignText: "center",
-    alignItems: "center",
+  pos: {
+    marginBottom: 2,
   },
 });
 
@@ -29,40 +30,46 @@ class DeliveryAddressCard extends Component {
     const { classes, address, handleChangeAddress } = this.props;
     return (
       <div>
-        <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Grid container wrap="nowrap">
-              <Grid item>
-                <CardActions>
-                  <Radio
-                    checked={
-                      this.props.selectedAddressId === address.address_id
-                    }
-                    onChange={handleChangeAddress}
-                    value={address.address_id}
-                    color="default"
-                    name="radio-button-demo"
-                  />
-                </CardActions>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Typography className={classes.pos} color="bold" noWrap>
-                  {address.address_line1}
-                  <br />
-                  {address.address_line2}
-                  <br />
-                  {address.city}
-                  <br />
-                  {address.state}
-                  <br />
-                  {address.country}
-                  <br />
-                  zipcode : {address.zipcode}
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-        </div>
+        <Card className={classes.root}>
+          <CardContent>
+            <div className="card header">
+              <Typography variant="h5" style={{ marginBottom: "2%" }}>
+                <Radio
+                  checked={this.props.selectedAddressId === address.address_id}
+                  onChange={handleChangeAddress}
+                  value={address.address_id}
+                  color="default"
+                  name="radio-button-demo"
+                />
+                Address Details
+                <Chip
+                  icon={<LocationOn />}
+                  label={address.address_type}
+                  className={classes.chip}
+                  color="primary"
+                  position="relative"
+                  left="20px"
+                  size="small"
+                />
+              </Typography>
+            </div>
+
+            <Divider style={{ marginBottom: "1%" }} />
+            <Typography className={classes.pos} color="bold">
+              {address.first_Name}&nbsp;{address.last_name}
+            </Typography>
+            <Typography className={classes.pos} color="bold">
+              {address.address_line1}&nbsp;{address.address_line2}
+              <br />
+              {address.city},&nbsp;{address.state},&nbsp;{address.country}
+              <br />
+              zipcode : {address.zipcode}
+            </Typography>
+            {/* <Typography className={classes.pos} color="bold">
+              mobile : {mobile}
+            </Typography> */}
+          </CardContent>
+        </Card>
       </div>
     );
   }

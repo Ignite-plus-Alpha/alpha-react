@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import PayPalBtn from "./PayWithPayPal";
 import ProfileDataService from "../../services/profile-service";
 import DeliveryAddressCard from "./DeliveryAddressCard";
-import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -13,18 +11,16 @@ import CreditCardIcon from "@material-ui/icons/CreditCard";
 import { width, height } from "@material-ui/system";
 import AddAddressModal from "../../components/Modal/add-address-form.component";
 import AddCardModal from "../../components/Modal/add-card-form.component";
+import { Redirect } from "react-router-dom";
 
 const styles = (theme) => ({
-  confirmation: { width: "100%", textAlign: "center" },
-  root: { width: "100%", height: "1000px", textTransform: "capitalize" },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    margin: "auto",
-    width: "300px",
-    marginBottom: "1%",
-    alignText: "center",
-    alignItems: "center",
+  confirmation: {
+    marginLeft: "2%",
+    marginRight: "2%",
+    marginLeft: "2%",
+    marginRight: "2%",
   },
+  root: { textTransform: "capitalize" },
 });
 
 class Confirmation extends Component {
@@ -42,6 +38,7 @@ class Confirmation extends Component {
       isLoaded: false,
       addressCounter: "",
       walletCounter: "",
+      isProccedToPayClicked: false,
     };
   }
 
@@ -111,8 +108,27 @@ class Confirmation extends Component {
     this.setState({ selectedCardId: event.target.value });
   };
 
+  proceedToPayClicked = () => {
+    this.setState({ isProccedToPayClicked: true });
+  };
+
   render() {
     const { classes } = this.props;
+    if (this.state.isProccedToPayClicked)
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/payment",
+            state: {
+              deliveryAddressId: this.state.selectedAddressId,
+              paymentCardId: this.state.selectedCardId,
+              total_price: this.state.total_price,
+              total_quantity: this.state.total_quantity,
+            },
+          }}
+        />
+      );
     if (!this.state.isLoaded) return <div></div>;
     return (
       <div className={classes.confirmation}>
@@ -123,20 +139,16 @@ class Confirmation extends Component {
           <div>
             <Grid
               container
-              spacing={3}
               className={classes.root}
-              alignItems="flex-start"
-              direction="row"
-              justify="space-evenly"
+              direction="column"
+              justify="flex-start"
             >
               <Grid
-                item
-                xs={6}
-                sm={2}
                 container
-                direction="column"
-                justify="space-around"
-                alignItems="center"
+                spacing={40}
+                direction="row"
+                justify="space-evenly"
+                alignItems="flex-start"
               >
                 {this.state.addresses.map((address, index) => {
                   if (this.state.selectedAddressId === address.address_id) {
@@ -158,45 +170,15 @@ class Confirmation extends Component {
                           handleChangeAddress={this.handleChangeAddress}
                           selectedAddressId={this.state.selectedAddressId}
                         />
-                        <AddAddressModal
-                          userId={localStorage.getItem("userId")}
-                          email="pragathiindran@gmail.com"
-                          loadAddresses={this.loadAddresses}
-                          loadProfileData={this.loadProfileData}
-                          addressCounter={this.state.addressCounter}
-                        />
                       </div>
                     );
                   }
                 })}
-                {this.state.value}
-                {this.state.addresses.map((address, index) => {
-                  if (this.state.selectedAddressId !== address.address_id) {
-                    return (
-                      <DeliveryAddressCard
-                        key={index}
-                        address={address}
-                        handleChangeAddress={this.handleChangeAddress}
-                        selectedAddressId={this.state.selectedAddressId}
-                      />
-                    );
-                  }
-                })}
-              </Grid>
-              <Grid
-                item
-                xs={6}
-                sm={2}
-                container
-                direction="column"
-                justify="space-around"
-                alignItems="center"
-              >
+
                 {this.state.wallets.map((wallet, index) => {
                   if (this.state.selectedCardId === wallet.wallet_id) {
                     return (
                       <div>
-                        {/* <Paper className={classes.paper}> */}
                         <Typography
                           className={classes.title}
                           variant="h5"
@@ -213,18 +195,85 @@ class Confirmation extends Component {
                           handleChangeCard={this.handleChangeCard}
                           selectedCardId={this.state.selectedCardId}
                         />
-                        <AddCardModal
-                          UserId={localStorage.getItem("userId")}
-                          email="pragathiindran@gmail.com"
-                          loadWallets={this.loadWallets}
-                          loadProfileData={this.loadProfileData}
-                          walletCounter={this.state.walletCounter}
-                        />
                       </div>
                     );
                   }
                 })}
-                {this.state.value}
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="flex-start"
+              >
+                <Typography
+                  className={classes.title}
+                  variant="h5"
+                  component="h2"
+                  width="auto"
+                  gutterBottom
+                >
+                  Other Address:
+                </Typography>
+
+                <AddAddressModal
+                  userId={localStorage.getItem("userId")}
+                  email="pragathiindran@gmail.com"
+                  loadAddresses={this.loadAddresses}
+                  loadProfileData={this.loadProfileData}
+                  addressCounter={this.state.addressCounter}
+                />
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="flex-start"
+              >
+                {this.state.addresses.map((address, index) => {
+                  if (this.state.selectedAddressId !== address.address_id) {
+                    return (
+                      <DeliveryAddressCard
+                        key={index}
+                        address={address}
+                        handleChangeAddress={this.handleChangeAddress}
+                        selectedAddressId={this.state.selectedAddressId}
+                      />
+                    );
+                  }
+                })}
+              </Grid>
+              <br />
+              <br />
+              <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="flex-start"
+              >
+                <Typography
+                  className={classes.title}
+                  variant="h5"
+                  component="h2"
+                  width="auto"
+                  gutterBottom
+                >
+                  Other Card:
+                </Typography>
+                <AddCardModal
+                  UserId={localStorage.getItem("userId")}
+                  email="pragathiindran@gmail.com"
+                  loadWallets={this.loadWallets}
+                  loadProfileData={this.loadProfileData}
+                  walletCounter={this.state.walletCounter}
+                />
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="flex-start"
+              >
                 {this.state.wallets.map((wallet, index) => {
                   if (this.state.selectedCardId !== wallet.wallet_id) {
                     return (
@@ -241,17 +290,21 @@ class Confirmation extends Component {
             </Grid>
           </div>
           <br />
-          <h3>
-            Total Price:{this.state.total_price}
-            <br />
-            Total Items:{this.state.total_quantity}
-          </h3>
-          <PayPalBtn
-            total={this.state.total_price}
-            // total={32}
-            currency={"INR"}
-            onSuccess={this.paymentHandler}
-          />
+          <div style={{ textAlign: "center" }}>
+            <h1>
+              Total Price:{this.state.total_price}
+              <br />
+              Total Items:{this.state.total_quantity}
+            </h1>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.proceedToPayClicked}
+              style={{ minWidth: 200 }}
+            >
+              Proceed To Pay
+            </Button>
+          </div>
         </div>
       </div>
     );

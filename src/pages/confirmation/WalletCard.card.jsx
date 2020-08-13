@@ -6,19 +6,17 @@ import CardActions from "@material-ui/core/CardActions";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { width, height } from "@material-ui/system";
+import { Divider } from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
 
 const styles = (theme) => ({
   root: {
-    flexGrow: 1,
-    marginBottom: "1%",
-  },
-  paper: {
-    padding: theme.spacing.unit * 2,
-    margin: `${theme.spacing(1)}px auto`,
     width: "300px",
-    height: "25%",
-    alignText: "center",
-    alignItems: "center",
+    margin: 5,
+  },
+  pos: {
+    marginBottom: 2,
   },
 });
 
@@ -31,41 +29,40 @@ class WalletCard extends Component {
     const { classes, wallet, handleChangeCard } = this.props;
     return (
       <div>
-        <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Grid container wrap="nowrap">
-              <Grid item>
-                <CardActions>
-                  <Radio
-                    checked={this.props.selectedCardId === wallet.wallet_id}
-                    onChange={handleChangeCard}
-                    value={wallet.wallet_id}
-                    color="default"
-                    name="radio-button-demo"
-                  />
-                </CardActions>
-              </Grid>
-              <Grid item xs zeroMinWidth>
-                <Typography className={classes.pos} color="bold" noWrap>
-                  {wallet.cardholder_name}
-                  <br />
-                  {
-                    (wallet.card_number = wallet.card_number
-                      .toString()
-                      .replace(/\d(?=\d{4})/g, "*"))
-                  }
-                  <br />
-                  {wallet.expiry_date}
-                  <br />
-                  {wallet.upi_id}
-                  <br />
-                  <br />
-                  <br />
-                </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
-        </div>
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography variant="h5" style={{ marginBottom: "2%" }}>
+              {/* <CardActions> */}
+              <Radio
+                checked={this.props.selectedCardId === wallet.wallet_id}
+                onChange={handleChangeCard}
+                value={wallet.wallet_id}
+                color="default"
+                name="radio-button-demo"
+              />
+              {/* </CardActions> */}
+              Card Details
+            </Typography>
+            <Divider style={{ marginBottom: "1%" }} />
+            <Typography className={classes.pos} color="bold">
+              Name&nbsp;:&nbsp;{wallet.cardholder_name}
+            </Typography>
+            <Typography className={classes.pos} color="bold">
+              Card Number &nbsp;:&nbsp;
+              {
+                (wallet.card_number = wallet.card_number
+                  .toString()
+                  .replace(/\d(?=\d{4})/g, "*"))
+              }
+            </Typography>
+            <Typography className={classes.pos} color="bold">
+              Expiry&nbsp;Date&nbsp;:&nbsp;{wallet.expiry_date}
+            </Typography>
+            <Typography className={classes.pos} color="bold">
+              UPI&nbsp;Id&nbsp;:&nbsp;{wallet.upi_id}
+            </Typography>
+          </CardContent>
+        </Card>
       </div>
     );
   }

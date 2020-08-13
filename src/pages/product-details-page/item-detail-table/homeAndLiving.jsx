@@ -13,27 +13,27 @@ class HomeAndLiving extends Component {
           <tbody>
             <tr>
               <td>Assembly</td>
-              <td> {this.props.description.Assembly}</td>
+              <td> {this.props.description.assembly}</td>
             </tr>
             <tr>
               <td>Brand</td>
-              <td> {this.props.description.Brand}</td>
+              <td> {this.props.description.brand}</td>
             </tr>
             <tr>
               <td>Color</td>
-              <td> {this.props.description.Color}</td>
+              <td> {this.props.description.color}</td>
             </tr>
             <tr>
               <td>Dimensions</td>
-              <td> {this.props.description.Dimensions}</td>
+              <td> {this.props.description.dimensions}</td>
             </tr>
             <tr>
               <td>Warranty</td>
-              <td> {this.props.description.Warranty}</td>
+              <td> {this.props.description.warranty}</td>
             </tr>
             <tr>
               <td>Weight</td>
-              <td> {this.props.description.Weight}</td>
+              <td> {this.props.description.weight}</td>
             </tr>
           </tbody>
         </table>
