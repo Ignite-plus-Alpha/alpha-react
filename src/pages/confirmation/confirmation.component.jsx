@@ -11,10 +11,12 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import WalletCard from "./WalletCard.card";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import { width, height } from "@material-ui/system";
+import AddAddressModal from "../../components/Modal/add-address-form.component";
+import AddCardModal from "../../components/Modal/add-card-form.component";
 
 const styles = (theme) => ({
   confirmation: { width: "100%", textAlign: "center" },
-  root: { width: "100%", height: "700px", textTransform: "capitalize" },
+  root: { width: "100%", height: "1000px", textTransform: "capitalize" },
   paper: {
     padding: theme.spacing.unit * 2,
     margin: "auto",
@@ -37,6 +39,7 @@ class Confirmation extends Component {
       userId: "",
       selectedCardId: "",
       wallets: [],
+      isLoaded:false,
     };
   }
 
@@ -50,6 +53,7 @@ class Confirmation extends Component {
     this.setState({
       total_price: this.props.location.state.total_price,
       total_quantity: this.props.location.state.total_quantity,
+      isLoaded:true,
     });
     this.loadProfileData();
     this.loadAddresses();
@@ -57,8 +61,9 @@ class Confirmation extends Component {
   };
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId("arpitha6556@gmail.com")
+    ProfileDataService.getProfileByEmailId("pragathiindran@gmail.com")
       .then((response) => {
+        console.log(response.data);
         this.setState({
           userId: response.data.userId,
           selectedAddressId: response.data.default_address,
@@ -71,8 +76,9 @@ class Confirmation extends Component {
   };
 
   loadAddresses = () => {
-    ProfileDataService.getAddressesByUserId(this.state.userId)
+    ProfileDataService.getAddressesByUserId(localStorage.getItem("userId"))
       .then((response) => {
+        console.log(response.data);
         this.setState({
           addresses: response.data,
         });
@@ -83,7 +89,7 @@ class Confirmation extends Component {
   };
 
   loadWallets = () => {
-    ProfileDataService.getWalletsByUserId(this.state.userId)
+    ProfileDataService.getWalletsByUserId(localStorage.getItem("userId"))
       .then((response) => {
         this.setState({
           wallets: response.data,
@@ -104,6 +110,8 @@ class Confirmation extends Component {
 
   render() {
     const { classes } = this.props;
+    if(!this.state.isLoaded)
+    return<div></div>
     return (
       <div className={classes.confirmation}>
         <div>
@@ -157,20 +165,27 @@ class Confirmation extends Component {
                             zipcode : {address.zipcode}
                           </Typography>
                         </Paper>
-                        <Button>Add</Button>
+                        <AddAddressModal
+            userId={localStorage.getItem("userId")}
+            email="pragathiindran@gmail.com"
+            loadAddresses={this.loadAddresses}
+          />
                       </div>
                     );
                   }
                 })}
                 {this.state.value}
-                {this.state.addresses.map((address, index) => (
+                {this.state.addresses.map((address, index) => {
+                  if(this.state.selectedAddressId!==address.address_id){
+                    return(
                   <DeliveryAddressCard
                     key={index}
                     address={address}
                     handleChangeAddress={this.handleChangeAddress}
                     selectedAddressId={this.state.selectedAddressId}
                   />
-                ))}
+                    )}
+                 })}
               </Grid>
               <Grid
                 item
@@ -208,20 +223,27 @@ class Confirmation extends Component {
                             <br />
                           </Typography>
                         </Paper>
-                        <Button>Add</Button>
+                        <AddCardModal
+            UserId={localStorage.getItem("userId")}
+            email="pragathiindran@gmail.com"
+            loadWallets={this.loadWallets}
+          />
                       </div>
                     );
                   }
                 })}
                 {this.state.value}
-                {this.state.wallets.map((wallet, index) => (
+                {this.state.wallets.map((wallet, index) => {
+                  if(this.state.selectedCardId!==wallet.wallet_id){
+                    return(
                   <WalletCard
                     key={index}
                     wallet={wallet}
                     handleChangeCard={this.handleChangeCard}
                     selectedCardId={this.state.selectedCardId}
                   />
-                ))}
+                    )
+  }})}
               </Grid>
             </Grid>
           </div>
@@ -232,7 +254,8 @@ class Confirmation extends Component {
             Total Items:{this.state.total_quantity}
           </h3>
           <PayPalBtn
-            amount={this.state.total_price}
+             total={this.state.total_price}
+           // total={32}
             currency={"INR"}
             onSuccess={this.paymentHandler}
           />

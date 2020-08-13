@@ -49,7 +49,7 @@ class WalletCard extends Component {
                 <Typography className={classes.pos} color="bold" noWrap>
                   {wallet.cardholder_name}
                   <br />
-                  {wallet.card_number}
+                  {wallet.card_number=wallet.card_number.toString().replace(/\d(?=\d{4})/g, "*")}
                   <br />
                   {wallet.expiry_date}
                   <br />

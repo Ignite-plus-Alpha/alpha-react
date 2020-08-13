@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 // import { ListGroup, ListGroupItem } from 'reactstrap'
+import Invoice from '../Invoice/invoice.component'
+import { Redirect, withRouter } from "react-router-dom";
 
 function PayWithPayPal (props) {
     const { items, total } = props
@@ -10,17 +12,18 @@ function PayWithPayPal (props) {
     useEffect(() => {
         window.paypal
             .Buttons({
-                // createOrder: (data, actions) => {
-                //     return actions.order.create({
-                //         purchase_units: [{
-                //             description: 'Alpha store checkout',
-                //             amount: {
-                //                 currency_code: 'INR',
-                //                 value: 10.00,
-                //             }
-                //         }]
-                //     });
-                // },
+                createOrder: (data, actions) => {
+                    console.log(total)
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: 'Alpha store checkout',
+                            amount: {
+                                currency_code: 'INR',
+                                value: total,
+                            }
+                        }]
+                    });
+                },
                 onApprove: async (data, actions) => {
                     const order = await actions.order.capture();
                     setPaidFor(true);
@@ -37,6 +40,7 @@ function PayWithPayPal (props) {
     if (paidFor) {
         return (
             <div>
+                <Redirect to="/invoice"/>
                 Thanks for making the purchase.
             </div>
         )
@@ -63,4 +67,4 @@ function PayWithPayPal (props) {
     )
 }
 
-export default PayWithPayPal
+export default withRouter(PayWithPayPal);

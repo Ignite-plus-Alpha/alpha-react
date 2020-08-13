@@ -246,7 +246,9 @@ class ProductDetailsPage extends React.Component {
               {this.state.size !== null ? (
                 <div className="size">
                   Select size :{" "}
-                  {this.state.size.map((s) => (
+                  {this.state.size.map((s) => {
+                    if(s!==this.state.chosenSize){
+                      return(
                     <a
                       class="ui teal circular label"
                       style={{ margin: "10px" }}
@@ -254,7 +256,18 @@ class ProductDetailsPage extends React.Component {
                     >
                       {s.toUpperCase()}
                     </a>
-                  ))}
+                      )
+                    }
+                    else{
+                      return(
+                      <a
+                      class="ui black circular label"
+                      style={{ margin: "10px" }}
+                      onClick={() => this.setState({ chosenSize: s })}
+                    >
+                      {s.toUpperCase()}
+                    </a>)
+                  }})}
                 </div>
               ) : (
                 <></>

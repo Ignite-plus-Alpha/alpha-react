@@ -17,7 +17,7 @@ class Footwear extends Component {
                 <tbody>
                 <tr>
                 <td>Color</td>
-                <td> {this.props.description.color}</td>      
+                <td> {this.props.description.Color}</td>      
                 </tr>
                 <tr>
                 <td>fit</td>
