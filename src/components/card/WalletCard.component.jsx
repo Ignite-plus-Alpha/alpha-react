@@ -11,6 +11,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Chip from '@material-ui/core/Chip';
 import ProfileService from '../../services/profile-service'
 import UpdateCardExpiry from '../../components/Modal/update-card-expiry.component'
+import Alert from "../alert/alert.component"
+
+import OutlinedChips from '../../components/chip/chip.component'
 
 const useStyles = makeStyles({
   root: {
@@ -22,18 +25,30 @@ const useStyles = makeStyles({
   },
 });
 
-export function WalletCard({loadWallets,email,currentUserUserId,walletId,cardHolderName,cardNumber,expiryDate,defaultCard}) {
+export function WalletCard({loadWallets, loadProfileData,email,currentUserUserId,walletId,cardHolderName,cardNumber,expiryDate,defaultCard}) {
   const classes = useStyles();
+
+  const [showAlert, setShowAlert] = React.useState(false)
+  const handleAlertClose = () => {
+    setShowAlert(false);
+  };
+
+  const makeDefault=()=>{ 
+  ProfileService.setDefaultWalletByEmailId(email,walletId)
+              .then(loadProfileData)
+              .catch((e) => console.log(e));
+   console.log(email,walletId,"make default....................................")
+}
+
+  
 
 
 const handleDelete=(currentUserUserId,walletId)=>{
   console.log("deleted for" ,currentUserUserId,"*****",walletId)
 
-  const st=".";
   if(walletId===defaultCard)
-  ProfileService.setDefaultWalletByEmailId(email,st)
-  .then(response=>console.log(response))
-  .catch(e=>console.log(e))
+  setShowAlert(true);
+  else
   
   ProfileService.
   deleteCardByUserIdWalletId(currentUserUserId,walletId)
@@ -46,12 +61,10 @@ const handleDelete=(currentUserUserId,walletId)=>{
 
   return (
     <div>    
-    <Card className={classes.root}>     
-    {console.log(walletId,email,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")}         
-       
+    <Card className={classes.root}>      
       <CardContent>         
       <Typography variant="h5"  style={{marginBottom:"2%"}}>
-      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:null} Card Details     
+      {defaultCard===walletId?  <Chip  size="small" label="Default"  float="right" />:<OutlinedChips makeDefault={makeDefault}/>} Card Details     
              </Typography>
         <Divider style={{marginBottom:"1%"}}/>
         <Typography className={classes.pos} color="bold">
@@ -74,11 +87,18 @@ const handleDelete=(currentUserUserId,walletId)=>{
       </Button>
       </span>
       <span>  
-        <UpdateCardExpiry loadWallets={loadWallets} email={email} userId={currentUserUserId} expiryDate={expiryDate} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
+        <UpdateCardExpiry loadProfileData={loadProfileData} loadWallets={loadWallets} email={email} userId={currentUserUserId} expiryDate={expiryDate} walletId={walletId} loadData={loadWallets} firstName={cardHolderName}/>
         </span>
       </div>    
       </CardActions>
     </Card>
+    {showAlert && (
+          <Alert
+            handleAlertClose={handleAlertClose}
+            message={"set another wallet as default to proceed with deletion of default wallet"}
+            showAlert={showAlert}
+          />
+        )}
     </div>
   );
 }

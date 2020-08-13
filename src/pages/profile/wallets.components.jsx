@@ -4,29 +4,24 @@ import { Divider } from "@material-ui/core";
 import ProfileDataService from "../../services/profile-service";
 import { WalletCard } from "../../components/card/WalletCard.component";
 import AddCardModal from "../../components/Modal/add-card-form.component";
-import { ActionConformationModal } from "../../components/Modal/action-conformation-modal.component";
+import WalletImage from "../../assets/wallet.webp";
 
 class Wallets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // email: this.props.userEmail,
-      // currentUserUserId: null,
       wallets: [],
       cardHolderName: "",
       cardNumber: "",
       expiryDate: "",
       defaultCard: "",
       user: null,
+      walletCounter:""
     };
   }
 
   componentDidMount() {
-    // this.setState({
-    //   email:this.props.email,
-    //   currentUserUserId:this.props.UserId
-
-    // })
+  
     this.loadProfileData();
     this.loadWallets();
   }
@@ -36,6 +31,7 @@ class Wallets extends React.Component {
       .then((response) => {
         this.setState({
           wallets: response.data,
+          walletCounter:response.data.length
         });
       })
       .catch((e) => {
@@ -57,9 +53,24 @@ class Wallets extends React.Component {
   };
 
   render() {
-    console.log(this.state,"#################################")
-    console.log(this.props,"#################################")
+  
+    if ( this.state.wallets.length === 0)
     return (
+      <div className="no-address">
+          <AddCardModal
+            UserId={this.props.userId}
+            email={this.props.userEmail}
+            loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
+          />
+        <div className="No-wallet-placeholder"> 
+          
+            <img src={WalletImage} style={{width:"auto",height:"15vw",marginTop:"15%"}}/>
+                
+        </div>
+      </div>
+    );
+   else return (
       <div className="profile-addresses-page">
         <div
           className="heading"
@@ -77,6 +88,8 @@ class Wallets extends React.Component {
             UserId={this.props.userId}
             email={this.props.userEmail}
             loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
+            walletCounter={this.state.walletCounter}
           />
         </div>
         <h5>DEFAULT CARD</h5>
@@ -85,6 +98,7 @@ class Wallets extends React.Component {
             return (
               <WalletCard
                 loadWallets={this.loadWallets}
+                loadProfileData={this.loadProfileData}
                 email={this.props.userEmail}
                 walletId={wallet.wallet_id}
                 currentUserUserId={this.props.userId}
@@ -101,6 +115,7 @@ class Wallets extends React.Component {
             return (
               <WalletCard
                 loadWallets={this.loadWallets}
+                loadProfileData={this.loadProfileData}
                 email={this.props.userEmail}
                 walletId={wallet.wallet_id}
                 currentUserUserId={this.props.userId}

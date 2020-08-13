@@ -59,9 +59,7 @@ class ProfileDetailPage extends React.Component {
       show,
     } = this.state;
     const {userEmail}=this.props
-    // console.log(this.state.user)
-
-    
+       
       return (
         <div className="profilePage">
           <h2>PROFILE INFORMATION</h2>
@@ -80,51 +78,3 @@ class ProfileDetailPage extends React.Component {
   }
 }
 export default ProfileDetailPage;
-// else
-// return (
-//   <div>
-//     {!show && (
-//       <div>
-//         <button
-//           style={{
-//             border: "none",
-//             backgroundColor: "inherit",
-//             marginBottom: "10%",
-//             minWidth: "340px",
-//             fontSize: "25px",
-//             cursor: "pointer",
-//             display: "inline-block",
-//           }}
-//           onClick={this.hideComponent}
-//           class="default-button"
-//         >
-//           {" "}
-//           I do not have an account
-//         </button>
-//         <h3>Sign in with email and password</h3>
-//          <SignInForm />
-//       </div>
-//     )}
-//     {show && (
-//       <div style={{ padding: "2%", width: "50%" }}>
-//         <button
-//           style={{
-//             border: "none",
-//             backgroundColor: "inherit",
-//             marginBottom: "10%",
-//             minWidth: "400px",
-//             fontSize: "25px",
-//             cursor: "pointer",
-//             display: "inline-block",
-//           }}
-//           onClick={this.hideComponent}
-//           class="default-button"
-//         >
-//           I already have an account
-//         </button>
-//         <h3>Sign Up with email and password</h3>
-//         <SignUp />
-//       </div>
-//     )}
-//   </div>
-// );

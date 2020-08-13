@@ -11,6 +11,7 @@ import Wallets from "./wallets.components";
 import "./profile.styles.scss";
 import Login from "../../components/login/login.component";
 import {  Redirect } from "react-router-dom";
+import { Divider, CssBaseline } from "@material-ui/core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,6 +46,16 @@ function a11yProps(index) {
   };
 }
 
+const ColoredLine = ({ color }) => (
+  <hr
+      style={{
+          color: "red",
+          backgroundColor: "red",
+          height: 5
+      }}
+  />
+);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -67,9 +78,29 @@ export default function Profile(props) {
   };
   if (props.email==null) return <Redirect to="/login"/>;
    return (
-    
+     <div    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+
+     }} >
+     <span   style={{
+            display: "flex",
+            flexDirection: "row",
+            // justifyContent: "space-around",
+            alignItems: "center",
+            padding:"1%",
+            // borderBottom:"solid",
+            // borderBlockEndWidth:"1px",
+            // borderColor:"pink",
+          
+            marginLeft:"2%",
+            // marginBottom:"2%"
+          }}> <img className="option" class="ui mini circular image" src={localStorage.getItem('imageUrl')}/>&nbsp;&nbsp;<b>Welcome &nbsp;{localStorage.getItem('firstName')} </b> &nbsp;!!
+          
+          </span>
     <div className={classes.root}>
-      
+           
    
       <Tabs
         orientation="vertical"        // variant="scrollable"
@@ -82,13 +113,6 @@ export default function Profile(props) {
         <Tab label="Addresses" {...a11yProps(1)} />
         <Tab label="SaveCards" {...a11yProps(2)} />
       </Tabs>
-      <div    style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-            marginLeft: "4%",
-          }}> <img  className="option" class="ui small circular image" src={localStorage.getItem('imageUrl')}/><b><i>Welcome &nbsp;{localStorage.getItem('firstName')} &nbsp;{localStorage.getItem('lastName')} &nbsp;!!</i></b></div>
-   
       <div className="tabs" style={{ marginLeft: "10%", minWidth: "30%" ,fontStyle:"bold"}}>
         <TabPanel value={value} index={0}>
           <ProfileDetailPage userEmail={props.email} />
@@ -100,7 +124,7 @@ export default function Profile(props) {
           <Wallets userEmail={props.email} userId={props.userId} />
         </TabPanel>
       </div>
+      </div>
     </div>
   );
-
 }

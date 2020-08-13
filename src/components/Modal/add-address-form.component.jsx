@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Button, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
 import Switch from '@material-ui/core/Switch';
+import   RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
 
+import Alert from "../alert/alert.component"
 
 class AddAddressModal extends Component {
 
@@ -17,9 +19,18 @@ class AddAddressModal extends Component {
             country: "",
             zipcode:"",
             checkedB:"false",
-            AddressId:""
+            AddressId:"",
+            addressType:"home",
+            ShowAlert:false
+           
           };        
     }
+
+  
+
+     handleAlertClose = () => {
+      this.setState({showAlert:false});
+    };
      handleToggleChange = (event) => {
       this.setState({ [event.target.name]: event.target.checked });
       console.log( event.target.checked)
@@ -28,14 +39,33 @@ class AddAddressModal extends Component {
     };
 
 
-  show = (dimmer) => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
+  show = (dimmer) => () => {
+    
+    if(this.props.addressCounter<5)
+    this.setState({ dimmer, open: true });
+    else this.setState({showAlert:true})
+  }
+  close = () => this.setState({ open: false,  
+    addressLine1: "",
+  addressLine2: "",
+  city: "",
+  state: "",
+  country: "",
+  zipcode:"",
+  checkedB:"false",
+  AddressId:"",
+  addressType:"" });
 
     //handle field change
    handleChange = event  => {
         const {value,name } = event.target;
         this.setState({[name]:value})
       };
+
+          //handle field change
+   handleTypeChange = (type) => {
+    this.setState({addressType:type})
+  };
 
       //handleFormSubmit
     handleSubmit= event => {
@@ -47,12 +77,14 @@ class AddAddressModal extends Component {
           city:this.state.city,
           zipcode:this.state.zipcode,
           state:this.state.state,
-          country:this.state.country  
+          country:this.state.country,
+          address_type:this.state.addressType  
         }
         if(this.state.checkedB===true)
         console.log("set as deafult",this.props.email)
         else console.log("no")
         // profileService.setDefaultAddressByEmailId()
+        console.log(this.state)
 
         profileService.createAddress(data)
         .then(response=>this.setState({ AddressId: response.data.address_id }))
@@ -62,7 +94,7 @@ class AddAddressModal extends Component {
             profileService
               .setDefaultAddressByEmailId(this.props.email, this.state.AddressId)
               .then((response) => console.log(response))
-              .then(this.props.loadAddresses)
+              .then(this.props.loadProfileData)
               .catch((e) => console.log(e));
           }
         })
@@ -179,6 +211,7 @@ class AddAddressModal extends Component {
                 />
               </div>
             </div>
+            <RadioButtonsGroup handleTypeChange={this.handleTypeChange}/>
             <div>Make default addresss</div>
             <Switch
         checked={state.checkedB}
@@ -217,6 +250,13 @@ class AddAddressModal extends Component {
             </div>
           </form>
         </Modal>
+        {this.state.showAlert && (
+          <Alert
+            handleAlertClose={this.handleAlertClose}
+            message={"you have reached your max address storage limit to add a new address delete an existing one"}
+            showAlert={this.state.showAlert}
+          />
+        )}
       </div>
     );
   }

@@ -3,6 +3,7 @@ import "./profile.styles.scss";
 import ProfileDataService from "../../services/profile-service";
 import { AddressCard } from "../../components/card/AddressCard.component";
 import AddAddressModal from "../../components/Modal/add-address-form.component";
+import LocationImage from "../../assets/map.webp";
 
 class Addresses extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Addresses extends React.Component {
       defaultAddress: "",
       default: "",
       otherAddresses: "",
+      addressCounter:""
     };
   }
 
@@ -32,8 +34,7 @@ class Addresses extends React.Component {
             lastName: response.data.last_name,
             mobile: response.data.mobile,
             defaultAddress: response.data.default_address,
-          },
-       
+          },       
         );
       })
       .catch((e) => {
@@ -46,6 +47,7 @@ class Addresses extends React.Component {
       .then((response) => {
         this.setState({
           addresses: response.data,
+         addressCounter:response.data.length
         });
       })
       .catch((e) => {
@@ -53,9 +55,25 @@ class Addresses extends React.Component {
       });
   };
 
-  render() {
-    
+  render() {    
+    console.log(this.state)
+    if ( this.state.addresses.length === 0)
     return (
+      <div className="no-address">
+               <AddAddressModal
+            userId={this.props.userId}
+            email={this.props.userEmail}
+            loadAddresses={this.loadAddresses}
+            loadProfileData={this.loadProfileData}
+            addressCounter={this.state.addressCounter}
+          />
+        <div className="NoAddress">       
+            <img src={LocationImage} style={{width:"auto",height:"25vw"}}/>          
+        </div>
+      </div>
+    );
+    
+    else return (
       <div className="profile-addresses-page">
         <div
           className="heading"
@@ -69,11 +87,16 @@ class Addresses extends React.Component {
           <span>
             <h2>SAVED ADDRESSES</h2>
           </span>
-          <AddAddressModal
+          
+         <AddAddressModal
             userId={this.props.userId}
             email={this.props.userEmail}
             loadAddresses={this.loadAddresses}
+            loadProfileData={this.loadProfileData}
+            addressCounter={this.state.addressCounter}
+            
           />
+   
         </div>
 
         <div className="card-list">
@@ -81,7 +104,7 @@ class Addresses extends React.Component {
           {this.state.addresses.map((address) => {
             if (address.address_id === this.state.defaultAddress)
               return (
-                <AddressCard
+                <AddressCard key={address.addressId}
                   loadAddresses={this.loadAddresses}
                   loadProfileData={this.loadProfileData}
                   emailId={this.props.userEmail}
@@ -90,6 +113,7 @@ class Addresses extends React.Component {
                   firstName={this.state.firstName}
                   lastName={this.state.lastName}
                   mobile={this.state.mobile}
+                  addressType={address.address_type}
                   addressLine1={address.address_line1}
                   addressLine2={address.address_line2}
                   city={address.city}
@@ -97,6 +121,7 @@ class Addresses extends React.Component {
                   country={address.country}
                   zipcode={address.zipcode}
                   defaultAddress={this.state.defaultAddress}
+            
                 />
               );
           })}
@@ -104,7 +129,7 @@ class Addresses extends React.Component {
           {this.state.addresses.map((address) => {
             if (address.address_id !== this.state.defaultAddress)
               return (
-                <AddressCard
+                <AddressCard key={address.addressId}
                   loadAddresses={this.loadAddresses}
                   loadProfileData={this.loadProfileData}
                   emailId={this.props.userEmail}
@@ -115,6 +140,7 @@ class Addresses extends React.Component {
                   lastName={this.state.lastName}
                   mobile={this.state.mobile}
                   addressLine1={address.address_line1}
+                  addressType={address.address_type}
                   addressLine2={address.address_line2}
                   city={address.city}
                   state={address.state}

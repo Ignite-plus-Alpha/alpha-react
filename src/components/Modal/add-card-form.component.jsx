@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, Header, Image, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
 import Switch from "@material-ui/core/Switch";
+import Alert from "../alert/alert.component"
 
 class AddCardModal extends Component {
   constructor(props) {
@@ -14,11 +15,24 @@ class AddCardModal extends Component {
       upiid: "",
       checkedA: "false",
       cardId: "",
+      ShowAlert:false
     };
   }
+  handleAlertClose = () => {
+    this.setState({showAlert:false});
+  };
 
-  show = (dimmer) => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
+  show = (dimmer) => () => {
+    if(this.props.walletCounter<5)
+    this.setState({ dimmer, open: true });
+    else this.setState({showAlert:true})
+  }
+
+
+  close = () => this.setState({ open: false,    cardHolderName: "",
+  cardNumber: "",
+  expirydate: "",
+  upiid: "" });
   handleToggleChange = (event) => {
     this.setState({ [event.target.name]: event.target.checked });
   };
@@ -40,12 +54,7 @@ class AddCardModal extends Component {
     };
     console.log(this.props)
 
-    // profileService.createWallet(data)
-    // .then(response=>console.log(response.data))
-    // .then(this.props.loadWallets)
-    // .catch(e=>console.log(e))
-
-    profileService
+      profileService
       .createWallet(data)
       .then((response) => this.setState({ cardId: response.data.wallet_id }))
       .then(() => {
@@ -53,11 +62,11 @@ class AddCardModal extends Component {
         if (this.state.checkedA === true) {
           profileService
             .setDefaultWalletByEmailId(this.props.email, this.state.cardId)
-            .then((response) => console.log(response))
-            .then(this.props.loadWallets)
+            .then(this.props.loadProfileData)
             .catch((e) => console.log(e));
         }
       })
+      .then(this.props.loadWallets)
       .catch((e) => console.log(e));
     this.setState({
       cardHolderName: "",
@@ -188,6 +197,13 @@ class AddCardModal extends Component {
             </div>
           </form>
         </Modal>
+        {this.state.showAlert && (
+          <Alert
+            handleAlertClose={this.handleAlertClose}
+            message={"sorry!! you have reached your max wallet limit.to add a new wallet delete an existing one"}
+            showAlert={this.state.showAlert}
+          />
+        )}
       </div>
     );
   }

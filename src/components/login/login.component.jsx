@@ -8,6 +8,7 @@ import Axios from "axios";
 import { Divider } from "@material-ui/core";
 import { Redirect } from "react-router-dom";
 import { withRouter, useHistory } from "react-router-dom";
+import './login-form.styles.css'
 
 const styles = (theme) => ({
   button: {
@@ -73,13 +74,15 @@ class Login extends Component {
 
     console.log(this.props, "!!!");
     return (
-      <center>
+      
         <div
           className="sign-in-form"
-          style={{ maxWidth: "400px", alignSelf: "center" }}
-        >
+          style={{ maxWidth: "400px", float: "center" }}
+          >      
+      
+
           <form>
-            <div style={{ fontSize: 28 }}>Sign In</div>
+            <div style={{ fontSize: 28,alignContent:"center" }}>Sign In</div>
             <br />
 
             <TextField
@@ -132,12 +135,11 @@ class Login extends Component {
               <Divider />
               <div style={{ fontSize: 16 }}>
                 <br />
-                Sign in with Google
                 <GoogleLogin
                   className="google-signin-button"
                   clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
-                  //isSignedIn={true}
-                  buttonText="Login"
+                  isSignedIn={true}
+                  buttonText="SIGN IN"
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}
                   cookiePolicy={"single_host_origin"}
@@ -149,7 +151,8 @@ class Login extends Component {
             <a href="/signup">Don't have an account?</a>
           </form>
         </div>
-      </center>
+
+     
     );
   }
 }
