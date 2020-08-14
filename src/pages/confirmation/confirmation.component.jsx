@@ -12,11 +12,12 @@ import { width, height } from "@material-ui/system";
 import AddAddressModal from "../../components/Modal/add-address-form.component";
 import AddCardModal from "../../components/Modal/add-card-form.component";
 import { Redirect } from "react-router-dom";
+import Card from "../cart/cart.card";
+import AddressList from "./addressList";
+import CardList from "./cardList";
 
 const styles = (theme) => ({
   confirmation: {
-    marginLeft: "2%",
-    marginRight: "2%",
     marginLeft: "2%",
     marginRight: "2%",
   },
@@ -39,6 +40,7 @@ class Confirmation extends Component {
       addressCounter: "",
       walletCounter: "",
       isProccedToPayClicked: false,
+      items: [],
     };
   }
 
@@ -52,11 +54,13 @@ class Confirmation extends Component {
     this.setState({
       total_price: this.props.location.state.total_price,
       total_quantity: this.props.location.state.total_quantity,
-      isLoaded: true,
+      items: this.props.location.state.items,
+      //isLoaded: true,
     });
     this.loadProfileData();
     this.loadAddresses();
     this.loadWallets();
+    this.setState({ isLoaded: true });
   };
 
   loadProfileData = () => {
@@ -132,178 +136,166 @@ class Confirmation extends Component {
     if (!this.state.isLoaded) return <div></div>;
     return (
       <div className={classes.confirmation}>
-        <div>
+        <div className={classes.root}>
           <p style={{ fontSize: "28px", textAlign: "center" }}>CONFIRMATION</p>
 
-          <br />
           <div>
             <Grid
               container
-              className={classes.root}
-              direction="column"
-              justify="flex-start"
+              direction="row"
+              // justify="space-evenly"
+              alignItems="flex-start"
             >
               <Grid
                 container
-                spacing={40}
                 direction="row"
-                justify="space-evenly"
+                justify="flex-start"
                 alignItems="flex-start"
               >
-                {this.state.addresses.map((address, index) => {
-                  if (this.state.selectedAddressId === address.address_id) {
-                    return (
-                      <div>
-                        <Typography
-                          className={classes.title}
-                          variant="h5"
-                          component="h2"
-                          width="auto"
-                          gutterBottom
-                        >
-                          <LocationOnIcon fontSize="inherit" />
-                          &nbsp; Delivery Address
-                        </Typography>
-                        <DeliveryAddressCard
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="flex-start"
+                >
+                  {this.state.addresses.map((address, index) => {
+                    if (this.state.selectedAddressId === address.address_id) {
+                      return (
+                        <div>
+                          <Typography
+                            className={classes.title}
+                            variant="h5"
+                            component="h2"
+                            width="auto"
+                            gutterBottom
+                          >
+                            <LocationOnIcon fontSize="inherit" />
+                            &nbsp; Delivery Address
+                          </Typography>
+                          <DeliveryAddressCard
+                            key={index}
+                            address={address}
+                            handleChangeAddress={this.handleChangeAddress}
+                            selectedAddressId={this.state.selectedAddressId}
+                          />
+                        </div>
+                      );
+                    }
+                  })}
+
+                  {this.state.wallets.map((wallet, index) => {
+                    if (this.state.selectedCardId === wallet.wallet_id) {
+                      return (
+                        <div>
+                          <Typography
+                            className={classes.title}
+                            variant="h5"
+                            component="h2"
+                            width="auto"
+                            gutterBottom
+                          >
+                            <CreditCardIcon fontSize="inherit" />
+                            &nbsp; Selected Card
+                          </Typography>
+                          <WalletCard
+                            key={index}
+                            wallet={wallet}
+                            handleChangeCard={this.handleChangeCard}
+                            selectedCardId={this.state.selectedCardId}
+                          />
+                        </div>
+                      );
+                    }
+                  })}
+                </Grid>
+                <Grid container direction="row">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Typography
+                      className={classes.title}
+                      variant="h5"
+                      component="h2"
+                      width="auto"
+                      gutterBottom
+                    >
+                      Other Address:
+                    </Typography>
+
+                    <AddAddressModal
+                      userId={localStorage.getItem("userId")}
+                      email="pragathiindran@gmail.com"
+                      loadAddresses={this.loadAddresses}
+                      loadProfileData={this.loadProfileData}
+                      addressCounter={this.state.addressCounter}
+                    />
+                  </Grid>
+                  {this.state.addresses.map((address, index) => {
+                    if (this.state.selectedAddressId !== address.address_id) {
+                      return (
+                        <AddressList
                           key={index}
                           address={address}
                           handleChangeAddress={this.handleChangeAddress}
                           selectedAddressId={this.state.selectedAddressId}
                         />
-                      </div>
-                    );
-                  }
-                })}
-
-                {this.state.wallets.map((wallet, index) => {
-                  if (this.state.selectedCardId === wallet.wallet_id) {
-                    return (
-                      <div>
-                        <Typography
-                          className={classes.title}
-                          variant="h5"
-                          component="h2"
-                          width="auto"
-                          gutterBottom
-                        >
-                          <CreditCardIcon fontSize="inherit" />
-                          &nbsp; Selected Card
-                        </Typography>
-                        <WalletCard
+                      );
+                    }
+                  })}
+                </Grid>
+                <Grid container direction="row">
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="flex-start"
+                  >
+                    <Typography
+                      className={classes.title}
+                      variant="h5"
+                      component="h2"
+                      width="auto"
+                      gutterBottom
+                    >
+                      Other Card:
+                    </Typography>
+                    <AddCardModal
+                      UserId={localStorage.getItem("userId")}
+                      email="pragathiindran@gmail.com"
+                      loadWallets={this.loadWallets}
+                      loadProfileData={this.loadProfileData}
+                      walletCounter={this.state.walletCounter}
+                    />
+                  </Grid>
+                  {this.state.wallets.map((wallet, index) => {
+                    if (this.state.selectedCardId !== wallet.wallet_id) {
+                      return (
+                        <CardList
                           key={index}
                           wallet={wallet}
                           handleChangeCard={this.handleChangeCard}
                           selectedCardId={this.state.selectedCardId}
                         />
-                      </div>
-                    );
-                  }
-                })}
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="flex-start"
-              >
-                <Typography
-                  className={classes.title}
-                  variant="h5"
-                  component="h2"
-                  width="auto"
-                  gutterBottom
-                >
-                  Other Address:
-                </Typography>
-
-                <AddAddressModal
-                  userId={localStorage.getItem("userId")}
-                  email="pragathiindran@gmail.com"
-                  loadAddresses={this.loadAddresses}
-                  loadProfileData={this.loadProfileData}
-                  addressCounter={this.state.addressCounter}
-                />
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="flex-start"
-              >
-                {this.state.addresses.map((address, index) => {
-                  if (this.state.selectedAddressId !== address.address_id) {
-                    return (
-                      <DeliveryAddressCard
-                        key={index}
-                        address={address}
-                        handleChangeAddress={this.handleChangeAddress}
-                        selectedAddressId={this.state.selectedAddressId}
-                      />
-                    );
-                  }
-                })}
-              </Grid>
-              <br />
-              <br />
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="flex-start"
-              >
-                <Typography
-                  className={classes.title}
-                  variant="h5"
-                  component="h2"
-                  width="auto"
-                  gutterBottom
-                >
-                  Other Card:
-                </Typography>
-                <AddCardModal
-                  UserId={localStorage.getItem("userId")}
-                  email="pragathiindran@gmail.com"
-                  loadWallets={this.loadWallets}
-                  loadProfileData={this.loadProfileData}
-                  walletCounter={this.state.walletCounter}
-                />
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="flex-start"
-              >
-                {this.state.wallets.map((wallet, index) => {
-                  if (this.state.selectedCardId !== wallet.wallet_id) {
-                    return (
-                      <WalletCard
-                        key={index}
-                        wallet={wallet}
-                        handleChangeCard={this.handleChangeCard}
-                        selectedCardId={this.state.selectedCardId}
-                      />
-                    );
-                  }
-                })}
+                      );
+                    }
+                  })}
+                </Grid>
               </Grid>
             </Grid>
-          </div>
-          <br />
-          <div style={{ textAlign: "center" }}>
-            <h1>
-              Total Price:{this.state.total_price}
-              <br />
-              Total Items:{this.state.total_quantity}
-            </h1>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={this.proceedToPayClicked}
-              style={{ minWidth: 200 }}
-            >
-              Proceed To Pay
-            </Button>
+            <div style={{ textAlign: "center" }}>
+              <h2>Total Price:{this.state.total_price}</h2>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.proceedToPayClicked}
+                style={{ minWidth: 200 }}
+              >
+                Proceed To Pay
+              </Button>
+            </div>
           </div>
         </div>
       </div>

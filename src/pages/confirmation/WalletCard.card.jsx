@@ -29,40 +29,38 @@ class WalletCard extends Component {
     const { classes, wallet, handleChangeCard } = this.props;
     return (
       <div>
-        <Card className={classes.root}>
-          <CardContent>
-            <Typography variant="h5" style={{ marginBottom: "2%" }}>
-              {/* <CardActions> */}
-              <Radio
-                checked={this.props.selectedCardId === wallet.wallet_id}
-                onChange={handleChangeCard}
-                value={wallet.wallet_id}
-                color="default"
-                name="radio-button-demo"
-              />
-              {/* </CardActions> */}
-              Card Details
-            </Typography>
-            <Divider style={{ marginBottom: "1%" }} />
-            <Typography className={classes.pos} color="bold">
-              Name&nbsp;:&nbsp;{wallet.cardholder_name}
-            </Typography>
-            <Typography className={classes.pos} color="bold">
-              Card Number &nbsp;:&nbsp;
-              {
-                (wallet.card_number = wallet.card_number
-                  .toString()
-                  .replace(/\d(?=\d{4})/g, "*"))
-              }
-            </Typography>
-            <Typography className={classes.pos} color="bold">
-              Expiry&nbsp;Date&nbsp;:&nbsp;{wallet.expiry_date}
-            </Typography>
-            <Typography className={classes.pos} color="bold">
-              UPI&nbsp;Id&nbsp;:&nbsp;{wallet.upi_id}
-            </Typography>
-          </CardContent>
-        </Card>
+        <b>
+          <h5>
+            <Card className={classes.root}>
+              <CardContent>
+                <Typography variant="h6" style={{ marginBottom: "2%" }}>
+                  Card Details
+                </Typography>
+                <Divider style={{ marginBottom: "1%" }} />
+                <Typography className={classes.pos} color="bold" variant="h7">
+                  Name&nbsp;:&nbsp;{wallet.cardholder_name}
+                  <br />
+                </Typography>
+                <Typography className={classes.pos} color="bold" variant="h7">
+                  Card Number &nbsp;:&nbsp;
+                  {
+                    (wallet.card_number = wallet.card_number
+                      .toString()
+                      .replace(/\d(?=\d{4})/g, "*"))
+                  }
+                </Typography>
+                <br />
+                <Typography className={classes.pos} color="bold" variant="h7">
+                  Expiry&nbsp;Date&nbsp;:&nbsp;{wallet.expiry_date}
+                </Typography>
+                <br />
+                <Typography className={classes.pos} color="bold" variant="h7">
+                  UPI&nbsp;Id&nbsp;:&nbsp;{wallet.upi_id}
+                </Typography>
+              </CardContent>
+            </Card>
+          </h5>
+        </b>
       </div>
     );
   }

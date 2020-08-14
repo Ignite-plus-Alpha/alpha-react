@@ -30,46 +30,45 @@ class DeliveryAddressCard extends Component {
     const { classes, address, handleChangeAddress } = this.props;
     return (
       <div>
-        <Card className={classes.root}>
-          <CardContent>
-            <div className="card header">
-              <Typography variant="h5" style={{ marginBottom: "2%" }}>
-                <Radio
-                  checked={this.props.selectedAddressId === address.address_id}
-                  onChange={handleChangeAddress}
-                  value={address.address_id}
-                  color="default"
-                  name="radio-button-demo"
-                />
-                Address Details
-                <Chip
-                  icon={<LocationOn />}
-                  label={address.address_type}
-                  className={classes.chip}
-                  color="primary"
-                  position="relative"
-                  left="20px"
-                  size="small"
-                />
-              </Typography>
-            </div>
+        <b>
+          <h5>
+            <Card className={classes.root}>
+              <CardContent>
+                <div className="card header">
+                  <Typography variant="h6" style={{ marginBottom: "2%" }}>
+                    Address Details
+                    <Chip
+                      icon={<LocationOn />}
+                      label={address.address_type}
+                      className={classes.chip}
+                      color="primary"
+                      position="relative"
+                      left="20px"
+                      size="small"
+                    />
+                  </Typography>
+                </div>
 
-            <Divider style={{ marginBottom: "1%" }} />
-            <Typography className={classes.pos} color="bold">
-              {address.first_Name}&nbsp;{address.last_name}
-            </Typography>
-            <Typography className={classes.pos} color="bold">
-              {address.address_line1}&nbsp;{address.address_line2}
-              <br />
-              {address.city},&nbsp;{address.state},&nbsp;{address.country}
-              <br />
-              zipcode : {address.zipcode}
-            </Typography>
-            {/* <Typography className={classes.pos} color="bold">
+                <Divider style={{ marginBottom: "1%" }} />
+                {/* <Typography className={classes.pos} color="bold">
+                  {address.first_Name}&nbsp;{address.last_name}
+                </Typography> */}
+                <Typography className={classes.pos} color="bold" variant="h7">
+                  {address.address_line1}&nbsp;{address.address_line2}
+                  <br />
+                  {address.city},&nbsp;
+                  <br />
+                  {address.state},&nbsp;{address.country}
+                  <br />
+                  zipcode : {address.zipcode}
+                </Typography>
+                {/* <Typography className={classes.pos} color="bold">
               mobile : {mobile}
             </Typography> */}
-          </CardContent>
-        </Card>
+              </CardContent>
+            </Card>
+          </h5>
+        </b>
       </div>
     );
   }

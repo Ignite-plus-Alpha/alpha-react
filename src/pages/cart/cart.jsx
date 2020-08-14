@@ -55,6 +55,7 @@ export default class CartPage extends Component {
             state: {
               total_price: this.state.total_price,
               total_quantity: this.state.total_quantity,
+              items: this.state.cartItems,
             },
           }}
         />

@@ -13,6 +13,7 @@
     "material-design-icons": "^3.0.1",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-credit-cards": "^0.8.3",
     "react-dom": "^16.13.1",
     "react-google-login": "^5.1.21",
     "react-paginate": "^6.3.2",

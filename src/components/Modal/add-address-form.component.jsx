@@ -264,23 +264,6 @@ class AddAddressModal extends Component {
                   CANCEL
                 </Button>
               </span>
-              {/* <span style={{ minWidth: "150px" }}>
-                <Button positive type="submit" value="Submit Form">
-                  <i class="add  icon"></i>
-                  Add
-                </Button>
-              </span>
-              <span>
-                {" "}
-                <button
-                  class="ui google plus button"
-                  style={{ minWidth: "120px" }}
-                  onClick={this.close}
-                >
-                  <i class="delete  icon"></i>
-                  Cancel
-                </button>
-              </span> */}
             </div>
           </form>
         </Modal>

@@ -82,7 +82,6 @@ class AddCardModal extends Component {
       upiid: "",
       expirydate: "",
       open: false,
-      checkedA: false,
     });
   };
 
@@ -196,7 +195,7 @@ class AddCardModal extends Component {
                     placeholder="Expiry Date"
                     onChange={this.handleChange}
                     value={expirydate}
-                    min="2020-07"
+                    min="2020-09"
                     required
                   ></input>
                 </div>
@@ -218,7 +217,7 @@ class AddCardModal extends Component {
                   marginTop: "3%",
                 }}
               >
-                <span style={{ minWidth: "150px" }}>
+                {/* <span style={{ minWidth: "150px" }}>
                   <Button positive type="submit" value="Submit Form">
                     Add
                   </Button>
@@ -226,12 +225,38 @@ class AddCardModal extends Component {
                 <span>
                   {" "}
                   <button
-                    class="ui google plus button"
+                    
                     style={{ minWidth: "120px" }}
                     onClick={this.close}
                   >
                     Cancel
                   </button>
+                </span> */}
+                <span style={{ minWidth: "200" }}>
+                  {/* <Button positive type='submit' value='Submit Form'>
+                  Update
+                </Button> */}
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    value="Submit Form"
+                    style={{ backgroundColor: "#F50057", color: "white" }}
+                  >
+                    ADD
+                  </Button>
+                </span>
+                <span>
+                  {" "}
+                  {/* <Button negative onClick={this.close}>                  
+                  Cancel
+                </Button> */}
+                  <Button
+                    variant="contained"
+                    onClick={this.close}
+                    style={{ backgroundColor: "#3F51B5", color: "white" }}
+                  >
+                    CANCEL
+                  </Button>
                 </span>
               </div>
             </form>

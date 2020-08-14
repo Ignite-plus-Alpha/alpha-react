@@ -161,11 +161,11 @@ class Confirmation extends Component {
           </div>
 
           <br />
-          <h1>
+          <h2>
             Total Price:{this.state.total_price}
             <br />
             Total Items:{this.state.total_quantity}
-          </h1>
+          </h2>
           <PayPalBtn
             total={this.state.total_price}
             // total={32}
