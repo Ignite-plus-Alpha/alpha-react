@@ -182,20 +182,28 @@ class AddCardModal extends Component {
                 marginTop: "3%",
               }}
             >
-              <span style={{ minWidth: "150px" }}>
-                <Button positive type="submit" value="Submit Form">
-                  Add
+              <span>
+                <Button
+                  variant="contained"
+                  type="submit"
+                  value="Submit Form"
+                  style={{ backgroundColor: "#F50057", color: "white" }}
+                >
+                  ADD
                 </Button>
               </span>
               <span>
                 {" "}
-                <button
-                  class="ui google plus button"
-                  style={{ minWidth: "120px" }}
-                  onClick={this.close}
-                >
+                {/* <Button negative onClick={this.close}>                  
                   Cancel
-                </button>
+                </Button> */}
+                <Button
+                  variant="contained"
+                  onClick={this.close}
+                  style={{ backgroundColor: "#3F51B5", color: "white" }}
+                >
+                  CANCEL
+                </Button>
               </span>
             </div>
           </form>

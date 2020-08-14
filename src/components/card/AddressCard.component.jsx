@@ -83,7 +83,11 @@ export function AddressCard({
               {defaultAddress === addressId ? (
                 <Chip size="small" label="Default" float="right" />
               ) : (
-                <OutlinedChips makeDefault={makeDefault} />
+                <OutlinedChips
+                  makeDefault={makeDefault}
+                  label="make default"
+                  symbol="D"
+                />
               )}{" "}
               Address Details
             </Typography>

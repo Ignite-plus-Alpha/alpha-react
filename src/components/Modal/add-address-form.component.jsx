@@ -238,7 +238,33 @@ class AddAddressModal extends Component {
                 marginTop: "3%",
               }}
             >
-              <span style={{ minWidth: "150px" }}>
+              <span style={{ minWidth: "200" }}>
+                {/* <Button positive type='submit' value='Submit Form'>
+                  Update
+                </Button> */}
+                <Button
+                  variant="contained"
+                  type="submit"
+                  value="Submit Form"
+                  style={{ backgroundColor: "#F50057", color: "white" }}
+                >
+                  ADD
+                </Button>
+              </span>
+              <span>
+                {" "}
+                {/* <Button negative onClick={this.close}>                  
+                  Cancel
+                </Button> */}
+                <Button
+                  variant="contained"
+                  onClick={this.close}
+                  style={{ backgroundColor: "#3F51B5", color: "white" }}
+                >
+                  CANCEL
+                </Button>
+              </span>
+              {/* <span style={{ minWidth: "150px" }}>
                 <Button positive type="submit" value="Submit Form">
                   <i class="add  icon"></i>
                   Add
@@ -254,7 +280,7 @@ class AddAddressModal extends Component {
                   <i class="delete  icon"></i>
                   Cancel
                 </button>
-              </span>
+              </span> */}
             </div>
           </form>
         </Modal>

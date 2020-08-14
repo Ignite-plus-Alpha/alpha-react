@@ -20,11 +20,12 @@ function OutlinedChips(props) {
   return (
     <span className={classes.root}>
       <Chip
-        avatar={<Avatar>P</Avatar>}
-        label="Make Preferred"
+        avatar={<Avatar>{props.symbol}</Avatar>}
+        //label="Make Preferred"
         onClick={handleClick}
         className={classes.chip}
         variant="outlined"
+        label={props.label}
       />
     </span>
   );

@@ -12,7 +12,7 @@ class ProfileDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-       //userEmail: "chinmay@gmail.com",
+      //userEmail: "chinmay@gmail.com",
       // userEmail: null,
       user: null,
       firstName: "",
@@ -50,7 +50,6 @@ class ProfileDetailPage extends React.Component {
 
   render() {
     const {
-      
       firstName,
       lastName,
       mobile,
@@ -58,23 +57,22 @@ class ProfileDetailPage extends React.Component {
       showSignUp,
       show,
     } = this.state;
-    const {userEmail}=this.props
-       
-      return (
-        <div className="profilePage">
-          <h2>PROFILE INFORMATION</h2>
-          <br/><br/>
-          <ProfileDetailCard
-            email={userEmail}
-            firstName={firstName}
-            lastName={lastName}
-            mobile={mobile}
-            loadData={this.loadData}
-          />
-          
-        </div>
-      );
+    const { userEmail } = this.props;
 
+    return (
+      <div className="profilePage">
+        <h2 style={{ color: "teal" }}>PROFILE INFORMATION</h2>
+        <br />
+        <br />
+        <ProfileDetailCard
+          email={userEmail}
+          firstName={firstName}
+          lastName={lastName}
+          mobile={mobile}
+          loadData={this.loadData}
+        />
+      </div>
+    );
   }
 }
 export default ProfileDetailPage;

@@ -91,9 +91,13 @@ export function WalletCard({
         <CardContent>
           <Typography variant="h5" style={{ marginBottom: "2%" }}>
             {defaultCard === walletId ? (
-              <Chip size="small" label="Preffered" float="right" />
+              <Chip size="small" label="Preferred" float="right" />
             ) : (
-              <OutlinedChips makeDefault={makeDefault} />
+              <OutlinedChips
+                makeDefault={makeDefault}
+                label="make preferred"
+                symbol="P"
+              />
             )}{" "}
             Card Details
           </Typography>
