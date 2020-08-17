@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ProfileDataService from "../../services/profile-service";
+import AddCardModal from "../../components/Modal/add-card-form.component";
 
 import CardList from "./cardList";
 
@@ -9,7 +10,7 @@ const styles = (theme) => ({
     marginLeft: "2%",
     marginRight: "2%",
   },
-  root: { textTransform: "capitalize" },
+  add: { alignItems: "right", textAlign: "right" },
 });
 
 class Card extends Component {
@@ -72,6 +73,15 @@ class Card extends Component {
     if (!this.state.isLoaded) return <div></div>;
     return (
       <div className={classes.confirmation}>
+        <div className={classes.add}>
+          <AddCardModal
+            UserId={localStorage.getItem("userId")}
+            email="pragathiindran@gmail.com"
+            loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
+            walletCounter={this.state.walletCounter}
+          />
+        </div>
         {this.state.wallets.map((wallet, index) => (
           <CardList
             key={index}

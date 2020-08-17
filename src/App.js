@@ -10,7 +10,6 @@ import AboutUs from "./pages/AboutUs/aboutus.component";
 import Signup from "./pages/signup/signup";
 import { Footer } from "./components/footer/footer.components";
 import Confirmation from "./pages/confirmation/confirmation.component.jsx";
-import Payment from "./pages/payment/payment";
 import CategoryPage from "./pages/category-page/category-page.component";
 import ItemPage from "./pages/item-page/item-page.component";
 import ProductDetailsPage from "./pages/product-details-page/product-details.component";
@@ -68,7 +67,6 @@ export default class App extends React.Component {
             )}
           />
           <Route exact path="/confirmation" component={Confirmation} />
-          <Route exact path="/payment" component={Payment} />
           <Route exact path="/invoice" component={Invoice} />
           <Route exact path="/:groupId" component={CategoryPage} />
           <Route exact path="/:groupId/:categoryId" component={ItemPage} />

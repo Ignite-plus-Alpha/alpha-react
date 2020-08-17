@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ProfileDataService from "../../services/profile-service";
 import AddressList from "./addressList";
+import AddAddressModal from "../../components/Modal/add-address-form.component";
 
 const styles = (theme) => ({
   confirmation: {
     marginLeft: "2%",
     marginRight: "2%",
   },
-  root: { textTransform: "capitalize" },
+  add: { alignItems: "right", textAlign: "right" },
 });
 
 class Address extends Component {
@@ -69,6 +70,15 @@ class Address extends Component {
     if (!this.state.isLoaded) return <div></div>;
     return (
       <div className={classes.confirmation}>
+        <div className={classes.add}>
+          <AddAddressModal
+            userId={localStorage.getItem("userId")}
+            email="pragathiindran@gmail.com"
+            loadAddresses={this.loadAddresses}
+            loadProfileData={this.loadProfileData}
+            addressCounter={this.state.addressCounter}
+          />
+        </div>
         {this.state.addresses.map((address, index) => (
           <div>
             <AddressList
