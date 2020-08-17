@@ -131,6 +131,7 @@ class Addresses extends React.Component {
               direction="row"
               justify="space-between"
               alignItems="flex-start"
+              style={{ maxWidth: "80%" }}
             >
               {this.state.addresses.map((address) => {
                 if (address.address_id !== this.state.defaultAddress)

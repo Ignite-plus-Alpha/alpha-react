@@ -111,7 +111,7 @@ class AddCardModal extends Component {
         <button
           onClick={this.show("blurring")}
           class="ui teal button"
-          style={{ position: "right", minWidth: "205px" }}
+          style={{ position: "right", minWidth: "205px", marginRight: "15vw" }}
         >
           <i className="fa  fa-credit-card"></i>
           &nbsp;&nbsp;&nbsp;

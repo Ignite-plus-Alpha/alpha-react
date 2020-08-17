@@ -20,8 +20,11 @@ import "./card.styles.css";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 10,
-    margin: 5,
+    minHeight: 280,
+    minWidth: 400,
+    maxWidth: 400,
+    // margin: 5,
+    marginBottom: 30,
   },
   pos: {
     marginBottom: 2,

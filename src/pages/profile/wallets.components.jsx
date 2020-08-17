@@ -118,6 +118,7 @@ class Wallets extends React.Component {
             direction="row"
             justify="space-between"
             alignItems="flex-start"
+            style={{ maxWidth: "80%" }}
           >
             {this.state.wallets.map((wallet) => {
               if (wallet.wallet_id !== this.state.defaultCard)
@@ -136,22 +137,6 @@ class Wallets extends React.Component {
                 );
             })}
           </Grid>
-          {/* {this.state.wallets.map((wallet) => {
-            if (wallet.wallet_id !== this.state.defaultCard)
-              return (
-                <WalletCard
-                  loadWallets={this.loadWallets}
-                  loadProfileData={this.loadProfileData}
-                  email={this.props.userEmail}
-                  walletId={wallet.wallet_id}
-                  currentUserUserId={this.props.userId}
-                  cardHolderName={wallet.cardholder_name}
-                  cardNumber={wallet.card_number}
-                  expiryDate={wallet.expiry_date}
-                  defaultCard={this.state.defaultCard}
-                />
-              );
-          })} */}
         </div>
       );
   }

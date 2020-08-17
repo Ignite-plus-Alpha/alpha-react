@@ -25,6 +25,7 @@ function OutlinedChips(props) {
         onClick={handleClick}
         className={classes.chip}
         variant="outlined"
+        color="secondary"
         label={props.label}
       />
     </span>
