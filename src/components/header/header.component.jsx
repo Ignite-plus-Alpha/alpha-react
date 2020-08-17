@@ -22,6 +22,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Axios from "axios";
+import { GoogleLogout } from "react-google-login";
 
 const styles = (theme) => ({
   root: {
@@ -266,6 +267,14 @@ class Header extends React.Component {
                 <MoreIcon />
               </IconButton>
             </div>
+            <span>
+              <GoogleLogout
+                className="Google-logOut"
+                clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
+                buttonText="Logout"
+                onLogoutSuccess={this.props.logout}
+              ></GoogleLogout>
+            </span>
           </Toolbar>
         </AppBar>
         {renderMenu}

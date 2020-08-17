@@ -36,13 +36,21 @@ export default class App extends React.Component {
       userId: newUserId,
     });
   };
+  logout = () => {
+    console.log("logout")
+    this.setState({
+      email: null,
+      userId: null
+
+    })
+  }
 
   render() {
     const { email, userId } = this.state;
     console.log(this.state);
     return (
       <div>
-        <Header />
+        <Header email={email} userId={userId} logout={this.logout} />
         <SubHeader />
         <Switch>
           <Route exact path="/" component={HomePage} />
