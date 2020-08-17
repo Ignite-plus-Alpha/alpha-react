@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
     width: "50%",
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
+    textTransform: "capitalize",
     //display: "flex",
   },
 }));
@@ -31,7 +32,7 @@ export default function FolderList(props) {
                 name="radio-button-demo"
               />
             </ListItemAvatar>
-            {address.first_Name}&nbsp;{address.last_name}
+            {/* {address.first_Name}&nbsp;{address.last_name} */}
             <br />
             {address.address_line1}&nbsp;{address.address_line2}
             <br />

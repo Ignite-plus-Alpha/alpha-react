@@ -102,7 +102,6 @@ class Card extends Component {
                     <Typography gutterBottom>
                       {item.itemGroup} {item.itemCategory}
                     </Typography>
-                    <Typography>{item.itemId.toLowerCase()}</Typography>
                     <Typography>Size:{item.itemSize.toUpperCase()}</Typography>
                     <Typography>
                       <IconButton
