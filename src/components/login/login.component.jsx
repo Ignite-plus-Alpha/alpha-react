@@ -37,7 +37,7 @@ class Login extends Component {
 
     //localStorage.setItem("userId", response.profileObj);
     localStorage.setItem("imageUrl", response.profileObj.imageUrl);
-    localStorage.setItem("firstName", response.Ot.sW);
+    localStorage.setItem("firstName", response.profileObj.givenName);
     profileService
       .userRegistration(response.profileObj.email)
       .then(
