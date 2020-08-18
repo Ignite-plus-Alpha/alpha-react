@@ -37,13 +37,16 @@ export default class App extends React.Component {
     });
   };
   logout = () => {
-    console.log("logout")
+    console.log("logout");
     this.setState({
       email: null,
-      userId: null
-
-    })
-  }
+      userId: null,
+    });
+    localStorage.removeItem("userId");
+    localStorage.removeItem("imageUrl");
+    localStorage.removeItem("firstName");
+    //localStorage.removeItem("lastName");
+  };
 
   render() {
     const { email, userId } = this.state;
@@ -54,7 +57,11 @@ export default class App extends React.Component {
         <SubHeader />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/cart" component={Cart} />
+          <Route
+            exact
+            path="/cart"
+            render={(props) => <Cart email={email} userId={userId} />}
+          />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route
             exact

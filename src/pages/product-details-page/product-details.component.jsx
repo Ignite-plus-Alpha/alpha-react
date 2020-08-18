@@ -8,6 +8,7 @@ import "./product-details.styles.scss";
 import Footwear from "./item-detail-table/footwear";
 import Axios from "axios";
 import CustomAlert from "./customAlert";
+import { Redirect, withRouter } from "react-router-dom";
 
 class ProductDetailsPage extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class ProductDetailsPage extends React.Component {
       addToCart: false,
       cartId: "",
       showAlert: false,
+      isAdded: false,
     };
   }
 
@@ -74,7 +76,7 @@ class ProductDetailsPage extends React.Component {
       !localStorage.getItem("userId") ||
       localStorage.getItem("userId") === ""
     ) {
-      window.location = "/signup";
+      window.location = "/login";
     }
     console.log(this.state.cartId);
     if (this.state.size !== null) {
@@ -132,13 +134,14 @@ class ProductDetailsPage extends React.Component {
       }/${itemId}/${itemSize}/${itemQuantity + 1}`
     )
       .then((response) => {
+        this.setState({ isAdded: true });
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
     // alert("Successfully added the item to your Cart.");
-    window.location = "/cart";
+    // window.location = "/cart";
   };
 
   addToCart = () => {
@@ -155,13 +158,14 @@ class ProductDetailsPage extends React.Component {
     };
     Axios.post(`http://localhost:8081/cartItem`, data)
       .then((response) => {
+        this.setState({ isAdded: true });
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
     // alert("Successfully added the item to your Cart.");
-    window.location = "/cart";
+    //  window.location = "/cart";
   };
 
   renderSwitchCategory(category) {
@@ -203,6 +207,7 @@ class ProductDetailsPage extends React.Component {
 
   render() {
     console.log(this.state.size);
+    if (this.state.isAdded) return <Redirect to="/cart" />;
     return (
       <div className="product-preview">
         <div className="flexbox-container-column">
@@ -247,27 +252,28 @@ class ProductDetailsPage extends React.Component {
                 <div className="size">
                   Select size :{" "}
                   {this.state.size.map((s) => {
-                    if(s!==this.state.chosenSize){
-                      return(
-                    <a
-                      class="ui teal circular label"
-                      style={{ margin: "10px" }}
-                      onClick={() => this.setState({ chosenSize: s })}
-                    >
-                      {s.toUpperCase()}
-                    </a>
-                      )
+                    if (s !== this.state.chosenSize) {
+                      return (
+                        <a
+                          class="ui teal circular label"
+                          style={{ margin: "10px" }}
+                          onClick={() => this.setState({ chosenSize: s })}
+                        >
+                          {s.toUpperCase()}
+                        </a>
+                      );
+                    } else {
+                      return (
+                        <a
+                          class="ui black circular label"
+                          style={{ margin: "10px" }}
+                          onClick={() => this.setState({ chosenSize: s })}
+                        >
+                          {s.toUpperCase()}
+                        </a>
+                      );
                     }
-                    else{
-                      return(
-                      <a
-                      class="ui black circular label"
-                      style={{ margin: "10px" }}
-                      onClick={() => this.setState({ chosenSize: s })}
-                    >
-                      {s.toUpperCase()}
-                    </a>)
-                  }})}
+                  })}
                 </div>
               ) : (
                 <></>
@@ -304,4 +310,4 @@ class ProductDetailsPage extends React.Component {
     );
   }
 }
-export default ProductDetailsPage;
+export default withRouter(ProductDetailsPage);

@@ -41,6 +41,17 @@ function PayWithPayPal(props) {
             .then((response) => {
               console.log(response.data);
               setOrderId(response.data.orderId);
+              Axios.put(
+                `http://localhost:8081/cart/${localStorage.getItem("userId")}/${
+                  response.data.orderId
+                }`
+              )
+                .then((response) => {
+                  console.log(response.data);
+                })
+                .catch((e) => {
+                  console.log(e);
+                });
             })
             .catch((e) => {
               console.log(e);

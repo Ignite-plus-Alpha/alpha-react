@@ -184,13 +184,14 @@ class Header extends React.Component {
         <MenuItem>
           <IconButton aria-label="cart">
             <Link to="/cart" className="option">
-              <StyledBadge
+              {/* <StyledBadge
                 // badgeContent={this.state.total_quantity}
                 badgeContent={4}
                 color="secondary"
-              >
+              > */}
+              <Badge badgeContent={4} color="primary">
                 <ShoppingCartIcon />
-              </StyledBadge>
+              </Badge>
             </Link>
           </IconButton>
           <IconButton color="inherit">
@@ -239,13 +240,14 @@ class Header extends React.Component {
                 aria-label="cart"
               >
                 <Link to="/cart" className="option">
-                  <StyledBadge
+                  {/* <StyledBadge
                     // badgeContent={this.state.total_quantity}
                     badgeContent={4}
                     color="secondary"
-                  >
+                  > */}
+                  <Badge badgeContent={4} color="primary">
                     <ShoppingCartIcon />
-                  </StyledBadge>
+                  </Badge>
                 </Link>
               </IconButton>
               <IconButton
