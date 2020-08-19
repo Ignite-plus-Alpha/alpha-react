@@ -10,14 +10,14 @@ const styles = (theme) => ({
     marginLeft: "2%",
     marginRight: "2%",
   },
-  add: { alignItems: "right", textAlign: "right" },
+  add: { alignItems: "right", textAlign: "center" },
 });
 
 class Card extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userEmail: "",
+      email: "",
       userId: "",
       selectedCardId: "",
       wallets: [],
@@ -34,12 +34,12 @@ class Card extends Component {
   };
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId("pragathiindran@gmail.com")
+    ProfileDataService.getProfileByEmailId(this.props.email)
       .then((response) => {
         console.log(response.data);
         this.setState({
           userId: response.data.userId,
-
+          email: response.data.email,
           selectedCardId: response.data.default_card,
         });
         this.props.handleCardChange(response.data.default_card);
@@ -76,7 +76,7 @@ class Card extends Component {
         <div className={classes.add}>
           <AddCardModal
             UserId={localStorage.getItem("userId")}
-            email="pragathiindran@gmail.com"
+            email={this.state.email}
             loadWallets={this.loadWallets}
             loadProfileData={this.loadProfileData}
             walletCounter={this.state.walletCounter}

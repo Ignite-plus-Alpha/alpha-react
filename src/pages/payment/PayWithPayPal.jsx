@@ -10,6 +10,7 @@ function PayWithPayPal(props) {
   const [error, setError] = useState(null);
   const paypalRef = useRef();
   const [orderId, setOrderId] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     window.paypal
@@ -41,6 +42,7 @@ function PayWithPayPal(props) {
             .then((response) => {
               console.log(response.data);
               setOrderId(response.data.orderId);
+              setIsLoaded(true);
               Axios.put(
                 `http://localhost:8081/cart/${localStorage.getItem("userId")}/${
                   response.data.orderId
@@ -75,12 +77,22 @@ function PayWithPayPal(props) {
   }, [items]);
 
   if (paidFor) {
-    return (
-      <div>
-        <Redirect to="/invoice" />
-        Thanks for making the purchase.
-      </div>
-    );
+    if (isLoaded) {
+      return (
+        <div>
+          <Redirect
+            push
+            to={{
+              pathname: "/invoice",
+              state: {
+                orderId: orderId,
+              },
+            }}
+          />
+          Thanks for making the purchase.
+        </div>
+      );
+    }
   }
 
   if (error) {

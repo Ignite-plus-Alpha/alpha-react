@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
     textTransform: "capitalize",
-    // display: "flex",
   },
 }));
 

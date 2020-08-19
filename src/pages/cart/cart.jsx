@@ -11,6 +11,7 @@ export default class CartPage extends Component {
     this.state = {
       userId: this.props.userId,
       cartId: this.props.cartId,
+      email: this.props.email,
       cartItems: [],
       total_price: 0,
       total_quantity: 0,
@@ -56,6 +57,7 @@ export default class CartPage extends Component {
               total_price: this.state.total_price,
               total_quantity: this.state.total_quantity,
               items: this.state.cartItems,
+              email: this.state.email,
             },
           }}
         />

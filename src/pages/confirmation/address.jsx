@@ -9,7 +9,7 @@ const styles = (theme) => ({
     marginLeft: "2%",
     marginRight: "2%",
   },
-  add: { alignItems: "right", textAlign: "right" },
+  add: { alignItems: "right", textAlign: "center" },
 });
 
 class Address extends Component {
@@ -18,7 +18,7 @@ class Address extends Component {
     this.state = {
       addresses: [],
       selectedAddressId: "",
-      userEmail: "",
+      email: "",
       userId: "",
       isLoaded: false,
       addressCounter: "",
@@ -32,12 +32,13 @@ class Address extends Component {
   };
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId("pragathiindran@gmail.com")
+    ProfileDataService.getProfileByEmailId(this.props.email)
       .then((response) => {
         console.log(response.data);
         this.setState({
           userId: response.data.userId,
           selectedAddressId: response.data.default_address,
+          email: response.data.email,
         });
         this.props.handleAddressChange(response.data.default_address);
       })
@@ -73,7 +74,7 @@ class Address extends Component {
         <div className={classes.add}>
           <AddAddressModal
             userId={localStorage.getItem("userId")}
-            email="pragathiindran@gmail.com"
+            email={this.state.email}
             loadAddresses={this.loadAddresses}
             loadProfileData={this.loadProfileData}
             addressCounter={this.state.addressCounter}

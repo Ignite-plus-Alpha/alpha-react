@@ -38,13 +38,11 @@ class Card extends Component {
     this.state = {
       cartId: props.cartId,
     };
-    this.deleteItem = this.deleteItem.bind(this);
   }
 
   updateQuantity(itemId, itemSize, itemQuantity, operation) {
     if (operation === 1) itemQuantity = itemQuantity + 1;
     else itemQuantity = itemQuantity - 1;
-    console.log(localStorage.getItem("cartId"), itemId, itemSize, itemQuantity);
     Axios.put(
       `http://localhost:8081/cartItem/${this.state.cartId}/${itemId}/${itemSize}/${itemQuantity}`
     )
@@ -64,7 +62,6 @@ class Card extends Component {
     )
       .then((response) => {
         console.log(response.data);
-        // this.props.delete(response.data.itemId, response.data.itemSize);
         this.props.getCartItems();
       })
       .catch((e) => {

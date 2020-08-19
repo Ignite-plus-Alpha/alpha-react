@@ -3,9 +3,72 @@ import { Redirect, withRouter } from "react-router-dom";
 import "./invoice.styles.scss";
 import Button from "@material-ui/core/Button";
 import ItemTable from "./itemTable.component";
+import Axios from "axios";
+import ProfileDataService from "../../services/profile-service";
 
 class Invoice extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      orderId: "",
+      isLoaded: false,
+      addressId: "",
+      orderStatus: "",
+      items: [],
+      orderPrice: 0,
+      orderQuantity: 0,
+      address: [],
+    };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
+
+    this.setState({
+      orderId: this.props.location.state.orderId,
+    });
+    this.getOrderId();
+  }
+  loadAddress = () => {
+    ProfileDataService.getAddressByUserIdAddressId(
+      localStorage.getItem("userId"),
+      this.state.addressId
+    )
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          address: response.data,
+          isLoaded: true,
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  getOrderId = () => {
+    Axios.get(
+      `http://localhost:8081/order/${this.props.location.state.orderId}`
+    )
+      .then((response) => {
+        console.log(response.data);
+        this.setState({
+          orderId: response.data.orderId,
+          addressId: response.data.deliveryAddress,
+          orderStatus: response.data.orderStatus,
+          items: JSON.parse(response.data.orderItems),
+          orderPrice: response.data.orderPrice,
+          orderQuantity: response.data.orderQuantity,
+        });
+        this.loadAddress();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   render() {
+    if (!this.state.isLoaded) return <div></div>;
     return (
       <div>
         <div className="outbox">
@@ -22,28 +85,31 @@ class Invoice extends Component {
             <div className="content">
               <div className="info">
                 <div className="order">
-                  <div className="title">Your order number is: </div>
-                  <div className="num">123456879</div>
+                  <div className="title">
+                    Your order number is : {this.state.orderId} <br />
+                    Your order Status is : {this.state.orderStatus} <br />
+                    Your order Price is : {this.state.orderPrice}{" "}
+                  </div>
+                  <br />
                 </div>
                 <div className="address">
-                  <div className="title">Billing & Shipping information:</div>
-                  recipient_name: Pragathi indran
+                  <div className="title">Billing & Shipping information :</div>
+                  line1: {this.state.address.address_line1}
                   <br />
-                  line1: Flat no. 507 Wing A Raheja Residency
+                  line2: {this.state.address.address_line2}
                   <br />
-                  line2: Film City Road
+                  city: {this.state.address.city}
                   <br />
-                  city: Mumbai
+                  state: {this.state.address.state}
                   <br />
-                  state: Maharashtra
+                  country: {this.state.address.country}
                   <br />
-                  zipcode: 400097
-                  <br />
-                  country: INDIA
+                  zipcode: {this.state.address.zipcode}
                   <br />
                 </div>
               </div>
-              <ItemTable />
+              {console.log(this.state.items)}
+              <ItemTable items={this.state.items} />
               <div className="btn">
                 <br />
                 <br />

@@ -59,20 +59,26 @@ export default function Checkout(props) {
   const [selectedCardId, setSelectedCardId] = React.useState("");
   const [products, setProducts] = React.useState([]);
   const [cartId, setCartId] = React.useState("");
+  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [email, setEmail] = React.useState("");
 
   React.useEffect(() => {
     setTotalPrice(props.location.state.total_price);
     setTotalQuantity(props.location.state.total_quantity);
     setProducts(props.location.state.items);
+    setEmail(props.location.state.email);
     getUserCartId();
   });
 
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <Address handleAddressChange={handleAddressChange} />;
+        return (
+          <Address handleAddressChange={handleAddressChange} email={email} />
+        );
       case 1:
-        return <Card handleCardChange={handleCardChange} />;
+        return <Card handleCardChange={handleCardChange} email={email} />;
       case 2:
         return (
           <Review
@@ -80,6 +86,7 @@ export default function Checkout(props) {
             selectedCardId={selectedCardId}
             totalPrice={totalPrice}
             products={products}
+            email={email}
           />
         );
       default:
@@ -89,18 +96,13 @@ export default function Checkout(props) {
   const getUserCartId = () => {
     Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
       .then((response) => {
-        // localStorage.setItem("cartId", response.data.cartId);
         console.log(response.data);
         setCartId(response.data);
+        setIsLoaded(true);
       })
       .catch((e) => {
         console.log(e);
       });
-  };
-  const paymentHandler = (details, data) => {
-    /** Here you can call your backend API
-          endpoint and update the database */
-    console.log(details, data);
   };
 
   const handleNext = () => {
@@ -119,6 +121,7 @@ export default function Checkout(props) {
     setSelectedCardId(selectedCardId);
   };
 
+  if (!isLoaded) return <div></div>;
   return (
     <React.Fragment>
       <main className={classes.layout}>
@@ -142,13 +145,11 @@ export default function Checkout(props) {
                 <Typography variant="subtitle1">
                   <PayPalBtn
                     total={totalPrice}
-                    // total={32}
                     currency={"INR"}
                     quantity={totalQuantity}
                     deliveryAddress={selectedAddressId}
                     products={products}
                     cartId={cartId}
-                    onSuccess={paymentHandler}
                   />
                 </Typography>
               </React.Fragment>

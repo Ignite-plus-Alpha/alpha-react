@@ -9,7 +9,6 @@ class CartDirectory extends React.Component {
     this.state = {
       cartId: "",
       isLoaded: false,
-      isEmailLoaded: false,
     };
   }
 
@@ -22,7 +21,6 @@ class CartDirectory extends React.Component {
   getUserCartId = () => {
     Axios.get(`http://localhost:8081/cart/${this.props.userId}`)
       .then((response) => {
-        // localStorage.setItem("cartId", response.data.cartId);
         console.log(response.data);
         this.setState({ cartId: response.data, isLoaded: true });
       })
@@ -32,18 +30,7 @@ class CartDirectory extends React.Component {
   };
 
   render() {
-    // if (
-    //   !localStorage.getItem("userId") ||
-    //   localStorage.getItem("userId") === ""
-    // )
     if (this.props.email == null) return <Redirect to="/login" />;
-
-    // return (
-    //   <Redirect
-    //     push
-    //     to={{ pathname: "/login", state: { from: this.props.location } }}
-    //   />
-    // );
     if (this.state.isLoaded)
       return (
         <div>
@@ -51,6 +38,7 @@ class CartDirectory extends React.Component {
             key={localStorage.getItem("userId")}
             userId={localStorage.getItem("userId")}
             cartId={this.state.cartId}
+            email={this.props.email}
           />
         </div>
       );
