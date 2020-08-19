@@ -38,17 +38,31 @@ class Login extends Component {
     //localStorage.setItem("userId", response.profileObj);
     localStorage.setItem("imageUrl", response.profileObj.imageUrl);
     localStorage.setItem("firstName", response.profileObj.givenName);
-    profileService
-      .userRegistration(response.profileObj.email)
-      .then(
-        (response) => (
-          console.log(response.data),
-          this.props.setUserId(response.data),
-          localStorage.setItem("userId", response.data),
-          Axios.post(`http://localhost:8081/cart/${response.data}`),
-          this.setState({ redirect: true })
-        )
-      );
+    profileService.userRegistration(response.profileObj.email).then(
+      (response) => (
+        console.log(response.data),
+        this.props.setUserId(response.data),
+        localStorage.setItem("userId", response.data),
+        Axios.post(`http://localhost:8081/cart/${response.data}`)
+          .then((response) => {
+            Axios.get(`http://localhost:8081/cartItem/${response.data}`)
+              .then((response) => {
+                console.log(response.data);
+                localStorage.setItem(
+                  "total_quantity",
+                  response.data.total_quantity
+                );
+              })
+              .catch((e) => {
+                console.log(e);
+              });
+          })
+          .catch((e) => {
+            console.log(e);
+          }),
+        this.setState({ redirect: true })
+      )
+    );
   };
 
   // responseGoogle = (response) => {

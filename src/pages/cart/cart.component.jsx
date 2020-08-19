@@ -19,7 +19,7 @@ class CartDirectory extends React.Component {
   };
 
   getUserCartId = () => {
-    Axios.get(`http://localhost:8081/cart/${this.props.userId}`)
+    Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
       .then((response) => {
         console.log(response.data);
         this.setState({ cartId: response.data, isLoaded: true });

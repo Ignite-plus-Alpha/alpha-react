@@ -41,14 +41,20 @@ class Card extends Component {
   }
 
   updateQuantity(itemId, itemSize, itemQuantity, operation) {
-    if (operation === 1) itemQuantity = itemQuantity + 1;
-    else itemQuantity = itemQuantity - 1;
+    if (operation === 1) {
+      itemQuantity = itemQuantity + 1;
+      let quantity = parseInt(localStorage.getItem("total_quantity")) + 1;
+      localStorage.setItem("total_quantity", quantity);
+    } else {
+      itemQuantity = itemQuantity - 1;
+      let quantity = parseInt(localStorage.getItem("total_quantity")) - 1;
+      localStorage.setItem("total_quantity", quantity);
+    }
     Axios.put(
       `http://localhost:8081/cartItem/${this.state.cartId}/${itemId}/${itemSize}/${itemQuantity}`
     )
       .then((response) => {
         console.log(response.data);
-
         this.props.getCartItems();
       })
       .catch((e) => {
@@ -62,6 +68,10 @@ class Card extends Component {
     )
       .then((response) => {
         console.log(response.data);
+        let quantity =
+          parseInt(localStorage.getItem("total_quantity")) -
+          response.data.itemQuantity;
+        localStorage.setItem("total_quantity", quantity);
         this.props.getCartItems();
       })
       .catch((e) => {

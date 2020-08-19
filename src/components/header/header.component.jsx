@@ -189,7 +189,10 @@ class Header extends React.Component {
                 badgeContent={4}
                 color="secondary"
               > */}
-              <Badge badgeContent={4} color="primary">
+              <Badge
+                badgeContent={localStorage.getItem("total_quantity")}
+                color="primary"
+              >
                 <ShoppingCartIcon />
               </Badge>
             </Link>
@@ -240,12 +243,10 @@ class Header extends React.Component {
                 aria-label="cart"
               >
                 <Link to="/cart" className="option">
-                  {/* <StyledBadge
-                    // badgeContent={this.state.total_quantity}
-                    badgeContent={4}
-                    color="secondary"
-                  > */}
-                  <Badge badgeContent={4} color="primary">
+                  <Badge
+                    badgeContent={localStorage.getItem("total_quantity")}
+                    color="primary"
+                  >
                     <ShoppingCartIcon />
                   </Badge>
                 </Link>

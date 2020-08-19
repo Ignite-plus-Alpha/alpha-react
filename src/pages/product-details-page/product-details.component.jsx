@@ -135,6 +135,8 @@ class ProductDetailsPage extends React.Component {
     )
       .then((response) => {
         this.setState({ isAdded: true });
+        let quantity = parseInt(localStorage.getItem("total_quantity")) + 1;
+        localStorage.setItem("total_quantity", quantity);
         console.log(response.data);
       })
       .catch((e) => {
@@ -160,6 +162,8 @@ class ProductDetailsPage extends React.Component {
       .then((response) => {
         this.setState({ isAdded: true });
         console.log(response.data);
+        let quantity = parseInt(localStorage.getItem("total_quantity")) + 1;
+        localStorage.setItem("total_quantity", quantity);
       })
       .catch((e) => {
         console.log(e);
