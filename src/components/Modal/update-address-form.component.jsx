@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Switch from "@material-ui/core/Switch";
 import profileService from "../../services/profile-service";
 import RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
-
+import axios from "axios";
 class UpdateAddressForm extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +28,45 @@ class UpdateAddressForm extends Component {
   handleTypeChange = (type) => {
     this.setState({ addressType: type });
   };
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.value.length === 6) {
+      this.setState({
+        error: "",
+      });
+      axios
+        .get(`https://api.postalpincode.in/pincode/${e.target.value}`)
+        .then((res) =>
+          this.setState(
+            {
+              state: res.data[0].PostOffice[0].State,
+              city: res.data[0].PostOffice[0].District,
+
+              country: res.data[0].PostOffice[0].Country,
+              // addressLine2: `${res.data[0].PostOffice[0].Name},${res.data[0].PostOffice[0].Division},${res.data[0].PostOffice[0].Block}`,
+            },
+            console.log(res)
+          )
+        )
+        .then(() => {
+          document.getElementById("zipcode").classList.remove("error");
+        })
+        .catch((err) => {
+          document.getElementById("zipcode").className = "error";
+          this.setState({
+            error: `${this.props.invalidError || "Invalid PIN Code"}`,
+          });
+        });
+    }
+    if (e.target.value.length !== 6) {
+      this.setState({
+        city: "",
+        state: "",
+        district: "",
+        error: `${this.props.lenghtError || "ZIP code must be of 6 digits"}`,
+      });
+    }
+  }
 
   //handle field change
   handleChange = (event) => {
@@ -143,6 +182,7 @@ class UpdateAddressForm extends Component {
                   name="city"
                   placeholder="City"
                   onChange={this.handleChange}
+                  disabled
                   value={city}
                   required
                 ></input>
@@ -155,6 +195,7 @@ class UpdateAddressForm extends Component {
                   placeholder="State"
                   onChange={this.handleChange}
                   value={state}
+                  disabled
                   required
                 ></input>
               </div>
@@ -168,18 +209,21 @@ class UpdateAddressForm extends Component {
                   placeholder="country"
                   onChange={this.handleChange}
                   value={country}
+                  disabled
                   required
                 ></input>
               </div>
               <div class=" six wide field">
                 <label>zipcode</label>
                 <input
-                  type="text"
                   name="zipcode"
-                  placeholder="zip code"
-                  onChange={this.handleChange}
+                  placeholder="Pin Code"
+                  onChange={(e) => this.onChange(e)}
                   value={zipcode}
-                  maxlength="6"
+                  id="zipcode"
+                  type="number"
+                  maxLength={6}
+                  minLength={6}
                   required
                 />
               </div>
