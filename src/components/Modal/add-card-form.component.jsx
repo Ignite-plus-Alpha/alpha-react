@@ -71,10 +71,12 @@ class AddCardModal extends Component {
             .setDefaultWalletByEmailId(this.props.email, this.state.cardId)
             .then((response) => console.log(response))
             .then(this.props.loadProfileData)
+
             .catch((e) => console.log(e));
         }
       })
       .then(this.props.loadWallets)
+      .then({ checkedA: false })
       .catch((e) => console.log(e));
     this.setState({
       cardHolderName: "",
@@ -146,7 +148,9 @@ class AddCardModal extends Component {
             >
               <h4>Card details</h4>
               <div class="field">
-                <label>Card Holder Name</label>
+                <label>
+                  Card Holder Name<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <div class="fields">
                   <div class="sixteen wide field">
                     <input
@@ -162,7 +166,10 @@ class AddCardModal extends Component {
                 </div>
               </div>
               <div class="field">
-                <label> Card Number</label>
+                <label>
+                  {" "}
+                  Card Number<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <div class="fields">
                   <div class="sixteen wide field">
                     <input
@@ -188,14 +195,16 @@ class AddCardModal extends Component {
                   ></input>
                 </div>
                 <div class=" six wide field">
-                  <label>expiry date</label>
+                  <label>
+                    expiry date<span style={{ color: "red" }}>&nbsp;*</span>
+                  </label>
                   <input
                     type="month"
                     name="expirydate"
                     placeholder="Expiry Date"
                     onChange={this.handleChange}
                     value={expirydate}
-                    min="2020-09"
+                    min={this.getCurrentMonth}
                     required
                   ></input>
                 </div>

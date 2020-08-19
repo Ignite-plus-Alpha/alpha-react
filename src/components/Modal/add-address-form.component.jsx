@@ -3,7 +3,7 @@ import { Button, Modal } from "semantic-ui-react";
 import profileService from "../../services/profile-service";
 import Switch from "@material-ui/core/Switch";
 import RadioButtonsGroup from "../../components/radio-button/radiobutton.component";
-
+import axios from "axios";
 import Alert from "../alert/alert.component";
 
 class AddAddressModal extends Component {
@@ -17,7 +17,7 @@ class AddAddressModal extends Component {
       state: "",
       country: "",
       zipcode: "",
-      checkedB: "false",
+      checkedB: false,
       AddressId: "",
       addressType: "home",
       ShowAlert: false,
@@ -45,10 +45,51 @@ class AddAddressModal extends Component {
       state: "",
       country: "",
       zipcode: "",
-      checkedB: "false",
+      checkedB: false,
       AddressId: "",
       addressType: "",
+      error: "",
     });
+
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+    if (e.target.value.length === 6) {
+      this.setState({
+        error: "",
+      });
+      axios
+        .get(`https://api.postalpincode.in/pincode/${e.target.value}`)
+        .then((res) =>
+          this.setState(
+            {
+              state: res.data[0].PostOffice[0].State,
+              city: res.data[0].PostOffice[0].District,
+
+              country: res.data[0].PostOffice[0].Country,
+              // addressLine2: `${res.data[0].PostOffice[0].Name},${res.data[0].PostOffice[0].Division},${res.data[0].PostOffice[0].Block}`,
+            },
+            console.log(res)
+          )
+        )
+        .then(() => {
+          document.getElementById("zipcode").classList.remove("error");
+        })
+        .catch((err) => {
+          document.getElementById("zipcode").className = "error";
+          this.setState({
+            error: `${this.props.invalidError || "Invalid PIN Code"}`,
+          });
+        });
+    }
+    if (e.target.value.length !== 6) {
+      this.setState({
+        city: "",
+        state: "",
+        district: "",
+        error: `${this.props.lenghtError || "ZIP code must be of 6 digits"}`,
+      });
+    }
+  }
 
   //handle field change
   handleChange = (event) => {
@@ -118,6 +159,7 @@ class AddAddressModal extends Component {
       city,
       state,
       country,
+      checkedB,
       zipcode,
     } = this.state;
 
@@ -142,7 +184,9 @@ class AddAddressModal extends Component {
             <h4>Shipping Address</h4>
 
             <div class="field">
-              <label>Address line 1</label>
+              <label>
+                Address line 1<span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
               <div class="fields">
                 <div class="sixteen wide field">
                   <input
@@ -157,7 +201,10 @@ class AddAddressModal extends Component {
               </div>
             </div>
             <div class="field">
-              <label> Address line 2</label>
+              <label>
+                {" "}
+                Address line 2<span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
               <div class="fields">
                 <div class="sixteen wide field">
                   <input
@@ -173,31 +220,39 @@ class AddAddressModal extends Component {
             </div>
             <div class="two fields">
               <div class="field">
-                <label>City</label>
+                <label>
+                  City<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <input
                   type="text"
                   name="city"
                   placeholder="City"
                   onChange={this.handleChange}
                   value={city}
+                  disabled
                   required
                 ></input>
               </div>
               <div class="field">
-                <label>State</label>
+                <label>
+                  State<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <input
                   type="text"
                   name="state"
                   placeholder="State"
                   onChange={this.handleChange}
                   value={state}
+                  disabled
                   required
                 ></input>
               </div>
             </div>
             <div class="two fields">
               <div class=" thirteen wide field">
-                <label>Country</label>
+                <label>
+                  Country<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <input
                   type="text"
                   name="country"
@@ -205,17 +260,28 @@ class AddAddressModal extends Component {
                   onChange={this.handleChange}
                   value={country}
                   required
+                  disabled
                 ></input>
               </div>
+
               <div class=" six wide field">
-                <label>zipcode</label>
+                {this.state.error ? (
+                  <span style={{ color: "red" }} className="error-display">
+                    {this.state.error}
+                  </span>
+                ) : null}
+                <label>
+                  zipcode<span style={{ color: "red" }}>&nbsp;*</span>
+                </label>
                 <input
-                  type="text"
+                  onChange={(e) => this.onChange(e)}
                   name="zipcode"
-                  placeholder="zip code"
-                  onChange={this.handleChange}
-                  value={zipcode}
-                  maxlength="6"
+                  placeholder="Pin Code"
+                  value={this.state.zipcode}
+                  id="zipcode"
+                  type="number"
+                  maxLength={6}
+                  minLength={6}
                   required
                 />
               </div>
@@ -223,7 +289,7 @@ class AddAddressModal extends Component {
             <RadioButtonsGroup handleTypeChange={this.handleTypeChange} />
             <div>Make default addresss</div>
             <Switch
-              checked={state.checkedB}
+              checked={checkedB}
               onChange={this.handleToggleChange}
               color="primary"
               name="checkedB"
