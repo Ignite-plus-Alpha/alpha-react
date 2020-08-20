@@ -39,6 +39,8 @@ class CartDirectory extends React.Component {
             userId={localStorage.getItem("userId")}
             cartId={this.state.cartId}
             email={this.props.email}
+            totalQuantity={this.props.totalQuantity}
+            setTotalQuantity={this.props.setTotalQuantity}
           />
         </div>
       );

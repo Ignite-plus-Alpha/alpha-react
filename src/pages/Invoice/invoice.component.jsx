@@ -4,6 +4,8 @@ import "./invoice.styles.scss";
 import Button from "@material-ui/core/Button";
 import ItemTable from "./itemTable.component";
 import Axios from "axios";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import ProfileDataService from "../../services/profile-service";
 
 class Invoice extends Component {
@@ -21,6 +23,21 @@ class Invoice extends Component {
     };
   }
 
+  printDocument() {
+    const input = document.getElementById("pdfdiv");
+    html2canvas(input).then((canvas) => {
+      var imgWidth = 200;
+      var pageHeight = 1000;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      var position = 0;
+      var heightLeft = imgHeight;
+      pdf.addImage(imgData, "JPEG", 0, position, imgWidth, imgHeight);
+      pdf.save("download.pdf");
+    });
+  }
   componentDidMount() {
     console.log(this.props);
 
@@ -70,7 +87,7 @@ class Invoice extends Component {
   render() {
     if (!this.state.isLoaded) return <div></div>;
     return (
-      <div>
+      <div id="pdfdiv" className="txt">
         <div className="outbox">
           <div className="box">
             <div className="checkMark">
@@ -114,10 +131,18 @@ class Invoice extends Component {
                 <br />
                 <br />
                 <Button
+                  onClick={this.printDocument}
+                  variant="contained"
+                  color="primary"
+                  style={{ minWidth: 200 }}
+                >
+                  Generate Pdf
+                </Button>
+                <Button
                   variant="contained"
                   color="primary"
                   onClick={() => (window.location = "/")}
-                  style={{ minWidth: 200, marginLeft: "40%" }}
+                  style={{ minWidth: 200, marginLeft: "70%" }}
                 >
                   Continue Shopping
                 </Button>

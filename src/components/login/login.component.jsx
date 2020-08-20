@@ -48,10 +48,7 @@ class Login extends Component {
             Axios.get(`http://localhost:8081/cartItem/${response.data}`)
               .then((response) => {
                 console.log(response.data);
-                localStorage.setItem(
-                  "total_quantity",
-                  response.data.total_quantity
-                );
+                this.props.setTotalQuantity(response.data.total_quantity);
               })
               .catch((e) => {
                 console.log(e);

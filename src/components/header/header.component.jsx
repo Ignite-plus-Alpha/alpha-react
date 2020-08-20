@@ -21,7 +21,6 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import Axios from "axios";
 import { GoogleLogout } from "react-google-login";
 import "./logout-button.styles.css";
 
@@ -113,33 +112,6 @@ class Header extends React.Component {
     isCartIdLoaded: false,
   };
 
-  getCartItems = () => {
-    if (this.state.isCartIdLoaded) {
-      Axios.get(`http://localhost:8081/cartItem/${this.state.cartId}`)
-        .then((response) => {
-          console.log(response.data);
-          this.setState({
-            total_quantity: response.data.total_quantity,
-            isLoaded: true,
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  };
-  getUserCartId = () => {
-    Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
-      .then((response) => {
-        // localStorage.setItem("cartId", response.data.cartId);
-        console.log(response.data);
-        this.setState({ cartId: response.data, isCartIdLoaded: true });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   handleProfileMenuOpen = (event) => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -182,21 +154,21 @@ class Header extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem>
-          <IconButton aria-label="cart">
-            <Link to="/cart" className="option">
-              {/* <StyledBadge
-                // badgeContent={this.state.total_quantity}
-                badgeContent={4}
-                color="secondary"
-              > */}
-              <Badge
-                badgeContent={localStorage.getItem("total_quantity")}
-                color="primary"
-              >
+          {this.props.email ? (
+            <IconButton aria-label="cart">
+              <Link to="/cart" className="option">
+                <Badge badgeContent={this.props.totalQuantity} color="primary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </Link>
+            </IconButton>
+          ) : (
+            <IconButton aria-label="cart">
+              <Link to="/cart" className="option">
                 <ShoppingCartIcon />
-              </Badge>
-            </Link>
-          </IconButton>
+              </Link>
+            </IconButton>
+          )}
           <IconButton color="inherit">
             <Link to="/wishlist" className="option">
               <FavoriteIcon />
@@ -235,22 +207,36 @@ class Header extends React.Component {
                   <FavoriteIcon />
                 </Link>
               </IconButton>
-              <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : undefined}
-                aria-haspopup="true"
-                //onClick={this.handleProfileMenuOpen}
-                color="inherit"
-                aria-label="cart"
-              >
-                <Link to="/cart" className="option">
-                  <Badge
-                    badgeContent={localStorage.getItem("total_quantity")}
-                    color="primary"
-                  >
+              {this.props.email ? (
+                <IconButton
+                  aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                  aria-haspopup="true"
+                  //onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                  aria-label="cart"
+                >
+                  <Link to="/cart" className="option">
+                    <Badge
+                      badgeContent={this.props.totalQuantity}
+                      color="primary"
+                    >
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </Link>
+                </IconButton>
+              ) : (
+                <IconButton
+                  aria-owns={isMenuOpen ? "material-appbar" : undefined}
+                  aria-haspopup="true"
+                  //onClick={this.handleProfileMenuOpen}
+                  color="inherit"
+                  aria-label="cart"
+                >
+                  <Link to="/cart" className="option">
                     <ShoppingCartIcon />
-                  </Badge>
-                </Link>
-              </IconButton>
+                  </Link>
+                </IconButton>
+              )}
               <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"

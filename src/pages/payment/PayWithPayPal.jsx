@@ -5,7 +5,15 @@ import { Redirect, withRouter } from "react-router-dom";
 import Axios from "axios";
 
 function PayWithPayPal(props) {
-  const { items, total, quantity, deliveryAddress, products, cartId } = props;
+  const {
+    items,
+    total,
+    quantity,
+    deliveryAddress,
+    products,
+    cartId,
+    email,
+  } = props;
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
   const paypalRef = useRef();
@@ -31,6 +39,7 @@ function PayWithPayPal(props) {
         },
         onApprove: async (data, actions) => {
           const order = await actions.order.capture();
+
           const data1 = {
             orderItems: JSON.stringify(products),
             orderPrice: total,
@@ -86,6 +95,7 @@ function PayWithPayPal(props) {
               pathname: "/invoice",
               state: {
                 orderId: orderId,
+                email: email,
               },
             }}
           />

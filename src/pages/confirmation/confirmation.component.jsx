@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ProfileDataService from "../../services/profile-service";
 import Paper from "@material-ui/core/Paper";
@@ -150,6 +150,8 @@ export default function Checkout(props) {
                     deliveryAddress={selectedAddressId}
                     products={products}
                     cartId={cartId}
+                    setTotalQuantity={props.setTotalQuantity}
+                    email={props.email}
                   />
                 </Typography>
               </React.Fragment>

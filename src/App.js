@@ -16,6 +16,7 @@ import ProductDetailsPage from "./pages/product-details-page/product-details.com
 import SubHeader from "./components/subheader/subheader.component";
 import Login from "./components/login/login.component";
 import Invoice from "./pages/Invoice/invoice.component";
+import Axios from "axios";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,8 +24,13 @@ export default class App extends React.Component {
     this.state = {
       email: null,
       userId: null,
+      totalQuantity: 0,
     };
   }
+
+  setTotalQuantity = (newQuantity) => {
+    this.setState({ totalQuantity: newQuantity });
+  };
 
   setEmail = (newEmail) => {
     this.setState({
@@ -45,22 +51,34 @@ export default class App extends React.Component {
     localStorage.removeItem("userId");
     localStorage.removeItem("imageUrl");
     localStorage.removeItem("firstName");
-    //localStorage.removeItem("lastName");
+    localStorage.removeItem("total_quantity");
   };
 
   render() {
-    const { email, userId } = this.state;
+    const { email, userId, totalQuantity } = this.state;
     console.log(this.state);
     return (
       <div>
-        <Header email={email} userId={userId} logout={this.logout} />
+        <Header
+          email={email}
+          userId={userId}
+          logout={this.logout}
+          totalQuantity={totalQuantity}
+        />
         <SubHeader />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route
             exact
             path="/cart"
-            render={(props) => <Cart email={email} userId={userId} />}
+            render={(props) => (
+              <Cart
+                email={email}
+                userId={userId}
+                totalQuantity={totalQuantity}
+                setTotalQuantity={this.setTotalQuantity}
+              />
+            )}
           />
           <Route exact path="/aboutus" component={AboutUs} />
           <Route
@@ -78,6 +96,7 @@ export default class App extends React.Component {
                 email={email}
                 setEmail={this.setEmail}
                 setUserId={this.setUserId}
+                setTotalQuantity={this.setTotalQuantity}
               />
             )}
           />
@@ -88,7 +107,12 @@ export default class App extends React.Component {
           <Route
             exact
             path="/:groupId/:categoryId/:itemId"
-            component={ProductDetailsPage}
+            render={(props) => (
+              <ProductDetailsPage
+                totalQuantity={totalQuantity}
+                setTotalQuantity={this.setTotalQuantity}
+              />
+            )}
           />
         </Switch>
         <Footer />

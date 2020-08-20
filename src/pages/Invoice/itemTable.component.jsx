@@ -40,11 +40,6 @@ function createData(ItemId, Title, Quantity, Price) {
   return { id, ItemId, Title, Quantity, Price };
 }
 
-const rows = [
-  createData("1234567890", "Women kurta", 1, 1000),
-  createData("1789992233", "potato", 2, 120),
-];
-
 function CustomizedTable(props) {
   const { classes } = props;
 
@@ -53,7 +48,6 @@ function CustomizedTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <CustomTableCell align="right">ItemID</CustomTableCell>
             <CustomTableCell align="right">Title</CustomTableCell>
             <CustomTableCell align="right">Type</CustomTableCell>
             <CustomTableCell align="right">Size</CustomTableCell>
@@ -64,8 +58,6 @@ function CustomizedTable(props) {
         <TableBody>
           {props.items.map((row) => (
             <TableRow className={classes.row} key={row.itemId}>
-              {/* <CustomTableCell align="right">{row.}</CustomTableCell> */}
-              <CustomTableCell align="right">{row.itemId}</CustomTableCell>
               <CustomTableCell align="right">{row.itemTitle}</CustomTableCell>
               <CustomTableCell align="right">
                 {row.itemGroup}/{row.itemCategory}

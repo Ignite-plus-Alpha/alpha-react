@@ -17,6 +17,7 @@ export default class CartPage extends Component {
       total_quantity: 0,
       isLoaded: false,
       isConfirmClicked: false,
+      setTotalQuantity: props.setTotalQuantity,
     };
   }
 
@@ -50,7 +51,6 @@ export default class CartPage extends Component {
     if (this.state.isConfirmClicked)
       return (
         <Redirect
-          push
           to={{
             pathname: "/confirmation",
             state: {
@@ -88,6 +88,8 @@ export default class CartPage extends Component {
               item={item}
               cartId={this.state.cartId}
               getCartItems={this.getCartItems}
+              totalQuantity={this.props.totalQuantity}
+              setTotalQuantity={this.props.setTotalQuantity}
             />
           ))}
           <h1>Total Price:₹{this.state.total_price}</h1>
