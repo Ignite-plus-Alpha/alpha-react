@@ -15,6 +15,7 @@ import Alert from "../alert/alert.component";
 import CustomConfirmation from "../alert/confirmation-alert.component";
 import OutlinedChips from "../../components/chip/chip.component";
 import "./card.styles.css";
+import Cards from "react-credit-cards";
 
 const useStyles = makeStyles({
   root: {
@@ -105,17 +106,15 @@ export function WalletCard({
             Card Details
           </Typography>
           <Divider style={{ marginBottom: "1%" }} />
-          <Typography className={classes.pos} color="bold">
-            Card Holder Name&nbsp;:&nbsp;{cardHolderName}
-          </Typography>
-          <Typography className={classes.pos} color="bold">
-            Card Number &nbsp;:&nbsp;
-            {(cardNumber = cardNumber.toString().replace(/\d(?=\d{4})/g, "*"))}
-          </Typography>
-          <Typography className={classes.pos} color="bold">
-            Expiry&nbsp;Date&nbsp;:&nbsp;{expiryDate}
-          </Typography>
+          <div className="card-image" style={{ margin: "5%" }}>
+            <Cards
+              number={cardNumber}
+              name={cardHolderName}
+              expiry={expiryDate}
+            />
+          </div>
         </CardContent>
+        <Divider />
         <CardActions>
           <div
             className="optionButtons"
@@ -125,7 +124,7 @@ export function WalletCard({
               justifyContent: "space-between",
               position: "center",
               minWidth: "100%",
-              padding: "2%",
+              padding: "1%",
             }}
           >
             <span>
