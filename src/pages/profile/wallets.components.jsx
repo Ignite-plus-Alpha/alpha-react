@@ -96,6 +96,22 @@ class Wallets extends React.Component {
           </div>
           <h5>PREFERRED CARD</h5>
           {this.state.wallets.map((wallet) => {
+            var first4 = wallet.card_number.toString().slice(0, 4);
+            var last5 = wallet.card_number.toString().slice(-5);
+
+            var mask = wallet.card_number
+              .toString()
+              .slice(4, -6)
+              .replace(/\d/g, "*");
+            console.log(
+              first4,
+              "mask =",
+              mask,
+              "---",
+              last5,
+              "card length",
+              wallet.card_number.length
+            );
             if (wallet.wallet_id === this.state.defaultCard)
               return (
                 <WalletCard
@@ -105,7 +121,7 @@ class Wallets extends React.Component {
                   walletId={wallet.wallet_id}
                   currentUserUserId={this.props.userId}
                   cardHolderName={wallet.cardholder_name}
-                  cardNumber={wallet.card_number}
+                  cardNumber={first4 + mask + last5}
                   expiryDate={wallet.expiry_date}
                   defaultCard={this.state.defaultCard}
                 />
@@ -121,6 +137,23 @@ class Wallets extends React.Component {
             style={{ maxWidth: "80%" }}
           >
             {this.state.wallets.map((wallet) => {
+              var first4 = wallet.card_number.toString().slice(0, 4);
+              var last5 = wallet.card_number.toString().slice(-5);
+
+              var mask = wallet.card_number
+                .toString()
+                .slice(4, -6)
+                .replace(/\d/g, "*");
+              console.log(
+                first4,
+                "mask =",
+                mask,
+                "---",
+                last5,
+                "card length",
+                wallet.card_number.length
+              );
+
               if (wallet.wallet_id !== this.state.defaultCard)
                 return (
                   <WalletCard
@@ -130,7 +163,7 @@ class Wallets extends React.Component {
                     walletId={wallet.wallet_id}
                     currentUserUserId={this.props.userId}
                     cardHolderName={wallet.cardholder_name}
-                    cardNumber={wallet.card_number}
+                    cardNumber={first4 + mask + last5}
                     expiryDate={wallet.expiry_date}
                     defaultCard={this.state.defaultCard}
                   />
