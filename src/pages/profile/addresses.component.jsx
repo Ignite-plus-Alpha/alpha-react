@@ -125,7 +125,7 @@ class Addresses extends React.Component {
                   />
                 );
             })}
-            <h5>Other ADDRESSES</h5>
+            <h5>OTHER ADDRESSES</h5>
             <Grid
               container
               direction="row"

@@ -101,7 +101,7 @@ class Wallets extends React.Component {
 
             var mask = wallet.card_number
               .toString()
-              .slice(4, -6)
+              .slice(4, -5)
               .replace(/\d/g, "*");
             console.log(
               first4,
@@ -127,7 +127,7 @@ class Wallets extends React.Component {
                 />
               );
           })}
-          <h5>Other Cards</h5>
+          <h5>OTHER CARDS</h5>
 
           <Grid
             container
@@ -142,7 +142,7 @@ class Wallets extends React.Component {
 
               var mask = wallet.card_number
                 .toString()
-                .slice(4, -6)
+                .slice(4, -5)
                 .replace(/\d/g, "*");
               console.log(
                 first4,

@@ -13,6 +13,7 @@ function PayWithPayPal(props) {
     products,
     cartId,
     email,
+    setTotalQuantity,
   } = props;
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
@@ -70,6 +71,7 @@ function PayWithPayPal(props) {
           Axios.delete(`http://localhost:8081/cartItem/${cartId}`)
             .then((response) => {
               console.log(response.data);
+              setTotalQuantity(0);
             })
             .catch((e) => {
               console.log(e);

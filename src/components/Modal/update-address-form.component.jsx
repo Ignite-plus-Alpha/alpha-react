@@ -214,6 +214,11 @@ class UpdateAddressForm extends Component {
                 ></input>
               </div>
               <div class=" six wide field">
+                {this.state.error ? (
+                  <span style={{ color: "red" }} className="error-display">
+                    {this.state.error}
+                  </span>
+                ) : null}
                 <label>zipcode</label>
                 <input
                   name="zipcode"

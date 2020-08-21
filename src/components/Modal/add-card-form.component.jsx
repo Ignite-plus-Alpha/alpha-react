@@ -175,6 +175,7 @@ class AddCardModal extends Component {
                     <input
                       type="tel"
                       name="cardNumber"
+                      maxLength="16"
                       placeholder="Card Number"
                       onChange={this.handleChange}
                       value={cardNumber}

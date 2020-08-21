@@ -150,7 +150,7 @@ export default function Checkout(props) {
                     deliveryAddress={selectedAddressId}
                     products={products}
                     cartId={cartId}
-                    setTotalQuantity={props.setTotalQuantity}
+                    setTotalQuantity={props.location.setTotalQuantity}
                     email={props.email}
                   />
                 </Typography>

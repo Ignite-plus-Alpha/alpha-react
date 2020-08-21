@@ -161,7 +161,7 @@ export function AddressCard({
         <Alert
           handleAlertClose={handleAlertClose}
           message={
-            "set another address as default to proceed with deletion of defaul address"
+            "set another address as default to proceed with deletion of default address"
           }
           showAlert={showAlert}
         />

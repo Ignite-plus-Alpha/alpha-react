@@ -67,7 +67,11 @@ export default class App extends React.Component {
         />
         <SubHeader />
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route
+            exact
+            path="/"
+            render={(props) => <HomePage email={email} />}
+          />
           <Route
             exact
             path="/cart"

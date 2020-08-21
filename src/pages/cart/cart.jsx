@@ -51,6 +51,7 @@ export default class CartPage extends Component {
     if (this.state.isConfirmClicked)
       return (
         <Redirect
+          push
           to={{
             pathname: "/confirmation",
             state: {
@@ -59,6 +60,7 @@ export default class CartPage extends Component {
               items: this.state.cartItems,
               email: this.state.email,
             },
+            setTotalQuantity: this.props.setTotalQuantity,
           }}
         />
       );

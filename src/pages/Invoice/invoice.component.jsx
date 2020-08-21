@@ -20,6 +20,7 @@ class Invoice extends Component {
       orderPrice: 0,
       orderQuantity: 0,
       address: [],
+      isShoppingClicked: false,
     };
   }
 
@@ -84,7 +85,19 @@ class Invoice extends Component {
       });
   };
 
+  isClicked = () => {
+    this.setState({ isShoppingClicked: true });
+  };
+
   render() {
+    if (this.state.isShoppingClicked)
+      return (
+        <Redirect
+          to={{
+            pathname: "/",
+          }}
+        />
+      );
     if (!this.state.isLoaded) return <div></div>;
     return (
       <div id="pdfdiv" className="txt">
@@ -141,7 +154,7 @@ class Invoice extends Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => (window.location = "/")}
+                  onClick={this.isClicked}
                   style={{ minWidth: 200, marginLeft: "70%" }}
                 >
                   Continue Shopping
