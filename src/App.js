@@ -56,7 +56,7 @@ export default class App extends React.Component {
 
   render() {
     const { email, userId, totalQuantity } = this.state;
-    console.log(this.state);
+
     return (
       <div>
         <Header

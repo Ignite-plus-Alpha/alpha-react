@@ -148,6 +148,8 @@ class Login extends Component {
                 clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"
                 isSignedIn={true}
                 buttonText="SIGN IN"
+                // uxMode="redirect"
+                // redirectUri={window.location.href}
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
                 cookiePolicy={"single_host_origin"}

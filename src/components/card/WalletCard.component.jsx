@@ -60,7 +60,6 @@ export function WalletCard({
   };
 
   const deleteDefault = () => {
-    console.log("heyyyyyyyyy");
     const st = ".";
     ProfileService.setDefaultWalletByEmailId(email, st)
       .then((res) => console.log(res))

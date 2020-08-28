@@ -111,6 +111,7 @@ class UpdateProfileForm extends Component {
                     placeholder="Mobile"
                     onChange={this.handleChange}
                     value={mobile}
+                    maxLength="10"
                     required
                   />
                 </div>

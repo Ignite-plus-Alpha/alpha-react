@@ -11,9 +11,20 @@ class UpdateCardExpiry extends Component {
     super(props);
     this.state = {
       open: false,
+      currMonth: "",
       expirydate: this.props.expiryDate,
       checkedA: false,
     };
+  }
+  componentDidMount() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = d.getMonth() + 2;
+    if (m <= 9) m = `0${m}`;
+    var final = `${y}-${m}`;
+    this.setState({
+      currMonth: final,
+    });
   }
 
   show = (dimmer) => () => this.setState({ dimmer, open: true });
@@ -28,6 +39,15 @@ class UpdateCardExpiry extends Component {
   handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
+  };
+
+  handleExpiryChange = (event) => {
+    const { value, name } = event.target;
+
+    var year = value.toString().slice(2, 4);
+    var month = value.toString().slice(-2, 8);
+    this.setState({ [name]: month + year });
+    console.log(year, month, value);
   };
 
   //handleFormSubmit
@@ -91,9 +111,10 @@ class UpdateCardExpiry extends Component {
                 type="month"
                 name="expirydate"
                 placeholder="Expiry Date"
-                onChange={this.handleChange}
+                onChange={this.handleExpiryChange}
                 value={expirydate}
-                required
+                min={this.state.currMonth}
+                // required
               ></input>
             </div>
             <label>set card as Preferred</label>

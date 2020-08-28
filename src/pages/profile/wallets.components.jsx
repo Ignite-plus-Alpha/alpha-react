@@ -103,15 +103,7 @@ class Wallets extends React.Component {
               .toString()
               .slice(4, -5)
               .replace(/\d/g, "*");
-            console.log(
-              first4,
-              "mask =",
-              mask,
-              "---",
-              last5,
-              "card length",
-              wallet.card_number.length
-            );
+
             if (wallet.wallet_id === this.state.defaultCard)
               return (
                 <WalletCard
@@ -144,15 +136,6 @@ class Wallets extends React.Component {
                 .toString()
                 .slice(4, -5)
                 .replace(/\d/g, "*");
-              console.log(
-                first4,
-                "mask =",
-                mask,
-                "---",
-                last5,
-                "card length",
-                wallet.card_number.length
-              );
 
               if (wallet.wallet_id !== this.state.defaultCard)
                 return (

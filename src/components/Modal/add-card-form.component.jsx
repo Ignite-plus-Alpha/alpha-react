@@ -22,6 +22,16 @@ class AddCardModal extends Component {
       currMonth: "",
     };
   }
+  componentDidMount() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = d.getMonth() + 2;
+    if (m <= 9) m = `0${m}`;
+    var final = `${y}-${m}`;
+    this.setState({
+      currMonth: final,
+    });
+  }
   handleAlertClose = () => {
     this.setState({ showAlert: false });
   };
@@ -48,6 +58,15 @@ class AddCardModal extends Component {
   handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
+  };
+
+  handleExpiryChange = (event) => {
+    const { value, name } = event.target;
+
+    var year = value.toString().slice(2, 4);
+    var month = value.toString().slice(-2, 8);
+    this.setState({ [name]: month + year });
+    console.log(year, month, value);
   };
   //handleFormSubmit
   handleSubmit = (event) => {
@@ -87,16 +106,6 @@ class AddCardModal extends Component {
     });
   };
 
-  getCurrentMonth = () => {
-    var d = new Date();
-    var y = d.getFullYear();
-    var m = d.getMonth() + 1;
-    if (m <= 9) m = `0${m}`;
-    var final = `${y}-${m}`;
-    return final;
-    // this.setState({ currMonth: `${y}-${m}` });
-    // console.log(`${y}-${m}`);
-  };
   render() {
     const {
       open,
@@ -203,10 +212,9 @@ class AddCardModal extends Component {
                     type="month"
                     name="expirydate"
                     placeholder="Expiry Date"
-                    onChange={this.handleChange}
+                    onChange={this.handleExpiryChange}
                     value={expirydate}
-                    min={this.getCurrentMonth}
-                    required
+                    min={this.state.currMonth}
                   ></input>
                 </div>
               </div>
