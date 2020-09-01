@@ -17,17 +17,6 @@ const styles = (theme) => ({
 });
 
 export default class SignUp extends Component {
-  //   constructor(props) {
-  //     super(props)
-
-  //     this.state = {
-
-  //       user: []
-
-  //     }
-
-  // }
-
   state = {
     users: "",
   };

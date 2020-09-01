@@ -19,16 +19,10 @@ export default class CartIcon extends Component {
         <IconButton
           aria-owns={this.props.isMenuOpen ? "material-appbar" : undefined}
           aria-haspopup="true"
-          //onClick={this.handleProfileMenuOpen}
           color="inherit"
           aria-label="cart"
         >
           <Link to="/cart" className="option">
-            {/* <StyledBadge
-        // badgeContent={this.state.total_quantity}
-        badgeContent={4}
-        color="secondary"
-      > */}
             <Badge badgeContent={4} color="primary">
               <ShoppingCartIcon />
             </Badge>

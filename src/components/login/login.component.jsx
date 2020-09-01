@@ -62,22 +62,6 @@ class Login extends Component {
     );
   };
 
-  // responseGoogle = (response) => {
-  //   console.log(response);
-  //   this.props.setEmail(response.profileObj.email)
-
-  //   sessionStorage.setItem('userId',response.profileObj)
-  //   localStorage.setItem('imageUrl',response.profileObj.imageUrl)
-  //   localStorage.setItem('firstName',response.Ot.sW)
-  //   localStorage.setItem('lastName',response.Ot.sU)
-  //   profileService.userRegistration(response.profileObj.email)
-  //   .then(response=>(
-  //     this.props.setUserId(response.data),
-  //     this.setState({redirect:true})
-  //   ))
-
-  // };
-
   render() {
     if (this.state.redirect) {
       return <Redirect to={"/"} />;

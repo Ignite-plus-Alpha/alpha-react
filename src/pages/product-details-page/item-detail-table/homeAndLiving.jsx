@@ -37,8 +37,6 @@ class HomeAndLiving extends Component {
             </tr>
           </tbody>
         </table>
-        {/* <div className="Primary Material"> Primary Material: {this.props.description.Primary Material},</div> */}
-        {/* <div className="Warranty"> Room Type: {this.props.description.Room Type},</div> */}
       </div>
     );
   }

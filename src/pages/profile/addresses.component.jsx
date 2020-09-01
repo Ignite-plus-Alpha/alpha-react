@@ -10,8 +10,6 @@ class Addresses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // userEmail: "chinmay@gmail.com",
-      // currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
       addresses: [],
       defaultAddress: "",
       default: "",

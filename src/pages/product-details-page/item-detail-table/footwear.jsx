@@ -34,12 +34,7 @@ class Footwear extends Component {
             <tr>
               <td>ankle-length</td>
               <td>regular</td>
-              {/* <td> {this.props.description.ankleLength}</td> */}
             </tr>
-            {/* <tr>
-                <td>ankle-length</td>
-                <td> {this.props.description.ankle length}</td>      //        ankle length: "Regular",
-                </tr> */}
           </tbody>
         </table>
       </div>

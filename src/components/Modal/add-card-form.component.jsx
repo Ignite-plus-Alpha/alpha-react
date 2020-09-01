@@ -235,25 +235,7 @@ class AddCardModal extends Component {
                   marginTop: "3%",
                 }}
               >
-                {/* <span style={{ minWidth: "150px" }}>
-                  <Button positive type="submit" value="Submit Form">
-                    Add
-                  </Button>
-                </span>
-                <span>
-                  {" "}
-                  <button
-                    
-                    style={{ minWidth: "120px" }}
-                    onClick={this.close}
-                  >
-                    Cancel
-                  </button>
-                </span> */}
                 <span style={{ minWidth: "200" }}>
-                  {/* <Button positive type='submit' value='Submit Form'>
-                  Update
-                </Button> */}
                   <Button
                     variant="contained"
                     type="submit"
@@ -265,9 +247,6 @@ class AddCardModal extends Component {
                 </span>
                 <span>
                   {" "}
-                  {/* <Button negative onClick={this.close}>                  
-                  Cancel
-                </Button> */}
                   <Button
                     variant="contained"
                     onClick={this.close}

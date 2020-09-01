@@ -56,8 +56,6 @@ class WomenTopWear extends Component {
             </tbody>
           </table>
         </div>
-
-        {/* <div className="print and pattern"> length: {this.props.print and pattern},</div> */}
       </div>
     );
   }

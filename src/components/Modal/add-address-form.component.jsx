@@ -305,9 +305,6 @@ class AddAddressModal extends Component {
               }}
             >
               <span style={{ minWidth: "200" }}>
-                {/* <Button positive type='submit' value='Submit Form'>
-                  Update
-                </Button> */}
                 <Button
                   variant="contained"
                   type="submit"
@@ -319,9 +316,6 @@ class AddAddressModal extends Component {
               </span>
               <span>
                 {" "}
-                {/* <Button negative onClick={this.close}>                  
-                  Cancel
-                </Button> */}
                 <Button
                   variant="contained"
                   onClick={this.close}
