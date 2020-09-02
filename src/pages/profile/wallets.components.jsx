@@ -4,20 +4,20 @@ import { Divider } from "@material-ui/core";
 import ProfileDataService from "../../services/profile-service";
 import { WalletCard } from "../../components/card/WalletCard.component";
 import AddCardModal from "../../components/Modal/add-card-form.component";
-import { ActionConformationModal } from "../../components/Modal/action-conformation-modal.component";
+import WalletImage from "../../assets/wallet.webp";
+import Grid from "@material-ui/core/Grid";
 
 class Wallets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "chinmay@gmail.com",
-      currentUserUserId: "a46edc1a-db4a-40c4-8daf-fbbfed21d9d0",
       wallets: [],
       cardHolderName: "",
       cardNumber: "",
       expiryDate: "",
       defaultCard: "",
       user: null,
+      walletCounter: "",
     };
   }
 
@@ -27,10 +27,11 @@ class Wallets extends React.Component {
   }
 
   loadWallets = () => {
-    ProfileDataService.getWalletsByUserId(this.state.currentUserUserId)
+    ProfileDataService.getWalletsByUserId(this.props.userId)
       .then((response) => {
         this.setState({
           wallets: response.data,
+          walletCounter: response.data.length,
         });
       })
       .catch((e) => {
@@ -39,7 +40,7 @@ class Wallets extends React.Component {
   };
 
   loadProfileData = () => {
-    ProfileDataService.getProfileByEmailId(this.state.email)
+    ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
         this.setState({
           user: response.data,
@@ -52,60 +53,108 @@ class Wallets extends React.Component {
   };
 
   render() {
-    return (
-      <div className="profile-addresses-page">
-        <div
-          className="heading"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: "3%",
-          }}
-        >
-          <span>
-            <h2>Saved Cards</h2>
-          </span>
+    if (this.state.wallets.length === 0)
+      return (
+        <div className="no-address">
           <AddCardModal
-            UserId={this.state.currentUserUserId}
-            email={this.state.email}
+            UserId={this.props.userId}
+            email={this.props.userEmail}
             loadWallets={this.loadWallets}
+            loadProfileData={this.loadProfileData}
+            walletCounter={this.state.walletCounter}
           />
+          <div className="No-wallet-placeholder">
+            <img
+              src={WalletImage}
+              style={{ width: "auto", height: "15vw", marginTop: "15%" }}
+            />
+          </div>
         </div>
-        <h5>DEFAULT CARD</h5>
-        {this.state.wallets.map((wallet) => {
-          if (wallet.wallet_id === this.state.defaultCard)
-            return (
-              <WalletCard
-                loadWallets={this.loadWallets}
-                emailId={this.state.email}
-                walletId={wallet.wallet_id}
-                currentUserUserId={this.state.currentUserUserId}
-                cardHolderName={wallet.cardholder_name}
-                cardNumber={wallet.card_number}
-                expiryDate={wallet.expiry_date}
-                defaultCard={this.state.defaultCard}
-              />
-            );
-        })}
-        <h5>Other Cards</h5>
-        {this.state.wallets.map((wallet) => {
-          if (wallet.wallet_id !== this.state.defaultCard)
-            return (
-              <WalletCard
-                loadWallets={this.loadWallets}
-                emailId={this.state.email}
-                walletId={wallet.wallet_id}
-                currentUserUserId={this.state.currentUserUserId}
-                cardHolderName={wallet.cardholder_name}
-                cardNumber={wallet.card_number}
-                expiryDate={wallet.expiry_date}
-                defaultCard={this.state.defaultCard}
-              />
-            );
-        })}
-      </div>
-    );
+      );
+    else
+      return (
+        <div className="profile-addresses-page">
+          <div
+            className="heading"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginBottom: "3%",
+            }}
+          >
+            <span>
+              <h2>SAVED CARDS</h2>
+            </span>
+            <AddCardModal
+              UserId={this.props.userId}
+              email={this.props.userEmail}
+              loadWallets={this.loadWallets}
+              loadProfileData={this.loadProfileData}
+              walletCounter={this.state.walletCounter}
+            />
+          </div>
+          <h5>PREFERRED CARD</h5>
+          {this.state.wallets.map((wallet) => {
+            var first4 = wallet.card_number.toString().slice(0, 4);
+            var last5 = wallet.card_number.toString().slice(-5);
+
+            var mask = wallet.card_number
+              .toString()
+              .slice(4, -5)
+              .replace(/\d/g, "*");
+
+            if (wallet.wallet_id === this.state.defaultCard)
+              return (
+                <WalletCard
+                  loadWallets={this.loadWallets}
+                  loadProfileData={this.loadProfileData}
+                  email={this.props.userEmail}
+                  walletId={wallet.wallet_id}
+                  currentUserUserId={this.props.userId}
+                  cardHolderName={wallet.cardholder_name}
+                  cardNumber={first4 + mask + last5}
+                  expiryDate={wallet.expiry_date}
+                  defaultCard={this.state.defaultCard}
+                />
+              );
+          })}
+          <h5>OTHER CARDS</h5>
+
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="flex-start"
+            style={{ maxWidth: "80%" }}
+          >
+            {this.state.wallets.map((wallet) => {
+              var first4 = wallet.card_number.toString().slice(0, 4);
+              var last5 = wallet.card_number.toString().slice(-5);
+
+              var mask = wallet.card_number
+                .toString()
+                .slice(4, -5)
+                .replace(/\d/g, "*");
+
+              if (wallet.wallet_id !== this.state.defaultCard)
+                return (
+                  <WalletCard
+                    loadWallets={this.loadWallets}
+                    loadProfileData={this.loadProfileData}
+                    email={this.props.userEmail}
+                    walletId={wallet.wallet_id}
+                    currentUserUserId={this.props.userId}
+                    cardHolderName={wallet.cardholder_name}
+                    cardNumber={first4 + mask + last5}
+                    expiryDate={wallet.expiry_date}
+                    defaultCard={this.state.defaultCard}
+                  />
+                );
+            })}
+          </Grid>
+        </div>
+      );
   }
 }
 export default Wallets;

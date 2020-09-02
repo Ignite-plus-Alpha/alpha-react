@@ -7,6 +7,8 @@ import HomeAndLiving from "./item-detail-table/homeAndLiving";
 import "./product-details.styles.scss";
 import Footwear from "./item-detail-table/footwear";
 import Axios from "axios";
+import CustomAlert from "./customAlert";
+import { Redirect, withRouter } from "react-router-dom";
 
 class ProductDetailsPage extends React.Component {
   constructor(props) {
@@ -21,6 +23,8 @@ class ProductDetailsPage extends React.Component {
       chosenSize: "na",
       addToCart: false,
       cartId: "",
+      showAlert: false,
+      isAdded: false,
     };
   }
 
@@ -56,6 +60,10 @@ class ProductDetailsPage extends React.Component {
       });
   };
 
+  handleAlertClose = () => {
+    this.setState({ showAlert: false });
+  };
+
   handleClick = (event) => {
     console.log("add to Bag");
     {
@@ -64,11 +72,15 @@ class ProductDetailsPage extends React.Component {
   };
 
   addToBag = () => {
-    if (!localStorage.getItem("userId")) {
-      window.location = "/signup";
+    if (
+      !localStorage.getItem("userId") ||
+      localStorage.getItem("userId") === ""
+    ) {
+      window.location = "/login";
     }
+    console.log(this.state.cartId);
     if (this.state.size !== null) {
-      if (this.state.chosenSize === "na") alert("Select a size.");
+      if (this.state.chosenSize === "na") this.setState({ showAlert: true });
       else {
         this.checkInBag();
       }
@@ -81,8 +93,8 @@ class ProductDetailsPage extends React.Component {
     Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
       .then((response) => {
         // localStorage.setItem("cartId", response.data.cartId);
-        console.log(response.data.cartId);
-        this.setState({ cartId: response.data.cartId });
+        console.log(response.data);
+        this.setState({ cartId: response.data });
       })
       .catch((e) => {
         console.log(e);
@@ -122,13 +134,16 @@ class ProductDetailsPage extends React.Component {
       }/${itemId}/${itemSize}/${itemQuantity + 1}`
     )
       .then((response) => {
+        this.setState({ isAdded: true });
+        let quantity = this.props.totalQuantity + 1;
+        this.props.setTotalQuantity(quantity);
         console.log(response.data);
       })
       .catch((e) => {
         console.log(e);
       });
     // alert("Successfully added the item to your Cart.");
-    window.location = "/cart";
+    // window.location = "/cart";
   };
 
   addToCart = () => {
@@ -145,13 +160,16 @@ class ProductDetailsPage extends React.Component {
     };
     Axios.post(`http://localhost:8081/cartItem`, data)
       .then((response) => {
+        this.setState({ isAdded: true });
         console.log(response.data);
+        let quantity = this.props.totalQuantity + 1;
+        this.props.setTotalQuantity(quantity);
       })
       .catch((e) => {
         console.log(e);
       });
     // alert("Successfully added the item to your Cart.");
-    window.location = "/cart";
+    //  window.location = "/cart";
   };
 
   renderSwitchCategory(category) {
@@ -193,6 +211,7 @@ class ProductDetailsPage extends React.Component {
 
   render() {
     console.log(this.state.size);
+    if (this.state.isAdded) return <Redirect to="/cart" />;
     return (
       <div className="product-preview">
         <div className="flexbox-container-column">
@@ -236,20 +255,35 @@ class ProductDetailsPage extends React.Component {
               {this.state.size !== null ? (
                 <div className="size">
                   Select size :{" "}
-                  {this.state.size.map((s) => (
-                    <a
-                      class="ui teal circular label"
-                      style={{ margin: "10px" }}
-                      onClick={() => this.setState({ chosenSize: s })}
-                    >
-                      {s.toUpperCase()}
-                    </a>
-                  ))}
+                  {this.state.size.map((s) => {
+                    if (s !== this.state.chosenSize) {
+                      return (
+                        <a
+                          class="ui teal circular label"
+                          style={{ margin: "10px" }}
+                          onClick={() => this.setState({ chosenSize: s })}
+                        >
+                          {s.toUpperCase()}
+                        </a>
+                      );
+                    } else {
+                      return (
+                        <a
+                          class="ui black circular label"
+                          style={{ margin: "10px" }}
+                          onClick={() => this.setState({ chosenSize: s })}
+                        >
+                          {s.toUpperCase()}
+                        </a>
+                      );
+                    }
+                  })}
                 </div>
               ) : (
                 <></>
               )}
             </div>
+
             <div class="ui divider"></div>
             <div className="specification-table" style={{ width: "500px" }}>
               {this.renderSwitchCategory(this.state.categoryId)}
@@ -260,7 +294,7 @@ class ProductDetailsPage extends React.Component {
             <span>
               <button
                 class="ui teal button"
-                style={{ margin: "7%" }}
+                style={{ margin: "7%", minWidth: 200 }}
                 onClick={this.handleClick}
               >
                 {" "}
@@ -270,8 +304,14 @@ class ProductDetailsPage extends React.Component {
           </div>
           {console.log(this.state.chosenSize)}
         </div>
+        {this.state.showAlert && (
+          <CustomAlert
+            handleAlertClose={this.handleAlertClose}
+            showAlert={this.state.showAlert}
+          />
+        )}
       </div>
     );
   }
 }
-export default ProductDetailsPage;
+export default withRouter(ProductDetailsPage);

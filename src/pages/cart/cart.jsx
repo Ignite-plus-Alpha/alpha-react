@@ -11,13 +11,14 @@ export default class CartPage extends Component {
     this.state = {
       userId: this.props.userId,
       cartId: this.props.cartId,
+      email: this.props.email,
       cartItems: [],
       total_price: 0,
       total_quantity: 0,
       isLoaded: false,
-      isCheckoutClicked: false,
+      isConfirmClicked: false,
+      setTotalQuantity: props.setTotalQuantity,
     };
-    this.getCartItems = this.getCartItems.bind(this);
   }
 
   componentDidMount = () => {
@@ -42,12 +43,12 @@ export default class CartPage extends Component {
       });
   };
 
-  checkoutClicked = () => {
-    this.setState({ isCheckoutClicked: true });
+  confirmClicked = () => {
+    this.setState({ isConfirmClicked: true });
   };
 
   render() {
-    if (this.state.isCheckoutClicked)
+    if (this.state.isConfirmClicked)
       return (
         <Redirect
           push
@@ -56,7 +57,10 @@ export default class CartPage extends Component {
             state: {
               total_price: this.state.total_price,
               total_quantity: this.state.total_quantity,
+              items: this.state.cartItems,
+              email: this.state.email,
             },
+            setTotalQuantity: this.props.setTotalQuantity,
           }}
         />
       );
@@ -86,6 +90,8 @@ export default class CartPage extends Component {
               item={item}
               cartId={this.state.cartId}
               getCartItems={this.getCartItems}
+              totalQuantity={this.props.totalQuantity}
+              setTotalQuantity={this.props.setTotalQuantity}
             />
           ))}
           <h1>Total Price:₹{this.state.total_price}</h1>
@@ -93,9 +99,9 @@ export default class CartPage extends Component {
           <Button
             variant="contained"
             color="primary"
-            onClick={this.checkoutClicked}
+            onClick={this.confirmClicked}
           >
-            CHECKOUT
+            CONFIRM
           </Button>
         </div>
       );

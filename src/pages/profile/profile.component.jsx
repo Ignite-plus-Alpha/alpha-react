@@ -9,6 +9,9 @@ import Addresses from "./addresses.component";
 import ProfileDetailPage from "./profile-detail.component";
 import Wallets from "./wallets.components";
 import "./profile.styles.scss";
+import Login from "../../components/login/login.component";
+import { Redirect } from "react-router-dom";
+import { Divider, CssBaseline } from "@material-ui/core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,6 +46,16 @@ function a11yProps(index) {
   };
 }
 
+const ColoredLine = ({ color }) => (
+  <hr
+    style={{
+      color: "red",
+      backgroundColor: "red",
+      height: 5,
+    }}
+  />
+);
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -52,41 +65,70 @@ const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderRight: `0px solid ${theme.palette.divider}`,
+    width: 200,
   },
 }));
 
-export default function Profile() {
+export default function Profile(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  if (props.email == null) return <Redirect to="/login" />;
   return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        // variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
+      <span
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          padding: "1%",
+          marginLeft: "2%",
+        }}
       >
-        <Tab label="Profile" {...a11yProps(0)} />
-        <Tab label="Addresses" {...a11yProps(1)} />
-        <Tab label="SaveCards" {...a11yProps(2)} />
-      </Tabs>
-      <div className="tabs" style={{ marginLeft: "5%", minWidth: "40%" }}>
-        <TabPanel value={value} index={0}>
-          <ProfileDetailPage />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Addresses />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Wallets />
-        </TabPanel>
+        {" "}
+        <img
+          className="option"
+          class="ui mini circular image"
+          src={localStorage.getItem("imageUrl")}
+        />
+        &nbsp;&nbsp;<b>Welcome &nbsp;{localStorage.getItem("firstName")} </b>{" "}
+        &nbsp;!!
+      </span>
+      <div className={classes.root}>
+        <Tabs
+          orientation="vertical" // variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          className={classes.tabs}
+        >
+          <Tab label="Profile" {...a11yProps(0)} />
+          <Tab label="Addresses" {...a11yProps(1)} />
+          <Tab label="SaveCards" {...a11yProps(2)} />
+        </Tabs>
+        <div
+          className="tabs"
+          style={{ marginLeft: "10%", minWidth: "30%", fontStyle: "bold" }}
+        >
+          <TabPanel value={value} index={0}>
+            <ProfileDetailPage userEmail={props.email} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <Addresses userEmail={props.email} userId={props.userId} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <Wallets userEmail={props.email} userId={props.userId} />
+          </TabPanel>
+        </div>
       </div>
     </div>
   );

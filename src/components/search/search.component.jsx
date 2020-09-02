@@ -10,19 +10,21 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { emphasize } from "@material-ui/core/styles/colorManipulator";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
+import { fade } from "@material-ui/core/styles/colorManipulator";
 import { capitalize } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 1,
-    height: 250,
-    marginTop: 25,
+    height: "auto",
+    //marginTop: 100,
     marginLeft: 100,
     textTransform: "capitalize",
   },
   input: {
     display: "flex",
     padding: 0,
+    height: "30px",
   },
   valueContainer: {
     display: "flex",
@@ -226,7 +228,7 @@ class Search extends React.Component {
           }))}
           components={components}
           onChange={this.handleChange()}
-          placeholder="Search category here..."
+          placeholder="Search.."
           isClearable
         />
       </div>

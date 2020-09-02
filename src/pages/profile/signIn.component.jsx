@@ -34,11 +34,6 @@ class SignInForm extends React.Component {
                 Sign In
               </Button>
             </span>
-            {/* <span> <button class="ui google plus button" style={{minWidth:"150px"}}>
-                    <i class="google  icon"></i>
-                    Google SignIn
-                    </button>
-                    </span> */}
             <span>
               <GoogleLogin
                 clientId="918811353367-moe53k16o58tmme27s8adujm3uqrdffc.apps.googleusercontent.com"

@@ -38,19 +38,23 @@ class Card extends Component {
     this.state = {
       cartId: props.cartId,
     };
-    this.deleteItem = this.deleteItem.bind(this);
   }
 
   updateQuantity(itemId, itemSize, itemQuantity, operation) {
-    if (operation === 1) itemQuantity = itemQuantity + 1;
-    else itemQuantity = itemQuantity - 1;
-    console.log(localStorage.getItem("cartId"), itemId, itemSize, itemQuantity);
+    if (operation === 1) {
+      itemQuantity = itemQuantity + 1;
+      let quantity = this.props.totalQuantity + 1;
+      this.props.setTotalQuantity(quantity);
+    } else {
+      itemQuantity = itemQuantity - 1;
+      let quantity = this.props.totalQuantity - 1;
+      this.props.setTotalQuantity(quantity);
+    }
     Axios.put(
       `http://localhost:8081/cartItem/${this.state.cartId}/${itemId}/${itemSize}/${itemQuantity}`
     )
       .then((response) => {
         console.log(response.data);
-
         this.props.getCartItems();
       })
       .catch((e) => {
@@ -64,7 +68,8 @@ class Card extends Component {
     )
       .then((response) => {
         console.log(response.data);
-        // this.props.delete(response.data.itemId, response.data.itemSize);
+        let quantity = this.props.totalQuantity - response.data.itemQuantity;
+        this.props.setTotalQuantity(quantity);
         this.props.getCartItems();
       })
       .catch((e) => {
@@ -102,7 +107,6 @@ class Card extends Component {
                     <Typography gutterBottom>
                       {item.itemGroup} {item.itemCategory}
                     </Typography>
-                    <Typography>{item.itemId.toLowerCase()}</Typography>
                     <Typography>Size:{item.itemSize.toUpperCase()}</Typography>
                     <Typography>
                       <IconButton

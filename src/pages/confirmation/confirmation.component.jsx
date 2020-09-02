@@ -1,105 +1,183 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
+import React, { useCallback } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import ProfileDataService from "../../services/profile-service";
+import Paper from "@material-ui/core/Paper";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import "./confirmation.styles.scss";
-import PayPalBtn from "./PayPal.jsx";
+import Address from "./address";
+import Card from "./card";
+import Review from "./Review.jsx";
+import PayPalBtn from "../payment/PayWithPayPal";
+import Axios from "axios";
 
-const styles = {
-  card: {
-    maxWidth: 500,
-    alignItems:"center"
+const useStyles = makeStyles((theme) => ({
+  layout: {
+    width: "auto",
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
   },
-  title: {
-    fontSize: 16,
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
   },
-  pos: {
-    marginBottom: 12,
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
   },
-};
+  buttons: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+}));
 
-class Confirmation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      total_price: 0,
-      total_quantity: 0,
-    };
+const steps = ["Shipping address", "Payment details", "Review your order"];
+
+export default function Checkout(props) {
+  const classes = useStyles();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [totalPrice, setTotalPrice] = React.useState(0);
+  const [totalQuantity, setTotalQuantity] = React.useState(0);
+  const [selectedAddressId, setSelectedAddressId] = React.useState("");
+  const [selectedCardId, setSelectedCardId] = React.useState("");
+  const [products, setProducts] = React.useState([]);
+  const [cartId, setCartId] = React.useState("");
+  const [isDataLoaded, setIsDataLoaded] = React.useState(false);
+  const [isLoaded, setIsLoaded] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+
+  React.useEffect(() => {
+    setTotalPrice(props.location.state.total_price);
+    setTotalQuantity(props.location.state.total_quantity);
+    setProducts(props.location.state.items);
+    setEmail(props.location.state.email);
+    getUserCartId();
+  });
+
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+          <Address handleAddressChange={handleAddressChange} email={email} />
+        );
+      case 1:
+        return <Card handleCardChange={handleCardChange} email={email} />;
+      case 2:
+        return (
+          <Review
+            selectedAddressId={selectedAddressId}
+            selectedCardId={selectedCardId}
+            totalPrice={totalPrice}
+            products={products}
+            email={email}
+          />
+        );
+      default:
+        throw new Error("Unknown step");
+    }
   }
-
-  paymentHandler = (details, data) => {
-    /** Here you can call your backend API
-      endpoint and update the database */
-    console.log(details, data);
-  }
-
-  componentDidMount = () => {
-    this.setState({
-      total_price: this.props.location.state.total_price,
-      total_quantity: this.props.location.state.total_quantity,
-    });
+  const getUserCartId = () => {
+    Axios.get(`http://localhost:8081/cart/${localStorage.getItem("userId")}`)
+      .then((response) => {
+        console.log(response.data);
+        setCartId(response.data);
+        setIsLoaded(true);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
-  render() {
-    const { classes } = this.props;
-    return (
-      <div className="confirmation" style={{alignItems:"center"}}>
-        <div >
-          <center>
-        CONFIRMATION
-        <br />
-        <br />
-          <Card className={classes.card}  >
-            <CardContent>
-              <Typography
-                className={classes.title}
-                variant="h5"
-                component="h2"
-                width="auto"
-                gutterBottom
-              >
-                <LocationOnIcon fontSize="inherit" />
-                &nbsp; Delivery Address
-              </Typography>
-              <Typography>Sirmvit Hostel</Typography>
-              <Typography>Yelahanka,Bengaluru</Typography>
-              <Typography variant="h10" component="h4">
-                Pincode:560064
-              </Typography>
-            </CardContent>
-          </Card>
-          <br />
-          {/* <Card className={classes.card}>
-            <CardContent>
-              <Typography
-                className={classes.title}
-                variant="h5"
-                component="h2"
-                gutterBottom
-              >
-                <PaymentIcon fontSize="inherit" />
-                &nbsp; Payment Card
-              </Typography>
-              <Typography></Typography>
-              <Typography>1111 2222 3333 4444</Typography>
-              <Typography>CVV:*</Typography>
-            </CardContent>
-          </Card> */}
-          <h3>
-            Total Price:{this.state.total_price}
-            <br />
-            Total Items:{this.state.total_quantity}
-          </h3>
-          <PayPalBtn
-                    amount = {this.state.total_price}
-                    currency = {'INR'}
-                    onSuccess={this.paymentHandler}/>
-        </center>
-        </div>
-      </div>
-    );
-  }
-}
 
-export default withStyles(styles)(Confirmation);
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const handleAddressChange = (selectedAddressId) => {
+    setSelectedAddressId(selectedAddressId);
+  };
+
+  const handleCardChange = (selectedCardId) => {
+    setSelectedCardId(selectedCardId);
+  };
+
+  if (!isLoaded) return <div></div>;
+  return (
+    <React.Fragment>
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h6" gutterBottom>
+                  Proceed to pay with PayPal
+                </Typography>
+                <Typography variant="subtitle1">
+                  <PayPalBtn
+                    total={totalPrice}
+                    currency={"INR"}
+                    quantity={totalQuantity}
+                    deliveryAddress={selectedAddressId}
+                    products={products}
+                    cartId={cartId}
+                    setTotalQuantity={props.location.setTotalQuantity}
+                    email={props.email}
+                  />
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? "Confirm" : "Next"}
+                  </Button>
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        </Paper>
+      </main>
+    </React.Fragment>
+  );
+}
