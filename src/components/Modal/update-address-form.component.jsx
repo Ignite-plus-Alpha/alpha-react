@@ -11,6 +11,8 @@ class UpdateAddressForm extends Component {
     super(props);
     this.state = {
       open: false,
+      name: this.props.name,
+      contact: this.props.contact,
       addressLine1: this.props.addressLine1,
       addressLine2: this.props.addressLine2,
       city: this.props.city,
@@ -78,6 +80,8 @@ class UpdateAddressForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const data = {
+      name: this.state.name,
+      contact: this.state.contact,
       address_line1: this.state.addressLine1,
       address_line2: this.state.addressLine2,
       city: this.state.city,
@@ -115,6 +119,8 @@ class UpdateAddressForm extends Component {
     const {
       open,
       dimmer,
+      name,
+      contact,
       addressLine1,
       addressLine2,
       city,
@@ -139,10 +145,45 @@ class UpdateAddressForm extends Component {
           dimmer={dimmer}
           open={open}
           onClose={this.close}
-          style={{ padding: "2%", width: "25%" }}
+          style={{ padding: "2%", width: "40%" }}
         >
           <form class="ui form" onSubmit={this.handleSubmit}>
             <h4>Shipping Address</h4>
+            <div class="field">
+              <label>
+                Receiver Nmae<span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
+              <div class="fields">
+                <div class="sixteen wide field">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Reciever name "
+                    onChange={this.handleChange}
+                    value={name}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>
+                Receiver Contact
+                <span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
+              <div class="fields">
+                <div class="sixteen wide field">
+                  <input
+                    type="tel"
+                    name="contact"
+                    placeholder="Mobile"
+                    onChange={this.handleChange}
+                    value={contact}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
 
             <div class="field">
               <label>Address line 1</label>

@@ -37,9 +37,8 @@ export function AddressCard({
   emailId,
   userId,
   addressId,
-  firstName,
-  lastName,
-  mobile,
+  name,
+  contact,
   addressLine1,
   addressLine2,
   addressType,
@@ -108,7 +107,7 @@ export function AddressCard({
 
           <Divider style={{ marginBottom: "1%" }} />
           <Typography className={classes.pos} color="bold">
-            {firstName}&nbsp;{lastName}
+            {name}
           </Typography>
           <Typography className={classes.pos} color="bold">
             {addressLine1}&nbsp;{addressLine2}
@@ -118,7 +117,7 @@ export function AddressCard({
             zipcode : {zipcode}
           </Typography>
           <Typography className={classes.pos} color="bold">
-            mobile : {mobile}
+            contact : {contact}
           </Typography>
         </CardContent>
         <CardActions>
@@ -146,6 +145,8 @@ export function AddressCard({
               userId={userId}
               addressId={addressId}
               emailId={emailId}
+              name={name}
+              contact={contact}
               addressLine1={addressLine1}
               addressLine2={addressLine2}
               city={city}

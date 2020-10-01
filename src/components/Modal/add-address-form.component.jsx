@@ -11,6 +11,8 @@ class AddAddressModal extends Component {
     super(props);
     this.state = {
       open: false,
+      name: "",
+      contact: "",
       addressLine1: "",
       addressLine2: "",
       city: "",
@@ -39,6 +41,8 @@ class AddAddressModal extends Component {
   close = () =>
     this.setState({
       open: false,
+      name: "",
+      contact: "",
       addressLine1: "",
       addressLine2: "",
       city: "",
@@ -107,6 +111,8 @@ class AddAddressModal extends Component {
     event.preventDefault();
     const data = {
       userid: this.props.userId,
+      name: this.state.name,
+      contact: this.state.contact,
       address_line1: this.state.addressLine1,
       address_line2: this.state.addressLine2,
       city: this.state.city,
@@ -140,6 +146,8 @@ class AddAddressModal extends Component {
       .catch((e) => console.log(e));
 
     this.setState({
+      name: "",
+      contact: "",
       addressLine1: "",
       addressLine2: "",
       city: "",
@@ -154,6 +162,8 @@ class AddAddressModal extends Component {
     const {
       open,
       dimmer,
+      name,
+      contact,
       addressLine1,
       addressLine2,
       city,
@@ -182,6 +192,41 @@ class AddAddressModal extends Component {
         >
           <form class="ui form" onSubmit={this.handleSubmit}>
             <h4>Shipping Address</h4>
+            <div class="field">
+              <label>
+                Receiver Nmae<span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
+              <div class="fields">
+                <div class="sixteen wide field">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Reciever name "
+                    onChange={this.handleChange}
+                    value={name}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label>
+                Receiver Contact
+                <span style={{ color: "red" }}>&nbsp;*</span>
+              </label>
+              <div class="fields">
+                <div class="sixteen wide field">
+                  <input
+                    type="tel"
+                    name="contact"
+                    placeholder="Mobile"
+                    onChange={this.handleChange}
+                    value={contact}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
 
             <div class="field">
               <label>
