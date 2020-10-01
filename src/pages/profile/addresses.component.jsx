@@ -10,8 +10,6 @@ class Addresses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // userEmail: "chinmay@gmail.com",
-      // currentUserUserId: "fee623af-3307-4ab6-9362-a4fc35aadf2e",
       addresses: [],
       defaultAddress: "",
       default: "",
@@ -29,10 +27,6 @@ class Addresses extends React.Component {
     ProfileDataService.getProfileByEmailId(this.props.userEmail)
       .then((response) => {
         this.setState({
-          // user: response.data,
-          firstName: response.data.first_name,
-          lastName: response.data.last_name,
-          mobile: response.data.mobile,
           defaultAddress: response.data.default_address,
         });
       })
@@ -111,9 +105,8 @@ class Addresses extends React.Component {
                     emailId={this.props.userEmail}
                     userId={this.props.userId}
                     addressId={address.address_id}
-                    firstName={this.state.firstName}
-                    lastName={this.state.lastName}
-                    mobile={this.state.mobile}
+                    name={address.name}
+                    contact={address.contact}
                     addressType={address.address_type}
                     addressLine1={address.address_line1}
                     addressLine2={address.address_line2}
@@ -144,9 +137,8 @@ class Addresses extends React.Component {
                       userId={this.props.userId}
                       userId={this.props.userId}
                       addressId={address.address_id}
-                      firstName={this.state.firstName}
-                      lastName={this.state.lastName}
-                      mobile={this.state.mobile}
+                      name={address.name}
+                      contact={address.contact}
                       addressLine1={address.address_line1}
                       addressType={address.address_type}
                       addressLine2={address.address_line2}

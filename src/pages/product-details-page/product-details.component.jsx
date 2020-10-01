@@ -3,6 +3,7 @@ import productService from "../../services/product-service";
 import WomenTopWear from "./item-detail-table/womeN-top-wear";
 import Book from "./item-detail-table/book";
 import Grocery from "./item-detail-table/grocery";
+import BottomWear from "./item-detail-table/bottowear";
 import HomeAndLiving from "./item-detail-table/homeAndLiving";
 import "./product-details.styles.scss";
 import Footwear from "./item-detail-table/footwear";
@@ -183,7 +184,9 @@ class ProductDetailsPage extends React.Component {
       case "kurta":
         return <WomenTopWear description={this.state.description} />;
       case "jeans":
-        return <WomenTopWear description={this.state.description} />;
+        return <BottomWear description={this.state.description} />;
+      case "skirt":
+        return <BottomWear description={this.state.description} />;
       case "chair":
         return <HomeAndLiving description={this.state.description} />;
       case "bed":
