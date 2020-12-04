@@ -13,7 +13,7 @@ const CategoryItem = ({
   itemId,
 }) => (
   <div className="collection-item">
-    {console.log(history, match)}
+    {/* {console.log(history, match)} */}
     <div
       className="image-item"
       onClick={() => history.push(`${match.url}/${itemId}`)}

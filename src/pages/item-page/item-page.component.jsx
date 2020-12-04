@@ -3,6 +3,7 @@ import productService from "../../services/product-service";
 import ItemCard from "./item-card.component";
 import "./item-page.styles.scss";
 import ReactPaginate from "react-paginate";
+import { Select } from "semantic-ui-react";
 
 class ItemPage extends React.Component {
   constructor(props) {
@@ -13,10 +14,16 @@ class ItemPage extends React.Component {
       items: [],
       offset: 0,
       data: [],
-      perPage: 4,
-      currentPage: 0
+      perPage: 10,
+      currentPage: 0,
+      sortType: "none",
     };
   }
+  Options = [
+    { value: "recent", text: "What's New" },
+    { value: "price-asc", text: "Price: Low To High" },
+    { value: "price-desc", text: "Price: High To Low" },
+  ];
 
   componentDidMount() {
     console.log(this.props);
@@ -48,33 +55,72 @@ class ItemPage extends React.Component {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
 
-    this.setState({
+    this.setState(
+      {
         currentPage: selectedPage,
-        offset: offset
-    }, () => {
-        this.getItemData()
-    });
+        offset: offset,
+      },
+      () => {
+        this.getItemData();
+      }
+    );
+  };
+  handleSort = (criteria) => {
+    this.setState({ sortType: criteria });
+    console.log(this.state.items + "  ---------- " + this.state.data);
 
-};
+    productService
+      .sortItemsByPrice(this.state.items, criteria)
+      .then((response) => {
+        this.setState({ data: response.data });
+        const data = response.data;
+        const slice = data.slice(
+          this.state.offset,
+          this.state.offset + this.state.perPage
+        );
+        const postData = slice.map((item) => (
+          <ItemCard
+            key={item.itemId}
+            groupId={item.groupId}
+            categoryId={item.categoryId}
+            itemId={item.itemId}
+            imageUrl={item.imageUrl}
+            title={item.title}
+            price={item.price}
+          />
+        ));
+        this.setState({
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData,
+        });
+      });
+    ////////////////////////////////////
+  };
 
   getItemData = () => {
     productService
       .getItemsByGroupIdCategoryId(this.state.groupId, this.state.categoryId)
       .then((response) => {
+        this.setState({ items: response });
         const data = response.data;
-        const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
-        const postData = slice.map(item =><ItemCard
-          key={item.itemId}
-          groupId={item.groupId}
-          categoryId={item.categoryId}
-          itemId={item.itemId}
-          imageUrl={item.imageUrl}
-          title={item.title}
-          price={item.price}
-        />)
+        const slice = data.slice(
+          this.state.offset,
+          this.state.offset + this.state.perPage
+        );
+        const postData = slice.map((item) => (
+          <ItemCard
+            key={item.itemId}
+            groupId={item.groupId}
+            categoryId={item.categoryId}
+            itemId={item.itemId}
+            imageUrl={item.imageUrl}
+            title={item.title}
+            price={item.price}
+          />
+        ));
         this.setState({
-          pageCount: Math.ceil(data.length / this.state.perPage),                 
-          postData
+          pageCount: Math.ceil(data.length / this.state.perPage),
+          postData,
         });
       })
       .catch((e) => {
@@ -99,24 +145,55 @@ class ItemPage extends React.Component {
       <center>
         <div className="collection-preview">
           <div className="title">{this.state.categoryId.toUpperCase()}</div>
-          {/* <div className="preview"> */}
           <div
-                className="new" style={{display:"flex" , width:"80%", justifyContent:"space-between", margin:"auto" }}>
-            {this.state.postData}    
-            </div>
+            className="sort-select"
+            style={{
+              position: "absolute",
+              right: "2%",
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <label for="sort-criteria">Sort By : </label> &nbsp;&nbsp;
+            <select
+              id="sort-criteria"
+              style={{ padding: "3%", border: "none" }}
+              onChange={(e) => {
+                this.handleSort(e.target.value);
+              }}
+            >
+              <option value="new" selected>
+                What's New
+              </option>
+              <option value="price-inc">Price: Low To High</option>
+              <option value="price-dec">Price: High To Low</option>
+            </select>
           </div>
-          <ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}/>
+          <div
+            className="new"
+            style={{
+              display: "flex",
+              width: "80%",
+              justifyContent: "space-between",
+              margin: "auto",
+            }}
+          >
+            {this.state.postData}
+          </div>
+        </div>
+        <ReactPaginate
+          previousLabel={"prev"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={this.state.pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={this.handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
         {/* </div> */}
       </center>
     );
