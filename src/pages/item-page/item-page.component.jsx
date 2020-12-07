@@ -14,7 +14,7 @@ class ItemPage extends React.Component {
       items: [],
       offset: 0,
       data: [],
-      perPage: 10,
+      perPage: 4,
       currentPage: 0,
       sortType: "none",
     };
@@ -67,7 +67,6 @@ class ItemPage extends React.Component {
   };
   handleSort = (criteria) => {
     this.setState({ sortType: criteria });
-    console.log(this.state.items + "  ---------- " + this.state.data);
 
     productService
       .sortItemsByPrice(this.state.items, criteria)
@@ -169,6 +168,8 @@ class ItemPage extends React.Component {
               <option value="price-dec">Price: High To Low</option>
             </select>
           </div>
+          <br />
+          <br />
           <div
             className="new"
             style={{
